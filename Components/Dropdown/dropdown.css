@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Dropdown Component
+   Based on Figma: Bank 02 UI Kit / Dropdown (node 20:2280)
+   Uses design tokens from tokens/*.css
+
+   Variant axes:
+     State:           Default | Hovered / Pressed | Focused | Disabled
+     Is Filled:       True | False
+     Has Description: True | False
+     Has Error:       True | False
+     Has Title:       boolean
+     Has Help Icon:   boolean
+     Has Accessory:   boolean  (Arrow | Avatar S | Avatar S + Arrow | Spinner 24)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: var(--form-rounding, 12px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border: 2px solid transparent;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   States
+   -------------------------------------------------------------------------- */
+
+.dropdown:hover,
+.dropdown--hovered {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.dropdown--focused {
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border-color: var(--primitive-brand, #835DE1);
+}
+
+.dropdown--disabled {
+  pointer-events: none;
+}
+
+.dropdown--disabled .dropdown__content {
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   Content (Text + Right Accessory)
+   -------------------------------------------------------------------------- */
+
+.dropdown__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  min-height: 70px;
+}
+
+/* --------------------------------------------------------------------------
+   Text Block (Title + Value)
+   -------------------------------------------------------------------------- */
+
+.dropdown__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* --- Title Row --- */
+
+.dropdown__title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown__title {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.dropdown__help-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.dropdown__help-icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primitive-secondary, #676767);
+}
+
+/* --- Value --- */
+
+.dropdown__value {
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown__value--placeholder {
+  color: var(--primitive-neutral-4, #949494);
+}
+
+/* --------------------------------------------------------------------------
+   Right Accessory
+   -------------------------------------------------------------------------- */
+
+.dropdown__accessory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-left: 16px;
+}
+
+/* --- Chevron Arrow --- */
+
+.dropdown__chevron {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.dropdown__chevron svg {
+  width: 12px;
+  height: 12px;
+  color: var(--primitive-neutral-4, #949494);
+}
+
+.dropdown--focused .dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+/* --- Avatar S --- */
+
+.dropdown__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--primitive-brand, #835DE1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.dropdown__avatar svg {
+  width: 13px;
+  height: 14px;
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.dropdown__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Spinner 24 --- */
+
+.dropdown__spinner {
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-brand, #835DE1);
+  border-radius: 50%;
+  animation: dropdown-spin 0.8s linear infinite;
+}
+
+@keyframes dropdown-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Divider
+   -------------------------------------------------------------------------- */
+
+.dropdown__divider {
+  width: 100%;
+  border: none;
+  margin: 0;
+}
+
+.dropdown__divider--default {
+  height: 1px;
+  background: rgba(25, 25, 25, 0.10);
+}
+
+.dropdown__divider--error {
+  height: 2px;
+  background: var(--primitive-error, #D84D4D);
+}
+
+/* --------------------------------------------------------------------------
+   Description
+   -------------------------------------------------------------------------- */
+
+.dropdown__description-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.dropdown__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Error
+   -------------------------------------------------------------------------- */
+
+.dropdown__error-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.dropdown__error {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-error, #D84D4D);
+  margin: 0;
+}

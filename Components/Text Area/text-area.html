@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Area — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="text-area.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section { margin-bottom: 48px; }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .demo__item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 320px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Text Area</h1>
+
+<!-- ===================================================================
+     SECTION 1: States — Empty (placeholder)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Empty</h2>
+  <p class="demo__section-subtitle">Is Filled = False, showing placeholder text</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Default</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Комментарий</p>
+                <span class="text-area__help-icon">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <span class="text-area__counter">0 / 500</span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Введите текст"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Hovered / Pressed</p>
+      <div class="text-area text-area--hovered">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Комментарий</p>
+                <span class="text-area__help-icon">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <span class="text-area__counter">0 / 500</span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Введите текст"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused</p>
+      <div class="text-area text-area--focused">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Комментарий</p>
+                <span class="text-area__help-icon">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <span class="text-area__counter">0 / 500</span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Введите текст"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: States — Filled
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Filled</h2>
+  <p class="demo__section-subtitle">Is Filled = True, value text in primary color</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Default (filled)</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">42 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="2">Оплата по договору №123 от 01.02.2026, в т.ч. НДС 20%</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused (filled)</p>
+      <div class="text-area text-area--focused">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">42 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="2">Оплата по договору №123 от 01.02.2026, в т.ч. НДС 20%</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Disabled (filled)</p>
+      <div class="text-area text-area--disabled">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">42 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="2" disabled>Оплата по договору №123 от 01.02.2026, в т.ч. НДС 20%</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Description
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Description</h2>
+  <p class="demo__section-subtitle">Helper text below with a thin divider</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Empty + Description</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Описание</p>
+                <span class="text-area__help-icon">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <span class="text-area__counter">0 / 1000</span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Опишите подробности"></textarea>
+          </div>
+        </div>
+        <div class="text-area__description-block">
+          <hr class="text-area__divider text-area__divider--default">
+          <p class="text-area__description">Подробное описание поможет ускорить обработку</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Filled + Description</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Описание</p>
+              </div>
+              <span class="text-area__counter">58 / 1000</span>
+            </div>
+            <textarea class="text-area__value" rows="3">Необходимо провести оплату по договору поставки оборудования для офиса</textarea>
+          </div>
+        </div>
+        <div class="text-area__description-block">
+          <hr class="text-area__divider text-area__divider--default">
+          <p class="text-area__description">Подробное описание поможет ускорить обработку</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused + Description</p>
+      <div class="text-area text-area--focused">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Описание</p>
+              </div>
+              <span class="text-area__counter">58 / 1000</span>
+            </div>
+            <textarea class="text-area__value" rows="3">Необходимо провести оплату по договору поставки оборудования для офиса</textarea>
+          </div>
+        </div>
+        <div class="text-area__description-block">
+          <hr class="text-area__divider text-area__divider--default">
+          <p class="text-area__description">Подробное описание поможет ускорить обработку</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Error State
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Error</h2>
+  <p class="demo__section-subtitle">Red divider (2px) and error text</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Empty + Error</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">0 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Введите назначение"></textarea>
+          </div>
+        </div>
+        <div class="text-area__error-block">
+          <hr class="text-area__divider text-area__divider--error">
+          <p class="text-area__error">Обязательное поле</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Filled + Error</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">215 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="3">Оплата по договору №123 от 01.02.2026 за поставку канцелярских товаров и оборудования для офиса согласно спецификации от 15.01.2026, в т.ч. НДС 20%. Без НДС не принимается.</textarea>
+          </div>
+        </div>
+        <div class="text-area__error-block">
+          <hr class="text-area__divider text-area__divider--error">
+          <p class="text-area__error">Превышен лимит символов (максимум 210)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused + Error</p>
+      <div class="text-area text-area--focused">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+              </div>
+              <span class="text-area__counter">215 / 210</span>
+            </div>
+            <textarea class="text-area__value" rows="3">Оплата по договору №123 от 01.02.2026 за поставку канцелярских товаров и оборудования для офиса согласно спецификации от 15.01.2026, в т.ч. НДС 20%. Без НДС не принимается.</textarea>
+          </div>
+        </div>
+        <div class="text-area__error-block">
+          <hr class="text-area__divider text-area__divider--error">
+          <p class="text-area__error">Превышен лимит символов (максимум 210)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Right Accessory
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Right Accessory</h2>
+  <p class="demo__section-subtitle">Icon 24 or Spinner 24 in the header row</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Icon 24 Accessory</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Сообщение</p>
+              </div>
+              <span class="text-area__counter">0 / 300</span>
+              <span class="text-area__accessory">
+                <span class="text-area__accessory-icon">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Напишите сообщение"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Spinner 24 Accessory</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Автозаполнение</p>
+              </div>
+              <span class="text-area__counter">0 / 500</span>
+              <span class="text-area__accessory">
+                <div class="text-area__spinner"></div>
+              </span>
+            </div>
+            <textarea class="text-area__value" rows="1" placeholder="Загрузка…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Minimal Variants
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Minimal Variants</h2>
+  <p class="demo__section-subtitle">Without optional elements</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">No Title, No Counter</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <textarea class="text-area__value" rows="2" placeholder="Свободный текст без заголовка…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Title only (no help, no counter)</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Примечание</p>
+              </div>
+            </div>
+            <textarea class="text-area__value" rows="2" placeholder="Добавьте примечание…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Title + Counter (no help icon)</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Заметка</p>
+              </div>
+              <span class="text-area__counter">0 / 140</span>
+            </div>
+            <textarea class="text-area__value" rows="2" placeholder="Короткая заметка…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Interactive Demo
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Interactive Demo</h2>
+  <p class="demo__section-subtitle">Click to focus, type to fill — counter updates with JS</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item" style="width: 400px;">
+      <p class="demo__label">Назначение платежа (live counter)</p>
+      <div class="text-area">
+        <div class="text-area__content">
+          <div class="text-area__text">
+            <div class="text-area__header">
+              <div class="text-area__title-group">
+                <p class="text-area__title">Назначение платежа</p>
+                <span class="text-area__help-icon">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <span class="text-area__counter" id="live-counter">0 / 210</span>
+            </div>
+            <textarea class="text-area__value" id="live-textarea" rows="3" placeholder="Введите назначение платежа…"></textarea>
+          </div>
+        </div>
+        <div class="text-area__description-block">
+          <hr class="text-area__divider text-area__divider--default">
+          <p class="text-area__description">Укажите за что производится оплата, номер и дату договора</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Live counter demo
+  const textarea = document.getElementById('live-textarea');
+  const counter = document.getElementById('live-counter');
+  const maxLen = 210;
+  textarea.addEventListener('input', function() {
+    const len = this.value.length;
+    counter.textContent = len + ' / ' + maxLen;
+    counter.style.color = len > maxLen ? 'var(--primitive-error, #D84D4D)' : '';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="dropdown.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section { margin-bottom: 48px; }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .demo__item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 320px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Dropdown</h1>
+
+<!-- ===================================================================
+     SECTION 1: States — Empty (placeholder)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Empty</h2>
+  <p class="demo__section-subtitle">Is Filled = False, placeholder text shown</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Default</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+              <span class="dropdown__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Выберите тип</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Hovered / Pressed</p>
+      <div class="dropdown dropdown--hovered">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+              <span class="dropdown__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Выберите тип</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused (chevron flips up)</p>
+      <div class="dropdown dropdown--focused">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+              <span class="dropdown__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Выберите тип</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: States — Filled
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Filled</h2>
+  <p class="demo__section-subtitle">Is Filled = True, selected value in primary color</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Default (filled)</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+            </div>
+            <p class="dropdown__value">Счёт на оплату</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused (filled)</p>
+      <div class="dropdown dropdown--focused">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+            </div>
+            <p class="dropdown__value">Счёт на оплату</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Disabled (filled)</p>
+      <div class="dropdown dropdown--disabled">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип документа</p>
+            </div>
+            <p class="dropdown__value">Счёт на оплату</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Description
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Description</h2>
+  <p class="demo__section-subtitle">Helper text below with a subtle divider (1px, 10% opacity)</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Empty + Description</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Валюта</p>
+              <span class="dropdown__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Выберите валюту</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__description-block">
+          <hr class="dropdown__divider dropdown__divider--default">
+          <p class="dropdown__description">Валюта по умолчанию — российский рубль</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Filled + Description</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Валюта</p>
+            </div>
+            <p class="dropdown__value">Российский рубль (RUB)</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__description-block">
+          <hr class="dropdown__divider dropdown__divider--default">
+          <p class="dropdown__description">Валюта по умолчанию — российский рубль</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused + Description</p>
+      <div class="dropdown dropdown--focused">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Валюта</p>
+            </div>
+            <p class="dropdown__value">Российский рубль (RUB)</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__description-block">
+          <hr class="dropdown__divider dropdown__divider--default">
+          <p class="dropdown__description">Валюта по умолчанию — российский рубль</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Error State
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Error</h2>
+  <p class="demo__section-subtitle">Red divider (2px) and error text</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Empty + Error</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип операции</p>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Выберите тип</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__error-block">
+          <hr class="dropdown__divider dropdown__divider--error">
+          <p class="dropdown__error">Обязательное поле</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Filled + Error</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип операции</p>
+            </div>
+            <p class="dropdown__value">Возврат</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__error-block">
+          <hr class="dropdown__divider dropdown__divider--error">
+          <p class="dropdown__error">Тип «Возврат» недоступен для данного контрагента</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Focused + Error</p>
+      <div class="dropdown dropdown--focused">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Тип операции</p>
+            </div>
+            <p class="dropdown__value">Возврат</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown__error-block">
+          <hr class="dropdown__divider dropdown__divider--error">
+          <p class="dropdown__error">Тип «Возврат» недоступен для данного контрагента</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Right Accessory Types
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Right Accessory Types</h2>
+  <p class="demo__section-subtitle">Arrow (default), Avatar S, Avatar S + Arrow, Spinner 24</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Arrow (default)</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Город</p>
+            </div>
+            <p class="dropdown__value">Москва</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Avatar S</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Организация</p>
+            </div>
+            <p class="dropdown__value">Точка Банк</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__avatar">
+              <svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 0C2.91 0 0 3.13 0 7s2.91 7 6.5 7S13 10.87 13 7 10.09 0 6.5 0zm2.17 10.5H4.33V3.5h4.34v7z" fill="currentColor"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Avatar S + Arrow</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Организация</p>
+            </div>
+            <p class="dropdown__value">Точка Банк</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__avatar">
+              <svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 0C2.91 0 0 3.13 0 7s2.91 7 6.5 7S13 10.87 13 7 10.09 0 6.5 0zm2.17 10.5H4.33V3.5h4.34v7z" fill="currentColor"/></svg>
+            </span>
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Spinner 24</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Контрагент</p>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Загрузка…</p>
+          </div>
+          <div class="dropdown__accessory">
+            <div class="dropdown__spinner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Accessory States
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Accessory + States</h2>
+  <p class="demo__section-subtitle">Avatar S + Arrow in focused and disabled states</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Avatar + Arrow — Focused</p>
+      <div class="dropdown dropdown--focused">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Организация</p>
+            </div>
+            <p class="dropdown__value">Точка Банк</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__avatar">
+              <svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 0C2.91 0 0 3.13 0 7s2.91 7 6.5 7S13 10.87 13 7 10.09 0 6.5 0zm2.17 10.5H4.33V3.5h4.34v7z" fill="currentColor"/></svg>
+            </span>
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Avatar + Arrow — Disabled</p>
+      <div class="dropdown dropdown--disabled">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Организация</p>
+            </div>
+            <p class="dropdown__value">Точка Банк</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__avatar">
+              <svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 0C2.91 0 0 3.13 0 7s2.91 7 6.5 7S13 10.87 13 7 10.09 0 6.5 0zm2.17 10.5H4.33V3.5h4.34v7z" fill="currentColor"/></svg>
+            </span>
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Minimal Variants
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Minimal Variants</h2>
+  <p class="demo__section-subtitle">Without optional elements</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">No Title</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <p class="dropdown__value">Значение без заголовка</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Title only (no help icon, no accessory)</p>
+      <div class="dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Категория</p>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder">Не выбрано</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 8: Interactive Demo
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Interactive Demo</h2>
+  <p class="demo__section-subtitle">Click to toggle focused state</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item" style="width: 360px;">
+      <p class="demo__label">Click to open / close</p>
+      <div class="dropdown" id="interactive-dropdown">
+        <div class="dropdown__content">
+          <div class="dropdown__text">
+            <div class="dropdown__title-row">
+              <p class="dropdown__title">Город</p>
+              <span class="dropdown__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <p class="dropdown__value dropdown__value--placeholder" id="interactive-value">Выберите город</p>
+          </div>
+          <div class="dropdown__accessory">
+            <span class="dropdown__chevron">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Interactive toggle demo
+  const dropdown = document.getElementById('interactive-dropdown');
+  const value = document.getElementById('interactive-value');
+  const cities = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань'];
+  let cityIdx = -1;
+
+  dropdown.addEventListener('click', function() {
+    const isFocused = this.classList.toggle('dropdown--focused');
+    if (!isFocused && cityIdx < cities.length - 1) {
+      cityIdx++;
+      value.textContent = cities[cityIdx];
+      value.classList.remove('dropdown__value--placeholder');
+    }
+  });
+</script>
+
+</body>
+</html>

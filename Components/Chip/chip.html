@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chip — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="chip.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section {
+      margin-bottom: 48px;
+    }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .demo__dark-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      background: var(--bg-neutral-1, #F4F4F4);
+      padding: 16px;
+      border-radius: var(--rounding-3x, 12px);
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Chip</h1>
+
+<!-- ===================================================================
+     SECTION 1: Type = Chip
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type = Chip</h2>
+  <p class="demo__section-subtitle">Default, Hovered, Disabled, Selected states</p>
+
+  <p class="demo__label">States</p>
+  <div class="demo__row">
+    <div class="chip">
+      <span class="chip__text">Default</span>
+    </div>
+    <div class="chip chip--hovered">
+      <span class="chip__text">Hovered</span>
+    </div>
+    <div class="chip chip--disabled">
+      <span class="chip__text">Disabled</span>
+    </div>
+    <div class="chip chip--selected">
+      <span class="chip__text">Selected</span>
+    </div>
+    <div class="chip chip--selected chip--hovered">
+      <span class="chip__text">Selected Hovered</span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Left Accessory (Icon)</p>
+  <div class="demo__row">
+    <div class="chip">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">С иконкой</span>
+    </div>
+    <div class="chip chip--selected">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Selected</span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Left Accessory (Logo)</p>
+  <div class="demo__row">
+    <div class="chip">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">С логотипом</span>
+    </div>
+    <div class="chip chip--selected">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">Selected</span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Left Accessory (2 Logos)</p>
+  <div class="demo__row">
+    <div class="chip">
+      <div class="chip__left-accessory">
+        <div class="chip__logos">
+          <div class="chip__logo"></div>
+          <div class="chip__logo"></div>
+        </div>
+      </div>
+      <span class="chip__text">Два логотипа</span>
+    </div>
+    <div class="chip chip--selected">
+      <div class="chip__left-accessory">
+        <div class="chip__logos">
+          <div class="chip__logo"></div>
+          <div class="chip__logo"></div>
+        </div>
+      </div>
+      <span class="chip__text">Selected</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: Type = Tab
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type = Tab</h2>
+  <p class="demo__section-subtitle">Selected tab has a border instead of filled background</p>
+
+  <p class="demo__label">States</p>
+  <div class="demo__row">
+    <div class="chip chip--tab">
+      <span class="chip__text">Default</span>
+    </div>
+    <div class="chip chip--tab chip--hovered">
+      <span class="chip__text">Hovered</span>
+    </div>
+    <div class="chip chip--tab chip--selected">
+      <span class="chip__text">Selected</span>
+    </div>
+    <div class="chip chip--tab chip--selected chip--hovered">
+      <span class="chip__text">Selected Hovered</span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Counter (Right Accessory)</p>
+  <div class="demo__row">
+    <div class="chip chip--tab">
+      <span class="chip__text">Все</span>
+      <span class="chip__counter">12</span>
+    </div>
+    <div class="chip chip--tab chip--selected">
+      <span class="chip__text">Активные</span>
+      <span class="chip__counter">5</span>
+    </div>
+    <div class="chip chip--tab">
+      <span class="chip__text">Архив</span>
+      <span class="chip__counter">0</span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Icon + Counter</p>
+  <div class="demo__row">
+    <div class="chip chip--tab chip--selected">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2L11.1 6.3L16 7L12.5 10.4L13.2 15.3L9 13.1L4.8 15.3L5.5 10.4L2 7L6.9 6.3L9 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Избранное</span>
+      <span class="chip__counter">3</span>
+    </div>
+    <div class="chip chip--tab">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.8" y="2.8" width="12.4" height="12.4" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Задачи</span>
+      <span class="chip__counter">7</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Type = Dropdown
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type = Dropdown</h2>
+  <p class="demo__section-subtitle">Chevron icon; when selected, shows cross to reset</p>
+
+  <p class="demo__label">States</p>
+  <div class="demo__row">
+    <!-- Default (not selected) with chevron -->
+    <div class="chip chip--dropdown">
+      <span class="chip__text">Категория</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- Hovered -->
+    <div class="chip chip--dropdown chip--hovered">
+      <span class="chip__text">Статус</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- Selected with reset icon -->
+    <div class="chip chip--dropdown chip--selected">
+      <span class="chip__text">Оплачено</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- Selected hovered -->
+    <div class="chip chip--dropdown chip--selected chip--hovered">
+      <span class="chip__text">Рубли</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Left Accessory</p>
+  <div class="demo__row">
+    <div class="chip chip--dropdown">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H15M5 9H13M7 13H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Фильтр</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--dropdown chip--selected">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H15M5 9H13M7 13H11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">3 фильтра</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Type = Action
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type = Action</h2>
+  <p class="demo__section-subtitle">Brand-colored text in default state; selected has brand fill</p>
+
+  <p class="demo__label">States</p>
+  <div class="demo__row">
+    <div class="chip chip--action">
+      <span class="chip__text">Добавить</span>
+    </div>
+    <div class="chip chip--action chip--hovered">
+      <span class="chip__text">Hovered</span>
+    </div>
+    <div class="chip chip--action chip--selected">
+      <span class="chip__text">Активно</span>
+    </div>
+    <div class="chip chip--action chip--selected chip--hovered">
+      <span class="chip__text">Selected Hovered</span>
+    </div>
+  </div>
+
+  <p class="demo__label">Selected with Reset Icon</p>
+  <div class="demo__row">
+    <div class="chip chip--action chip--selected">
+      <span class="chip__text">Применено</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--action chip--selected chip--hovered">
+      <span class="chip__text">Удалить</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <p class="demo__label">With Left Accessory (Icon)</p>
+  <div class="demo__row">
+    <div class="chip chip--action">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 4V14M4 9H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Создать</span>
+    </div>
+    <div class="chip chip--action chip--selected">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 4V14M4 9H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Создано</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Practical Examples
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Practical Examples</h2>
+  <p class="demo__section-subtitle">Real-world usage patterns</p>
+
+  <p class="demo__label">Filter Bar (Dropdown chips)</p>
+  <div class="demo__dark-row">
+    <div class="chip chip--dropdown chip--selected">
+      <span class="chip__text">Все счета</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--dropdown">
+      <span class="chip__text">Период</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--dropdown">
+      <span class="chip__text">Сумма</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--dropdown">
+      <span class="chip__text">Валюта</span>
+      <span class="chip__chevron">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <br>
+
+  <p class="demo__label">Tab Bar (Tab chips with counters)</p>
+  <div class="demo__dark-row">
+    <div class="chip chip--tab chip--selected">
+      <span class="chip__text">Все</span>
+      <span class="chip__counter">24</span>
+    </div>
+    <div class="chip chip--tab">
+      <span class="chip__text">Входящие</span>
+      <span class="chip__counter">8</span>
+    </div>
+    <div class="chip chip--tab">
+      <span class="chip__text">Исходящие</span>
+      <span class="chip__counter">16</span>
+    </div>
+    <div class="chip chip--tab">
+      <span class="chip__text">Отклонённые</span>
+      <span class="chip__counter">0</span>
+    </div>
+  </div>
+
+  <br>
+
+  <p class="demo__label">Tags / Multi-select (Chip type)</p>
+  <div class="demo__dark-row">
+    <div class="chip chip--selected">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">Тинькофф</span>
+    </div>
+    <div class="chip chip--selected">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">Сбер</span>
+    </div>
+    <div class="chip">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">Альфа</span>
+    </div>
+    <div class="chip">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">ВТБ</span>
+    </div>
+    <div class="chip chip--disabled">
+      <div class="chip__left-accessory">
+        <div class="chip__logo"></div>
+      </div>
+      <span class="chip__text">Недоступно</span>
+    </div>
+  </div>
+
+  <br>
+
+  <p class="demo__label">Actions Row</p>
+  <div class="demo__dark-row">
+    <div class="chip chip--action">
+      <div class="chip__left-accessory">
+        <span class="chip__icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 4V14M4 9H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <span class="chip__text">Добавить тег</span>
+    </div>
+    <div class="chip chip--action chip--selected">
+      <span class="chip__text">Срочно</span>
+      <span class="chip__reset">
+        <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.667 1.667L8.333 8.333M8.333 1.667L1.667 8.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="chip chip--action chip--selected">
+      <span class="chip__text">Важно</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

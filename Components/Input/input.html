@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="input.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section {
+      margin-bottom: 48px;
+    }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .demo__item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 320px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Input</h1>
+
+<!-- ===================================================================
+     SECTION 1: States — Not Filled (placeholder visible)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Empty (placeholder)</h2>
+  <p class="demo__section-subtitle">Is Filled = False, showing placeholder text</p>
+
+  <div class="demo__row">
+
+    <!-- Default -->
+    <div class="demo__item">
+      <p class="demo__label">Default</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Название</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" placeholder="Введите значение">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hovered -->
+    <div class="demo__item">
+      <p class="demo__label">Hovered / Pressed</p>
+      <div class="input input--hovered">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Название</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" placeholder="Введите значение">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focused -->
+    <div class="demo__item">
+      <p class="demo__label">Focused</p>
+      <div class="input input--focused">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Название</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" placeholder="Введите значение">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: States — Filled
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">States — Filled</h2>
+  <p class="demo__section-subtitle">Is Filled = True, value text is primary color</p>
+
+  <div class="demo__row">
+
+    <!-- Default Filled -->
+    <div class="demo__item">
+      <p class="demo__label">Default (filled)</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Имя</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" value="Иван Петров">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focused Filled -->
+    <div class="demo__item">
+      <p class="demo__label">Focused (filled)</p>
+      <div class="input input--focused">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Имя</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" value="Иван Петров">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disabled Filled -->
+    <div class="demo__item">
+      <p class="demo__label">Disabled (filled)</p>
+      <div class="input input--disabled">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Имя</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" value="Иван Петров" disabled>
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Description
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Description</h2>
+  <p class="demo__section-subtitle">Helper text below the input with a thin divider</p>
+
+  <div class="demo__row">
+
+    <!-- Default + Description (empty) -->
+    <div class="demo__item">
+      <p class="demo__label">Default + Description (empty)</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Email</p>
+            </div>
+            <input class="input__value" type="email" placeholder="user@example.com">
+          </div>
+        </div>
+        <div class="input__description-block">
+          <hr class="input__divider input__divider--default">
+          <p class="input__description">Укажите рабочий email для уведомлений</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focused + Description (filled) -->
+    <div class="demo__item">
+      <p class="demo__label">Focused + Description (filled)</p>
+      <div class="input input--focused">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Email</p>
+            </div>
+            <input class="input__value" type="email" value="ivan@company.ru">
+          </div>
+        </div>
+        <div class="input__description-block">
+          <hr class="input__divider input__divider--default">
+          <p class="input__description">Укажите рабочий email для уведомлений</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disabled + Description -->
+    <div class="demo__item">
+      <p class="demo__label">Disabled + Description</p>
+      <div class="input input--disabled">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Email</p>
+            </div>
+            <input class="input__value" type="email" value="ivan@company.ru" disabled>
+          </div>
+        </div>
+        <div class="input__description-block">
+          <hr class="input__divider input__divider--default">
+          <p class="input__description">Укажите рабочий email для уведомлений</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Error State
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Has Error</h2>
+  <p class="demo__section-subtitle">Red divider (2px) and error text</p>
+
+  <div class="demo__row">
+
+    <!-- Default + Error (empty) -->
+    <div class="demo__item">
+      <p class="demo__label">Default + Error (empty)</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">ИНН</p>
+            </div>
+            <input class="input__value" type="text" placeholder="10 или 12 цифр">
+          </div>
+        </div>
+        <div class="input__error-block">
+          <hr class="input__divider input__divider--error">
+          <p class="input__error">Обязательное поле</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filled + Error -->
+    <div class="demo__item">
+      <p class="demo__label">Filled + Error</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">ИНН</p>
+            </div>
+            <input class="input__value" type="text" value="12345">
+          </div>
+        </div>
+        <div class="input__error-block">
+          <hr class="input__divider input__divider--error">
+          <p class="input__error">ИНН должен содержать 10 или 12 цифр</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focused + Error -->
+    <div class="demo__item">
+      <p class="demo__label">Focused + Error</p>
+      <div class="input input--focused">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">ИНН</p>
+            </div>
+            <input class="input__value" type="text" value="12345">
+          </div>
+        </div>
+        <div class="input__error-block">
+          <hr class="input__divider input__divider--error">
+          <p class="input__error">ИНН должен содержать 10 или 12 цифр</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Right Accessories
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Right Accessories</h2>
+  <p class="demo__section-subtitle">Avatar S, Icon 30, Icon 24, Spinner 24</p>
+
+  <div class="demo__row">
+
+    <!-- Avatar S -->
+    <div class="demo__item">
+      <p class="demo__label">Avatar S (34px)</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Получатель</p>
+            </div>
+            <input class="input__value" type="text" value="ООО «Точка»">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon 30 -->
+    <div class="demo__item">
+      <p class="demo__label">Icon 30</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Дата</p>
+            </div>
+            <input class="input__value" type="text" value="08.02.2026">
+          </div>
+          <div class="input__accessory">
+            <span class="input__icon input__icon--30">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="22" height="20" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M4 12h22M10 4v4M20 4v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon 24 -->
+    <div class="demo__item">
+      <p class="demo__label">Icon 24</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Поиск</p>
+            </div>
+            <input class="input__value" type="text" placeholder="Найти…">
+          </div>
+          <div class="input__accessory">
+            <span class="input__icon input__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spinner -->
+    <div class="demo__item">
+      <p class="demo__label">Spinner 24</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">БИК</p>
+            </div>
+            <input class="input__value" type="text" value="044525974">
+          </div>
+          <div class="input__accessory">
+            <div class="input__spinner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Without Optional Elements
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Minimal Variants</h2>
+  <p class="demo__section-subtitle">Without title, help icon, or accessory</p>
+
+  <div class="demo__row">
+
+    <!-- No title, no help, no accessory -->
+    <div class="demo__item">
+      <p class="demo__label">No Title, No Accessory</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <input class="input__value" type="text" placeholder="Комментарий к переводу">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title only (no help icon, no accessory) -->
+    <div class="demo__item">
+      <p class="demo__label">Title only (no help, no accessory)</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Сумма</p>
+            </div>
+            <input class="input__value" type="text" value="100 000,00 ₽">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title + Help Icon (no accessory) -->
+    <div class="demo__item">
+      <p class="demo__label">Title + Help Icon</p>
+      <div class="input">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Назначение платежа</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" placeholder="Оплата по договору №...">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Interactive Demo
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Interactive Demo</h2>
+  <p class="demo__section-subtitle">Click inputs to see focus state; type to fill</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Реквизиты получателя</p>
+      <div class="input" style="width: 100%;">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Наименование</p>
+              <span class="input__help-icon">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12.5v-.5M9 10c0-1.5 2-1.5 2-3a2 2 0 10-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <input class="input__value" type="text" placeholder="ООО, ИП или ФИО">
+          </div>
+          <div class="input__accessory">
+            <div class="input__avatar"></div>
+          </div>
+        </div>
+        <div class="input__description-block">
+          <hr class="input__divider input__divider--default">
+          <p class="input__description">Введите наименование организации или ФИО</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Счёт получателя</p>
+      <div class="input" style="width: 100%;">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">Расчётный счёт</p>
+            </div>
+            <input class="input__value" type="text" placeholder="40702810XXXXXXXXXX">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">С ошибкой</p>
+      <div class="input" style="width: 100%;">
+        <div class="input__content">
+          <div class="input__text">
+            <div class="input__title-row">
+              <p class="input__title">БИК</p>
+            </div>
+            <input class="input__value" type="text" value="123">
+          </div>
+        </div>
+        <div class="input__error-block">
+          <hr class="input__divider input__divider--error">
+          <p class="input__error">БИК должен содержать 9 цифр</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

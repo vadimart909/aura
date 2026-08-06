@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Bank Theme Night — auto-generated from tokens/Bank Theme/Night.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+[data-theme="night"] {
+
+  /* Badge */
+  --bank-badge-text-risk-high: #FC6667;
+  --bank-badge-text-risk-medium: #DAAE2F;
+  --bank-badge-text-risk-low: #7AC6B2;
+  --bank-badge-text-purple-bright: #D0BAF7;
+
+  /* Primitive */
+  --bank-primitive-border: rgba(174, 174, 174, 0.45);
+}

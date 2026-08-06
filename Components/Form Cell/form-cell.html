@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Cell — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="form-cell.css">
+
+  <style>
+    /* Demo page layout */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section {
+      margin-bottom: 48px;
+    }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .demo__item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0;
+    }
+
+    .demo__cell-container {
+      width: 335px;
+    }
+
+    .demo__group {
+      width: 335px;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Form Cell</h1>
+
+<!-- ===================================================================
+     SECTION 1: Type Variants — Single position
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type Variants</h2>
+  <p class="demo__section-subtitle">Switch, Checkbox, Radio — Position: Single</p>
+
+  <div class="demo__row">
+
+    <!-- Switch -->
+    <div class="demo__item">
+      <p class="demo__label">Type = Switch</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Уведомления</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkbox -->
+    <div class="demo__item">
+      <p class="demo__label">Type = Checkbox</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Согласие на обработку</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" checked>
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Radio -->
+    <div class="demo__item">
+      <p class="demo__label">Type = Radio</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Вариант А</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="radio">
+                <input class="radio__input" type="radio" name="demo-radio-single" checked>
+                <span class="radio__circle"></span>
+                <span class="radio__dot"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: Position Variants (grouped cells)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Position Variants</h2>
+  <p class="demo__section-subtitle">Single, Top, Middle, Bottom — Switch type</p>
+
+  <div class="demo__row">
+
+    <!-- Single -->
+    <div class="demo__item">
+      <p class="demo__label">Position = Single</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Единственный пункт</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top + Middle + Bottom Group -->
+    <div class="demo__item">
+      <p class="demo__label">Top + Middle + Bottom</p>
+      <div class="demo__group">
+        <div class="form-cell form-cell--top">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Первый пункт</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--middle">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Средний пункт</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox">
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--bottom">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Последний пункт</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Subtitle & Description
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Subtitle & Description</h2>
+  <p class="demo__section-subtitle">Optional text below / above the title</p>
+
+  <div class="demo__row">
+
+    <!-- Has Description = On -->
+    <div class="demo__item">
+      <p class="demo__label">Has Description = On</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Push-уведомления</p>
+              <p class="form-cell__description">Получать уведомления о событиях</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Has Subtitle = On -->
+    <div class="demo__item">
+      <p class="demo__label">Has Subtitle = On</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__subtitle">Настройки</p>
+              <p class="form-cell__title">Биометрия</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox">
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Has Subtitle + Description -->
+    <div class="demo__item">
+      <p class="demo__label">Subtitle + Description</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__subtitle">Категория</p>
+              <p class="form-cell__title">Автоматический перевод</p>
+              <p class="form-cell__description">Переводить средства ежемесячно</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Left Accessory
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Left Accessory</h2>
+  <p class="demo__section-subtitle">Avatar and Card Preview variants</p>
+
+  <div class="demo__row">
+
+    <!-- Avatar -->
+    <div class="demo__item">
+      <p class="demo__label">Left Accessory = Avatar</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__avatar">
+                <span class="form-cell__avatar-text">АА</span>
+              </div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__title">Счёт «Основной»</p>
+              <p class="form-cell__description">Автоплатёж каждый месяц</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" checked>
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Preview -->
+    <div class="demo__item">
+      <p class="demo__label">Left Accessory = Card Preview</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__card-preview"></div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__title">Карта *1234</p>
+              <p class="form-cell__description">Подписка на уведомления</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" checked>
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Error State
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Error State</h2>
+  <p class="demo__section-subtitle">Has Error = true</p>
+
+  <div class="demo__row">
+
+    <!-- Error on Switch -->
+    <div class="demo__item">
+      <p class="demo__label">Switch + Error</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Обязательное согласие</p>
+              <p class="form-cell__description">Необходимо для продолжения</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="switch">
+                <input class="switch__input" type="checkbox">
+                <span class="switch__track"></span>
+                <span class="switch__knob"></span>
+              </label>
+            </div>
+          </div>
+          <div class="form-cell__error">
+            <hr class="form-cell__error-divider">
+            <p class="form-cell__error-text">Необходимо включить для продолжения</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error on Checkbox -->
+    <div class="demo__item">
+      <p class="demo__label">Checkbox + Error</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Принимаю условия</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox">
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="form-cell__error">
+            <hr class="form-cell__error-divider">
+            <p class="form-cell__error-text">Обязательное поле</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Loading State
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Loading State</h2>
+  <p class="demo__section-subtitle">Is Loading = True — spinner replaces the control</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Is Loading = True</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Загрузка настроек</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <div class="spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Loading + Avatar + Description</p>
+      <div class="demo__cell-container">
+        <div class="form-cell">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__avatar">
+                <span class="form-cell__avatar-text">ТБ</span>
+              </div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__title">Счёт компании</p>
+              <p class="form-cell__description">Обновление статуса…</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <div class="spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Radio Group Example
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Radio Group</h2>
+  <p class="demo__section-subtitle">Top + Middle + Bottom with radio buttons</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Выбор периода</p>
+      <div class="demo__group">
+        <div class="form-cell form-cell--top">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Ежемесячно</p>
+              <p class="form-cell__description">Списание каждый месяц</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="radio">
+                <input class="radio__input" type="radio" name="demo-period" checked>
+                <span class="radio__circle"></span>
+                <span class="radio__dot"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--middle">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Ежеквартально</p>
+              <p class="form-cell__description">Списание раз в 3 месяца</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="radio">
+                <input class="radio__input" type="radio" name="demo-period">
+                <span class="radio__circle"></span>
+                <span class="radio__dot"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--bottom">
+          <div class="form-cell__content">
+            <div class="form-cell__text">
+              <p class="form-cell__title">Ежегодно</p>
+              <p class="form-cell__description">Списание раз в год</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="radio">
+                <input class="radio__input" type="radio" name="demo-period">
+                <span class="radio__circle"></span>
+                <span class="radio__dot"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkbox Group -->
+    <div class="demo__item">
+      <p class="demo__label">Выбор категорий</p>
+      <div class="demo__group">
+        <div class="form-cell form-cell--top">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__avatar">
+                <span class="form-cell__avatar-text">🏠</span>
+              </div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__subtitle">Категория</p>
+              <p class="form-cell__title">Жильё</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" checked>
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--middle">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__avatar">
+                <span class="form-cell__avatar-text">🚗</span>
+              </div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__subtitle">Категория</p>
+              <p class="form-cell__title">Транспорт</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox">
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-cell form-cell--bottom">
+          <div class="form-cell__content">
+            <div class="form-cell__left-accessory">
+              <div class="form-cell__avatar">
+                <span class="form-cell__avatar-text">🍔</span>
+              </div>
+            </div>
+            <div class="form-cell__text">
+              <p class="form-cell__subtitle">Категория</p>
+              <p class="form-cell__title">Еда и напитки</p>
+            </div>
+            <div class="form-cell__right-accessory">
+              <label class="checkbox">
+                <input class="checkbox__input" type="checkbox" checked>
+                <span class="checkbox__box"></span>
+                <span class="checkbox__check">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 7L5.5 10.5L12 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

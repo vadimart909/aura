@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Roundings Default — auto-generated from tokens/Roundings/Default.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+:root,
+[data-rounding="default"] {
+  --button-rounding-weak: 8px;
+  --button-rounding-strong: 12px;
+  --card-rounding: 12px;
+  --popup-rounding-strong: 12px;
+  --popup-rounding-weak: 8px;
+  --chip-rounding-strong: 12px;
+  --chip-rounding-weak: 8px;
+  --checkbox-rounding: 4px;
+  --form-rounding: 12px;
+  --form-rounding-weak: 8px;
+  --cell-rounding-weak: 8px;
+  --slider-rounding: 12px;
+  --tag-rounding-strong: 8px;
+  --tag-rounding: 6px;
+  --tag-rounding-weak: 4px;
+}

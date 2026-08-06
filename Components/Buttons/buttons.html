@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer / Buttons — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="buttons.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section { margin-bottom: 48px; }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__desktop-frame {
+      width: 800px;
+      border: 1px solid var(--primitive-neutral-2, #E1E1E1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .demo__mobile-frame {
+      width: 375px;
+      border: 1px solid var(--primitive-neutral-2, #E1E1E1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .demo__pair {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">Footer / Buttons</h1>
+
+<!-- ===================================================================
+     SECTION 1: Desktop — 1 Button
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">1 Button</h2>
+  <p class="demo__section-subtitle">Desktop and Adaptive layouts</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Продолжить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive (375px)</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Продолжить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: 1 Button with Description
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">1 Button + Description</h2>
+  <p class="demo__section-subtitle">Optional helper text above the button</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop + Description</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <p class="footer__description">Нажимая «Подтвердить», вы соглашаетесь с условиями</p>
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Подтвердить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive + Description</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <p class="footer__description">Нажимая «Подтвердить», вы соглашаетесь с условиями</p>
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Подтвердить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: 2 Buttons In Line
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">2 Buttons In Line</h2>
+  <p class="demo__section-subtitle">Secondary + Primary side by side</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <div class="footer__buttons">
+            <button class="footer__btn footer__btn--secondary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отменить</span>
+            </button>
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Сохранить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <div class="footer__buttons">
+            <button class="footer__btn footer__btn--secondary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отменить</span>
+            </button>
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Сохранить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: 2 Buttons In Column (adaptive only)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">2 Buttons In Column</h2>
+  <p class="demo__section-subtitle">Adaptive only — Primary on top, Secondary below</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Adaptive</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <div class="footer__buttons footer__buttons--column">
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отправить</span>
+            </button>
+            <button class="footer__btn footer__btn--secondary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Сохранить как черновик</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: 3 Buttons
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">3 Buttons</h2>
+  <p class="demo__section-subtitle">Icon Button + Secondary + Primary</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <div class="footer__buttons">
+            <button class="footer__icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+              <div class="footer__icon-btn-spinner"></div>
+            </button>
+            <button class="footer__btn footer__btn--secondary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Черновик</span>
+            </button>
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отправить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <div class="footer__buttons">
+            <button class="footer__icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+              <div class="footer__icon-btn-spinner"></div>
+            </button>
+            <button class="footer__btn footer__btn--secondary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Черновик</span>
+            </button>
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отправить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Stepper + Button
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Stepper + Button</h2>
+  <p class="demo__section-subtitle">Stepper control alongside a primary button</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop</p>
+      <div class="demo__desktop-frame">
+        <div class="footer footer--stepper">
+          <div class="footer__stepper">
+            <button class="footer__stepper-btn footer__stepper-btn--disabled">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="footer__stepper-value">00</span>
+            <button class="footer__stepper-btn">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">В корзину</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive footer--stepper">
+          <div class="footer__stepper">
+            <button class="footer__stepper-btn footer__stepper-btn--disabled">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="footer__stepper-value">00</span>
+            <button class="footer__stepper-btn">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button class="footer__btn footer__btn--primary" style="flex: 1; min-width: 0;">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">В корзину</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Page Control + Button
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Page Control + Button</h2>
+  <p class="demo__section-subtitle">Page indicator dots above a primary button</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Desktop</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <div class="footer__page-control">
+            <span class="footer__page-dot"></span>
+            <span class="footer__page-dot"></span>
+            <span class="footer__page-dot footer__page-dot--active"></span>
+          </div>
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Далее</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Adaptive</p>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive">
+          <div class="footer__page-control">
+            <span class="footer__page-dot"></span>
+            <span class="footer__page-dot"></span>
+            <span class="footer__page-dot footer__page-dot--active"></span>
+          </div>
+          <button class="footer__btn footer__btn--primary">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Далее</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 8: Button Loading States
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Loading States</h2>
+  <p class="demo__section-subtitle">Buttons with spinner replacing text</p>
+
+  <div class="demo__pair">
+
+    <div>
+      <p class="demo__label">Primary loading</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <button class="footer__btn footer__btn--primary footer__btn--loading">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">Загрузка</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="demo__label">Secondary loading + Primary normal</p>
+      <div class="demo__desktop-frame">
+        <div class="footer">
+          <div class="footer__buttons">
+            <button class="footer__btn footer__btn--secondary footer__btn--loading">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Отменить</span>
+            </button>
+            <button class="footer__btn footer__btn--primary">
+              <span class="footer__btn-spinner"></span>
+              <span class="footer__btn-text">Сохранить</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 9: Footer Icon Button States
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Footer Icon Button</h2>
+  <p class="demo__section-subtitle">States: Default, Hovered, Loading</p>
+
+  <div class="demo__pair">
+    <div style="display: flex; gap: 16px; align-items: flex-end;">
+
+      <div>
+        <p class="demo__label">Default</p>
+        <button class="footer__icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          <div class="footer__icon-btn-spinner"></div>
+        </button>
+      </div>
+
+      <div>
+        <p class="demo__label">Hovered (simulated)</p>
+        <button class="footer__icon-btn" style="background: var(--container-transparent-2, rgba(25,25,25,0.10));">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          <div class="footer__icon-btn-spinner"></div>
+        </button>
+      </div>
+
+      <div>
+        <p class="demo__label">Loading</p>
+        <button class="footer__icon-btn footer__icon-btn--loading">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          <div class="footer__icon-btn-spinner"></div>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 10: Interactive Stepper Demo
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Interactive Stepper</h2>
+  <p class="demo__section-subtitle">Click +/- to change quantity</p>
+
+  <div class="demo__pair">
+    <div>
+      <div class="demo__mobile-frame">
+        <div class="footer footer--adaptive footer--stepper">
+          <div class="footer__stepper">
+            <button class="footer__stepper-btn footer__stepper-btn--disabled" id="stepper-minus">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="footer__stepper-value" id="stepper-value">0</span>
+            <button class="footer__stepper-btn" id="stepper-plus">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button class="footer__btn footer__btn--primary" id="stepper-cart" style="flex: 1; min-width: 0;">
+            <span class="footer__btn-spinner"></span>
+            <span class="footer__btn-text">В корзину</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Interactive stepper
+  const minusBtn = document.getElementById('stepper-minus');
+  const plusBtn = document.getElementById('stepper-plus');
+  const valueEl = document.getElementById('stepper-value');
+  let count = 0;
+
+  function updateStepper() {
+    valueEl.textContent = count < 10 ? '0' + count : count;
+    if (count <= 0) {
+      minusBtn.classList.add('footer__stepper-btn--disabled');
+    } else {
+      minusBtn.classList.remove('footer__stepper-btn--disabled');
+    }
+  }
+
+  plusBtn.addEventListener('click', function() {
+    count++;
+    updateStepper();
+  });
+
+  minusBtn.addEventListener('click', function() {
+    if (count > 0) {
+      count--;
+      updateStepper();
+    }
+  });
+</script>
+
+</body>
+</html>

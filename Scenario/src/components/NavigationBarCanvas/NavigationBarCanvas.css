@@ -1,0 +1,189 @@
+/* ==========================================================================
+   NavigationBarCanvas — навигационная панель для canvas-режима сценария
+   Figma: .🛠 Navigation Bar Canvas (21864:270720)
+   ========================================================================== */
+
+.nav-bar-canvas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px 16px 96px;
+  gap: 16px;
+  background: var(--bg-default);
+  width: 100%;
+  min-height: 72px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Back button (absolutely positioned)
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__back-btn {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(25, 25, 25, 0.45);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.nav-bar-canvas__back-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.nav-bar-canvas__back-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Title block
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__title-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 2px 0;
+  width: 386px;
+  flex-shrink: 0;
+}
+
+.nav-bar-canvas__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Status badge
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-tight);
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.nav-bar-canvas__badge--grey {
+  background: var(--bg-neutral-3);
+  color: var(--primitive-secondary);
+}
+
+.nav-bar-canvas__badge--purple {
+  background: var(--bg-brand-2);
+  color: var(--primitive-brand-2);
+}
+
+.nav-bar-canvas__badge--yellow {
+  background: var(--bg-warning-2);
+  color: var(--primitive-warning-2);
+}
+
+.nav-bar-canvas__badge--red {
+  background: var(--bg-error-2);
+  color: var(--primitive-error);
+}
+
+/* --------------------------------------------------------------------------
+   Right part (absolutely positioned)
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__right {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Icon buttons (info, dots)
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(25, 25, 25, 0.05);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.nav-bar-canvas__icon-btn:hover {
+  background: rgba(25, 25, 25, 0.1);
+}
+
+.nav-bar-canvas__icon-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Brand action button (Play / Run)
+   -------------------------------------------------------------------------- */
+
+.nav-bar-canvas__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  background: var(--bg-brand);
+  color: var(--primitive-default);
+  border: none;
+  border-radius: var(--button-rounding-weak);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-bar-canvas__action-btn:hover {
+  background: var(--state-bg-brand-active);
+}
+
+.nav-bar-canvas__action-btn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}

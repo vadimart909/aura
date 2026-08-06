@@ -1,0 +1,278 @@
+{
+  "Font Size/7XL": {
+    "$type": "number",
+    "$value": 60,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/6XL": {
+    "$type": "number",
+    "$value": 48,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/5XL": {
+    "$type": "number",
+    "$value": 42,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/4XL": {
+    "$type": "number",
+    "$value": 36,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/3XL": {
+    "$type": "number",
+    "$value": 30,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/2XL": {
+    "$type": "number",
+    "$value": 24,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/XL": {
+    "$type": "number",
+    "$value": 20,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/L": {
+    "$type": "number",
+    "$value": 18,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/M": {
+    "$type": "number",
+    "$value": 16,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/S": {
+    "$type": "number",
+    "$value": 14,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/XS": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Size/XXS": {
+    "$type": "number",
+    "$value": 10,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_SIZE"]
+    }
+  },
+  "Font Weight/Regular": {
+    "$type": "number",
+    "$value": 400,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_WEIGHT"]
+    }
+  },
+  "Font Weight/Medium": {
+    "$type": "number",
+    "$value": 500,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_WEIGHT"]
+    }
+  },
+  "Font Weight/SemiBold": {
+    "$type": "number",
+    "$value": 600,
+    "$extensions": {
+      "com.figma.scopes": ["FONT_WEIGHT"]
+    }
+  },
+  "Line Height/7XL": {
+    "$type": "number",
+    "$value": 66,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/6XL": {
+    "$type": "number",
+    "$value": 54,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/5XL": {
+    "$type": "number",
+    "$value": 48,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/4XL": {
+    "$type": "number",
+    "$value": 40,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/3XL": {
+    "$type": "number",
+    "$value": 36,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/2XL": {
+    "$type": "number",
+    "$value": 30,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/XL": {
+    "$type": "number",
+    "$value": 26,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/L": {
+    "$type": "number",
+    "$value": 22,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/M": {
+    "$type": "number",
+    "$value": 20,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/S": {
+    "$type": "number",
+    "$value": 18,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/XS": {
+    "$type": "number",
+    "$value": 15,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Line Height/XXS": {
+    "$type": "number",
+    "$value": 13,
+    "$extensions": {
+      "com.figma.scopes": ["LINE_HEIGHT"]
+    }
+  },
+  "Letter Spacing/7XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/6XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/5XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/4XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/3XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/2XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/XL": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/L": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/M": {
+    "$type": "number",
+    "$value": 0.16,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/S": {
+    "$type": "number",
+    "$value": 0.14,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/XS": {
+    "$type": "number",
+    "$value": 0.12,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "Letter Spacing/XXS": {
+    "$type": "number",
+    "$value": 0.1,
+    "$extensions": {
+      "com.figma.scopes": ["LETTER_SPACING"]
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Default"
+  }
+}

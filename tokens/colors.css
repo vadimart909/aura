@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Color Tokens — auto-generated from tokens/Colors.json
+   Do not edit manually
+   ========================================================================== */
+
+:root {
+
+  /* ========================================================================
+     Brand
+     ======================================================================== */
+
+  /* Brand / Purple */
+  --brand-purple-055: #7F42E1;
+  --brand-purple-060: #915DE6;
+  --brand-purple-070: #A57BEC;
+  --brand-purple-075: #BA9AF1;
+  --brand-purple-080: #D0BAF7;
+  --brand-purple-090: #E7DBFD;
+  --brand-purple-095: #F5F0FF;
+
+  /* Brand / Amaranth */
+  --brand-amaranth-055: #A32881;
+  --brand-amaranth-060: #B44292;
+  --brand-amaranth-070: #C460A5;
+  --brand-amaranth-075: #D481B9;
+  --brand-amaranth-080: #E4A7D0;
+  --brand-amaranth-090: #F6D1E9;
+  --brand-amaranth-095: #FCE8F5;
+
+  /* Brand / Teal */
+  --brand-teal-055: #1D6B77;
+  --brand-teal-060: #348490;
+  --brand-teal-070: #529DA9;
+  --brand-teal-075: #75B7C1;
+  --brand-teal-080: #9FD2DA;
+  --brand-teal-090: #CDECF1;
+  --brand-teal-095: #E6F7FA;
+
+  /* Brand / Herbal */
+  --brand-herbal-055: #008749;
+  --brand-herbal-060: #1B9D5F;
+  --brand-herbal-070: #3DB279;
+  --brand-herbal-075: #66C797;
+  --brand-herbal-080: #96DDB9;
+  --brand-herbal-090: #CCF1DE;
+  --brand-herbal-095: #E6FAF0;
+
+  /* Brand / Orange */
+  --brand-orange-055: #D74611;
+  --brand-orange-060: #DD6034;
+  --brand-orange-070: #E47D5A;
+  --brand-orange-075: #EC9B81;
+  --brand-orange-080: #F3BCAB;
+  --brand-orange-090: #F9DED6;
+  --brand-orange-095: #FCEFEB;
+
+  /* ========================================================================
+     Product Bright
+     ======================================================================== */
+
+  /* Product Bright / Purple */
+  --product-bright-purple-055: #7945EB;
+  --product-bright-purple-060: #835DE1;
+  --product-bright-purple-070: #9B7EF1;
+  --product-bright-purple-075: #B39DF7;
+  --product-bright-purple-080: #CABEF3;
+  --product-bright-purple-085: #D6CEF3;
+  --product-bright-purple-090: #E2DDF6;
+  --product-bright-purple-095: #EFEDF8;
+  --product-bright-purple-097: #F6F3FF;
+
+  /* Product Bright / Red */
+  --product-bright-red-055: #BB4343;
+  --product-bright-red-060: #D84D4D;
+  --product-bright-red-070: #FC6667;
+  --product-bright-red-075: #F98E88;
+  --product-bright-red-080: #FBB2AB;
+  --product-bright-red-085: #FFC3BE;
+  --product-bright-red-090: #FCD7D4;
+  --product-bright-red-095: #F9EBEA;
+  --product-bright-red-097: #FCF3F2;
+
+  /* Product Bright / Yellow */
+  --product-bright-yellow-055: #8A6901;
+  --product-bright-yellow-060: #9A7811;
+  --product-bright-yellow-070: #BE960F;
+  --product-bright-yellow-075: #DAAE2F;
+  --product-bright-yellow-080: #F0C555;
+  --product-bright-yellow-085: #FAD370;
+  --product-bright-yellow-090: #FDE2A2;
+  --product-bright-yellow-095: #FBEFD2;
+  --product-bright-yellow-097: #FCF5E3;
+
+  /* Product Bright / Green */
+  --product-bright-green-055: #308270;
+  --product-bright-green-060: #3F9180;
+  --product-bright-green-070: #5CAD9A;
+  --product-bright-green-075: #7AC6B2;
+  --product-bright-green-080: #A5D7CA;
+  --product-bright-green-085: #B5E3D7;
+  --product-bright-green-090: #C9EEE3;
+  --product-bright-green-095: #DDF8EF;
+  --product-bright-green-097: #E8FAF5;
+
+  /* ========================================================================
+     Product Dim
+     ======================================================================== */
+
+  /* Product Dim / Purple */
+  --product-dim-purple-035: #3B364F;
+  --product-dim-purple-045: #534B79;
+  --product-dim-purple-055: #6C5E97;
+  --product-dim-purple-070: #978DBE;
+
+  /* Product Dim / Red */
+  --product-dim-red-035: #542F2C;
+  --product-dim-red-045: #704542;
+  --product-dim-red-055: #925652;
+  --product-dim-red-070: #B88783;
+
+  /* Product Dim / Yellow */
+  --product-dim-yellow-035: #443920;
+  --product-dim-yellow-045: #5F5135;
+  --product-dim-yellow-055: #786741;
+  --product-dim-yellow-070: #AB925C;
+
+  /* Product Dim / Green */
+  --product-dim-green-035: #2B403B;
+  --product-dim-green-045: #385E55;
+  --product-dim-green-055: #4E756B;
+  --product-dim-green-070: #80A098;
+
+  /* ========================================================================
+     Neutral
+     ======================================================================== */
+
+  --neutral-000: #000000;
+  --neutral-020: #191919;
+  --neutral-025: #262626;
+  --neutral-030: #303030;
+  --neutral-035: #3B3B3B;
+  --neutral-040: #474747;
+  --neutral-045: #525252;
+  --neutral-050: #5E5E5E;
+  --neutral-055: #676767;
+  --neutral-060: #777777;
+  --neutral-070: #949494;
+  --neutral-075: #AEAEAE;
+  --neutral-080: #C8C8C8;
+  --neutral-085: #D4D4D4;
+  --neutral-090: #E1E1E1;
+  --neutral-095: #EEEEEE;
+  --neutral-096: #F4F4F4;
+  --neutral-097: #F6F6F6;
+  --neutral-098: #F9F9F9;
+  --neutral-099: #FCFCFC;
+  --neutral-100: #FFFFFF;
+
+  /* ========================================================================
+     Category
+     ======================================================================== */
+
+  /* Category / Sand */
+  --category-sand-060: #AE653F;
+  --category-sand-075: #DE9C7E;
+
+  /* Category / Coral */
+  --category-coral-060: #B65B5E;
+  --category-coral-075: #E59594;
+
+  /* Category / Flamingo */
+  --category-flamingo-060: #AF5692;
+  --category-flamingo-075: #D796C1;
+
+  /* Category / Orchid */
+  --category-orchid-060: #9C58BC;
+  --category-orchid-075: #C799DF;
+
+  /* Category / Amethyst */
+  --category-amethyst-060: #895ECE;
+  --category-amethyst-075: #B79FE9;
+
+  /* Category / Lavender */
+  --category-lavender-060: #716AD1;
+  --category-lavender-075: #A8A3F1;
+
+  /* Category / Indigo */
+  --category-indigo-060: #5C79B6;
+  --category-indigo-075: #95AEE2;
+
+  /* Category / Sky */
+  --category-sky-060: #4A86A1;
+  --category-sky-075: #82BAD4;
+
+  /* Category / Mint */
+  --category-mint-060: #4D8989;
+  --category-mint-075: #82BEBE;
+
+  /* Category / Emerald */
+  --category-emerald-060: #5C8C52;
+  --category-emerald-075: #91C089;
+
+  /* ========================================================================
+     Tech
+     ======================================================================== */
+
+  --tech-component: #9747FF;
+
+  /* ========================================================================
+     Alpha
+     ======================================================================== */
+
+  /* Alpha / Neutral 020 */
+  --alpha-neutral-020-005: rgba(25, 25, 25, 0.05);
+  --alpha-neutral-020-010: rgba(25, 25, 25, 0.10);
+  --alpha-neutral-020-015: rgba(25, 25, 25, 0.15);
+  --alpha-neutral-020-020: rgba(25, 25, 25, 0.20);
+  --alpha-neutral-020-025: rgba(25, 25, 25, 0.25);
+  --alpha-neutral-020-030: rgba(25, 25, 25, 0.30);
+  --alpha-neutral-020-035: rgba(25, 25, 25, 0.35);
+  --alpha-neutral-020-040: rgba(25, 25, 25, 0.40);
+  --alpha-neutral-020-045: rgba(25, 25, 25, 0.45);
+  --alpha-neutral-020-050: rgba(25, 25, 25, 0.50);
+  --alpha-neutral-020-055: rgba(25, 25, 25, 0.55);
+  --alpha-neutral-020-060: rgba(25, 25, 25, 0.60);
+  --alpha-neutral-020-065: rgba(25, 25, 25, 0.65);
+  --alpha-neutral-020-070: rgba(25, 25, 25, 0.70);
+  --alpha-neutral-020-075: rgba(25, 25, 25, 0.75);
+  --alpha-neutral-020-080: rgba(25, 25, 25, 0.80);
+  --alpha-neutral-020-085: rgba(25, 25, 25, 0.85);
+  --alpha-neutral-020-090: rgba(25, 25, 25, 0.90);
+
+  /* Alpha / Neutral 100 */
+  --alpha-neutral-100-005: rgba(255, 255, 255, 0.05);
+  --alpha-neutral-100-010: rgba(255, 255, 255, 0.10);
+  --alpha-neutral-100-015: rgba(255, 255, 255, 0.15);
+  --alpha-neutral-100-020: rgba(255, 255, 255, 0.20);
+  --alpha-neutral-100-025: rgba(255, 255, 255, 0.25);
+  --alpha-neutral-100-030: rgba(255, 255, 255, 0.30);
+  --alpha-neutral-100-035: rgba(255, 255, 255, 0.35);
+  --alpha-neutral-100-040: rgba(255, 255, 255, 0.40);
+  --alpha-neutral-100-045: rgba(255, 255, 255, 0.45);
+  --alpha-neutral-100-050: rgba(255, 255, 255, 0.50);
+  --alpha-neutral-100-055: rgba(255, 255, 255, 0.55);
+  --alpha-neutral-100-060: rgba(255, 255, 255, 0.60);
+  --alpha-neutral-100-065: rgba(255, 255, 255, 0.65);
+  --alpha-neutral-100-070: rgba(255, 255, 255, 0.70);
+  --alpha-neutral-100-075: rgba(255, 255, 255, 0.75);
+  --alpha-neutral-100-080: rgba(255, 255, 255, 0.80);
+  --alpha-neutral-100-085: rgba(255, 255, 255, 0.85);
+  --alpha-neutral-100-090: rgba(255, 255, 255, 0.90);
+}

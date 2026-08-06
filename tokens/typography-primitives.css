@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Typography Primitives — auto-generated from tokens/Typography/Primitives.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+:root {
+  /* Font families */
+  --font-family-primary: 'TT Norms Tochka Extended', sans-serif;
+  --font-family-script:  'Tochka Script', cursive;
+
+  /* Font sizes */
+  --font-size-7xl: 60px;
+  --font-size-6xl: 48px;
+  --font-size-5xl: 42px;
+  --font-size-4xl: 36px;
+  --font-size-3xl: 30px;
+  --font-size-2xl: 24px;
+  --font-size-xl:  20px;
+  --font-size-l:   18px;
+  --font-size-m:   16px;
+  --font-size-s:   14px;
+  --font-size-xs:  12px;
+  --font-size-xxs: 10px;
+
+  /* Font weights */
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+
+  /* Line heights */
+  --line-height-7xl: 66px;
+  --line-height-6xl: 54px;
+  --line-height-5xl: 48px;
+  --line-height-4xl: 40px;
+  --line-height-3xl: 36px;
+  --line-height-2xl: 30px;
+  --line-height-xl:  26px;
+  --line-height-l:   22px;
+  --line-height-m:   20px;
+  --line-height-s:   18px;
+  --line-height-xs:  15px;
+  --line-height-xxs: 13px;
+
+  /* Letter spacing */
+  --letter-spacing-7xl: 0px;
+  --letter-spacing-6xl: 0px;
+  --letter-spacing-5xl: 0px;
+  --letter-spacing-4xl: 0px;
+  --letter-spacing-3xl: 0px;
+  --letter-spacing-2xl: 0px;
+  --letter-spacing-xl:  0px;
+  --letter-spacing-l:   0px;
+  --letter-spacing-m:   0.16px;
+  --letter-spacing-s:   0.14px;
+  --letter-spacing-xs:  0.12px;
+  --letter-spacing-xxs: 0.1px;
+}

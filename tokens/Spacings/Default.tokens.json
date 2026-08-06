@@ -1,0 +1,225 @@
+{
+  "Spacing 0,5x": {
+    "$type": "number",
+    "$value": 2,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:e15b033d2960cecd62a9638ee89ec0528f0d8c3c/597:0",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 1x": {
+    "$type": "number",
+    "$value": 4,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:8a9c02b47e33819de0fa93573e07cd97c9d25a15/597:2",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 2x": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:4acb2e7783f36bee2154b20535fe22354d965289/597:3",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 3x": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:307c4ce4c920a0d6f82eee70858c4f659e9f72ce/597:4",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 4x": {
+    "$type": "number",
+    "$value": 16,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:a5d752e372106481825a05b9aa2b38d35c05e4ce/597:5",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 5x": {
+    "$type": "number",
+    "$value": 20,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:6c75fa529500cbc459c9bbf23e7c93b26015ae35/597:6",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 6x": {
+    "$type": "number",
+    "$value": 24,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2d69df8445b4787cdc53df3b70942897755e3f52/597:7",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 8x": {
+    "$type": "number",
+    "$value": 32,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:db049a1e7622ede1d7086f301572f054ba30506c/597:8",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 10x": {
+    "$type": "number",
+    "$value": 40,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:7ab4a6cbda794872619787a420c31213bf38b4fb/597:9",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 12x": {
+    "$type": "number",
+    "$value": 48,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:6c657db8127a73464cfa8f9bfddec68e93db5b54/597:10",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 14x": {
+    "$type": "number",
+    "$value": 56,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:9becc2dc9338ae4ba68a672f9494c0414a082773/597:11",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 16x": {
+    "$type": "number",
+    "$value": 64,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:c4507d3dba8697d4cd6b502f9bc9c2fbf4b3a6f9/597:12",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 20x": {
+    "$type": "number",
+    "$value": 80,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:8f3698993ac71782b0e91b8f02148bee7f6a1644/597:13",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 24x": {
+    "$type": "number",
+    "$value": 96,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:0bb156dd596bbfa403b50479f028fa9d14a6a7dd/597:14",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 30x": {
+    "$type": "number",
+    "$value": 120,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:dd69bc04c089d4a7a1fa16f9787544424659423e/597:15",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 40x": {
+    "$type": "number",
+    "$value": 160,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:06981955d0cbefc36978cb3d8dd9be5ac745b3e7/597:16",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 1,5x": {
+    "$type": "number",
+    "$value": 6,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:cbc35e1af56819730df477b9896f60179b301a4c/2961:1",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 2,5x": {
+    "$type": "number",
+    "$value": 10,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:94e5ef0a11fa1acaf58a198805f188daeb367bfd/2961:3",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 3,5x": {
+    "$type": "number",
+    "$value": 14,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:4057e607307c4e798e9b9258d87e5ade81286287/2961:5",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "Spacing 4,5x": {
+    "$type": "number",
+    "$value": 18,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:47c20b1d21392b17a2ecca6dc85e4ce528fe37ec/2961:7",
+      "com.figma.scopes": [
+        "GAP"
+      ],
+      "com.figma.isOverride": true
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Default"
+  }
+}

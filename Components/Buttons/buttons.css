@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Footer / Buttons Component
+   Based on Figma: Bank 02 UI Kit / Footer (node 62040:68196)
+   Uses design tokens from tokens/*.css
+
+   Variant axes:
+     is Adaptive:     False (desktop 1440) | True (mobile 375)
+     Type:            1 Button | 2 Buttons In Line | 2 Buttons In Column |
+                      3 Buttons | Stepper + Button | Page Control + Button
+     Has Description: boolean
+
+   Sub-components:
+     Footer Button (primary / secondary)
+     Footer Icon Button
+     Stepper
+     Page Control (Page Indicator)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-default, #FFFFFF);
+  padding: 20px 0;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+}
+
+/* Adaptive (mobile) */
+.footer--adaptive {
+  padding: 10px 20px;
+}
+
+/* Stepper + Button uses horizontal layout */
+.footer--stepper {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.footer--adaptive.footer--stepper {
+  justify-content: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   Description (optional, hidden by default)
+   -------------------------------------------------------------------------- */
+
+.footer__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+  text-align: center;
+}
+
+.footer--adaptive .footer__description {
+  text-align: left;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons Row / Column
+   -------------------------------------------------------------------------- */
+
+.footer__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.footer__buttons--column {
+  flex-direction: column;
+}
+
+.footer--adaptive .footer__buttons {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Button — Base
+   -------------------------------------------------------------------------- */
+
+.footer__btn {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  border-radius: var(--rounding-2-5x, 10px);
+  border: none;
+  padding: 0 24px;
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-size: var(--font-size-l, 18px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-l, 22px);
+  letter-spacing: 0px;
+  white-space: nowrap;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  text-decoration: none;
+}
+
+/* Desktop buttons have fixed width */
+.footer__btn {
+  min-width: 335px;
+}
+
+/* When in button row, let them share space equally */
+.footer__buttons .footer__btn {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Adaptive stretches to full width for single button */
+.footer--adaptive > .footer__btn {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Adaptive column buttons stretch */
+.footer__buttons--column .footer__btn {
+  width: 100%;
+}
+
+/* Stepper layout: button fills remaining space */
+.footer--stepper .footer__btn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Button — Primary (Brand)
+   -------------------------------------------------------------------------- */
+
+.footer__btn--primary {
+  background: var(--primitive-brand, #835DE1);
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.footer__btn--primary:hover {
+  opacity: 0.9;
+}
+
+.footer__btn--primary:active {
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Button — Secondary
+   -------------------------------------------------------------------------- */
+
+.footer__btn--secondary {
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  color: var(--primitive-primary, #191919);
+}
+
+.footer__btn--secondary:hover {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.footer__btn--secondary:active {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+/* --------------------------------------------------------------------------
+   Button — Loading State
+   -------------------------------------------------------------------------- */
+
+.footer__btn--loading .footer__btn-text {
+  display: none;
+}
+
+.footer__btn-spinner {
+  display: none;
+}
+
+.footer__btn--loading .footer__btn-spinner {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--primitive-default, #FFFFFF);
+  border-radius: 50%;
+  animation: footer-spin 0.8s linear infinite;
+}
+
+.footer__btn--secondary.footer__btn--loading .footer__btn-spinner {
+  border-color: var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-brand, #835DE1);
+}
+
+@keyframes footer-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Footer Icon Button
+   -------------------------------------------------------------------------- */
+
+.footer__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 50px;
+  padding: 13px 15px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.footer__icon-btn:hover {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.footer__icon-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary, #191919);
+}
+
+/* Icon button — loading */
+.footer__icon-btn--loading svg {
+  display: none;
+}
+
+.footer__icon-btn-spinner {
+  display: none;
+}
+
+.footer__icon-btn--loading .footer__icon-btn-spinner {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-primary, #191919);
+  border-radius: 50%;
+  animation: footer-spin 0.8s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Stepper
+   -------------------------------------------------------------------------- */
+
+.footer__stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.footer__stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 50px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.footer__stepper-btn:hover {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.footer__stepper-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary, #191919);
+}
+
+.footer__stepper-btn--disabled {
+  pointer-events: none;
+}
+
+.footer__stepper-btn--disabled svg {
+  opacity: 0.5;
+}
+
+.footer__stepper-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  min-width: 23px;
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+}
+
+/* --------------------------------------------------------------------------
+   Page Control (Page Indicator)
+   -------------------------------------------------------------------------- */
+
+.footer__page-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.footer__page-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primitive-neutral-2, #E1E1E1);
+}
+
+.footer__page-dot--active {
+  background: var(--primitive-brand, #835DE1);
+}

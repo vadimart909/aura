@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="day">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Bar — Bank 02 UI Kit</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="tokens/colors.css">
+  <link rel="stylesheet" href="tokens/typography-primitives.css">
+  <link rel="stylesheet" href="tokens/theme-day.css">
+  <link rel="stylesheet" href="tokens/spacings-default.css">
+  <link rel="stylesheet" href="tokens/shadows.css">
+  <link rel="stylesheet" href="tokens/roundings-default.css">
+  <link rel="stylesheet" href="tokens/roundings-base.css">
+
+  <!-- Component Styles -->
+  <link rel="stylesheet" href="navigation-bar.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </style>
+</head>
+<body>
+<div class="showcase">
+
+  <h1 class="showcase__title">Navigation Bar</h1>
+
+  <!-- ====================================================================
+       SECTION: Main Variants
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Main Variants</h2>
+    <div class="showcase__row">
+
+      <!-- Variant 1: Desktop Navigation -->
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Navigation, Is Adaptive=False</span>
+        <div class="navbar">
+          <div class="navbar__button-area">
+            <button class="navbar-btn" aria-label="Back">
+              <span class="navbar-btn__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div class="navbar__title-area">
+            <a class="root-link" href="#">
+              <span class="root-link__title">Text S</span>
+              <span class="root-link__arrow">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="#C8C8C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+            <div class="navbar-title">
+              <h2 class="navbar-title__text">Text 2XL</h2>
+            </div>
+          </div>
+          <div class="navbar__items">
+            <div class="nav-item"><span class="nav-item__text">Text S</span></div>
+            <div class="nav-item"><span class="nav-item__text">Text S</span></div>
+            <div class="nav-item"><span class="nav-item__text">Text S</span></div>
+            <div class="nav-item"><span class="nav-item__text">Text S</span></div>
+            <div class="nav-item"><span class="nav-item__text">Text S</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variant 2: Desktop Progress -->
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Progress, Is Adaptive=False</span>
+        <div class="navbar">
+          <div class="navbar__button-area">
+            <button class="navbar-btn" aria-label="Back">
+              <span class="navbar-btn__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div class="navbar__title-area">
+            <a class="root-link" href="#">
+              <span class="root-link__title">Text S</span>
+              <span class="root-link__arrow">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="#C8C8C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+            <div class="navbar-title">
+              <h2 class="navbar-title__text">Text 2XL</h2>
+            </div>
+          </div>
+          <div class="navbar__items">
+            <div class="progress-item">
+              <div class="progress-item__indicator"></div>
+              <span class="progress-item__text">Text M</span>
+            </div>
+            <div class="progress-item progress-item--disabled">
+              <div class="progress-item__indicator"></div>
+              <span class="progress-item__text">Text M</span>
+            </div>
+            <div class="progress-item progress-item--disabled">
+              <div class="progress-item__indicator"></div>
+              <span class="progress-item__text">Text M</span>
+            </div>
+            <div class="progress-item progress-item--disabled">
+              <div class="progress-item__indicator"></div>
+              <span class="progress-item__text">Text M</span>
+            </div>
+            <div class="progress-item progress-item--disabled">
+              <div class="progress-item__indicator"></div>
+              <span class="progress-item__text">Text M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variant 3: Adaptive Navigation -->
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Navigation, Is Adaptive=True</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title">
+              <span class="adaptive-title__text">Text M</span>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="accessory-icon" aria-label="Action">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Navbar Button States
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Navbar Button</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">is Hovered=False (Normal)</span>
+        <div class="subcomp-box">
+          <button class="navbar-btn" aria-label="Back">
+            <span class="navbar-btn__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">is Hovered=True</span>
+        <div class="subcomp-box">
+          <button class="navbar-btn navbar-btn--hovered" aria-label="Back">
+            <span class="navbar-btn__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Navbar Title Variants
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Navbar Title</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Title</span>
+        <div class="subcomp-box" style="width: 280px;">
+          <div class="navbar-title">
+            <h2 class="navbar-title__text">Text 2XL</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Title + Description</span>
+        <div class="subcomp-box" style="width: 280px;">
+          <div class="navbar-title">
+            <h2 class="navbar-title__text">Text 2XL</h2>
+            <p class="navbar-title__description">Text XS</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Image (Logo)</span>
+        <div class="subcomp-box" style="width: 280px;">
+          <div class="navbar-title navbar-title--image">
+            <!-- Placeholder for logo image -->
+            <svg class="navbar-title__logo" width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="44" rx="4" fill="#F4F4F4"/>
+              <text x="80" y="26" text-anchor="middle" font-size="12" fill="#949494" font-family="sans-serif">Logo Placeholder</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Root Link States
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Root Link</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Normal</span>
+        <div class="subcomp-box">
+          <a class="root-link" href="#">
+            <span class="root-link__title">Text S</span>
+            <span class="root-link__arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="#C8C8C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Hovered</span>
+        <div class="subcomp-box">
+          <a class="root-link root-link--hovered" href="#">
+            <span class="root-link__title">Text S</span>
+            <span class="root-link__arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="#C8C8C8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Skeleton</span>
+        <div class="subcomp-box" style="width: 200px;">
+          <div class="root-link root-link--skeleton">
+            <div class="skeleton-loaf skeleton-loaf--m" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Navigation Item States
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Navigation Item</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Default</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="nav-item">
+            <span class="nav-item__text">Text S</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Hovered</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="nav-item nav-item--hovered">
+            <span class="nav-item__text">Text S</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Skeleton</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="nav-item nav-item--skeleton">
+            <div class="skeleton-loaf skeleton-loaf--s"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Progress Item States
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Progress Item</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Default (Active)</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="progress-item">
+            <div class="progress-item__indicator"></div>
+            <span class="progress-item__text">Text M</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Disabled</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="progress-item progress-item--disabled">
+            <div class="progress-item__indicator"></div>
+            <span class="progress-item__text">Text M</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Hovered</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="progress-item progress-item--hovered">
+            <div class="progress-item__indicator"></div>
+            <span class="progress-item__text">Text M</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">State=Skeleton</span>
+        <div class="subcomp-box" style="width: 181px;">
+          <div class="progress-item progress-item--skeleton">
+            <div class="progress-item__indicator"></div>
+            <div class="skeleton-loaf skeleton-loaf--m"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Title Variants (Adaptive)
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Title (Adaptive Center)</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Title</span>
+        <div class="subcomp-box" style="width: 267px;">
+          <div class="adaptive-title">
+            <span class="adaptive-title__text">Text M</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Title + Description</span>
+        <div class="subcomp-box" style="width: 267px;">
+          <div class="adaptive-title adaptive-title--with-desc">
+            <span class="adaptive-title__text">Text M</span>
+            <span class="adaptive-title__desc">Text XS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Image</span>
+        <div class="subcomp-box" style="width: 267px;">
+          <div class="adaptive-title">
+            <svg width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="44" rx="4" fill="#F4F4F4"/>
+              <text x="80" y="26" text-anchor="middle" font-size="12" fill="#949494" font-family="sans-serif">Logo Placeholder</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Percent Progress</span>
+        <div class="subcomp-box" style="width: 375px;">
+          <div class="adaptive-title adaptive-title--progress">
+            <div class="percent-progress">
+              <div class="percent-progress__fill" style="width: 80%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Step Progress</span>
+        <div class="subcomp-box" style="width: 375px;">
+          <div class="adaptive-title adaptive-title--progress">
+            <div class="step-progress">
+              <div class="step-progress__step step-progress__step--active"></div>
+              <div class="step-progress__step"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Right Accessories Variants
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Right Accessories</h2>
+    <div class="showcase__row">
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Icon</span>
+        <div class="subcomp-box">
+          <div class="right-accessories">
+            <button class="accessory-icon" aria-label="Action">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Icon + Icon</span>
+        <div class="subcomp-box">
+          <div class="right-accessories" style="gap: 20px;">
+            <button class="accessory-icon" aria-label="Action 1">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+            <button class="accessory-icon" aria-label="Action 2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Icon 24 + Counter</span>
+        <div class="subcomp-box">
+          <div class="right-accessories right-accessories--with-counter">
+            <div class="counter">
+              <span class="counter__text">0</span>
+            </div>
+            <button class="accessory-icon" aria-label="Action">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase__item">
+        <span class="showcase__label">Type=Action</span>
+        <div class="subcomp-box">
+          <div class="right-accessories">
+            <button class="right-accessories__action">Text M</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SECTION: Assembled Adaptive Variants
+       ==================================================================== -->
+
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Adaptive Navigation — Assembled Examples</h2>
+    <div class="showcase__row" style="flex-direction: column;">
+
+      <!-- Adaptive with Title -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — Title</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title">
+              <span class="adaptive-title__text">Text M</span>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="accessory-icon" aria-label="Action">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive with Title + Description -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — Title + Description</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title adaptive-title--with-desc">
+              <span class="adaptive-title__text">Text M</span>
+              <span class="adaptive-title__desc">Text XS</span>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="accessory-icon" aria-label="Action 1">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+            <button class="accessory-icon" aria-label="Action 2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive with Percent Progress -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — Percent Progress</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title adaptive-title--progress">
+              <div class="percent-progress">
+                <div class="percent-progress__fill" style="width: 80%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="accessory-icon" aria-label="Close">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive with Step Progress -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — Step Progress</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title adaptive-title--progress">
+              <div class="step-progress">
+                <div class="step-progress__step step-progress__step--active"></div>
+                <div class="step-progress__step"></div>
+              </div>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="accessory-icon" aria-label="Close">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive with Action text -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — with Action text</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title">
+              <span class="adaptive-title__text">Text M</span>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <button class="right-accessories__action">Text M</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive with Counter + Icon -->
+      <div class="showcase__item">
+        <span class="showcase__label">Adaptive — Icon + Counter</span>
+        <div class="navbar navbar--adaptive">
+          <div class="navbar__left">
+            <button class="accessory-icon" aria-label="Back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 6L8 12L14 18" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="navbar__center">
+            <div class="adaptive-title">
+              <span class="adaptive-title__text">Text M</span>
+            </div>
+          </div>
+          <div class="navbar__right">
+            <div class="counter">
+              <span class="counter__text">0</span>
+            </div>
+            <button class="accessory-icon" aria-label="Action">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="9" stroke="#191919" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

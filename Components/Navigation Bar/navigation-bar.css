@@ -1,0 +1,545 @@
+/* ==========================================================================
+   Navigation Bar Component Styles
+   Uses design tokens from tokens/*.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Showcase / Page Layout
+   -------------------------------------------------------------------------- */
+
+.showcase {
+  padding: 60px;
+  background: var(--bg-default, #FFFFFF);
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  color: var(--primitive-primary, #191919);
+}
+
+.showcase__title {
+  font-size: var(--font-size-7xl, 60px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-7xl, 66px);
+  margin: 0 0 60px;
+}
+
+.showcase__section {
+  margin-bottom: 80px;
+}
+
+.showcase__section-title {
+  font-size: var(--font-size-2xl, 24px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-2xl, 30px);
+  margin: 0 0 32px;
+}
+
+.showcase__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.showcase__item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase__label {
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-xs, 15px);
+  color: var(--primitive-secondary, #676767);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Bar — Desktop (280px wide, column)
+   -------------------------------------------------------------------------- */
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 280px;
+  background: var(--bg-default, #FFFFFF);
+}
+
+/* --- Button Area --- */
+
+.navbar__button-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 20px 10px;
+}
+
+/* --- Navbar Button (back button) --- */
+
+.navbar-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--translucent-primitive-neutral-4, rgba(25, 25, 25, 0.45));
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.navbar-btn:hover,
+.navbar-btn--hovered {
+  border-color: var(--translucent-primitive-neutral-3, rgba(25, 25, 25, 0.25));
+}
+
+.navbar-btn:hover .navbar-btn__icon,
+.navbar-btn--hovered .navbar-btn__icon {
+  opacity: 0.5;
+}
+
+.navbar-btn__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transition: opacity 0.15s ease;
+}
+
+.navbar-btn__icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary, #191919);
+}
+
+/* --- Title Area --- */
+
+.navbar__title-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 20px;
+}
+
+/* --- Root Link --- */
+
+.root-link {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  padding-right: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.root-link:hover,
+.root-link--hovered {
+  opacity: 0.5;
+}
+
+.root-link--skeleton {
+  pointer-events: none;
+}
+
+.root-link__title {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-primary, #191919);
+}
+
+.root-link__arrow {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+.root-link__arrow svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* --- Navbar Title --- */
+
+.navbar-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.navbar-title__text {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-2xl, 24px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-2xl, 30px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.navbar-title__description {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --- Navbar Title Image variant --- */
+
+.navbar-title--image {
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.navbar-title__logo {
+  height: 44px;
+}
+
+/* --- Items Area (shared) --- */
+
+.navbar__items {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Navigation Item --- */
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.nav-item:hover,
+.nav-item--hovered {
+  opacity: 1;
+}
+
+.nav-item:hover .nav-item__text,
+.nav-item--hovered .nav-item__text {
+  opacity: 0.5;
+}
+
+.nav-item--skeleton {
+  pointer-events: none;
+}
+
+.nav-item__text {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-primary, #191919);
+  transition: opacity 0.15s ease;
+}
+
+/* --- Progress Item --- */
+
+.progress-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 20px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.progress-item:hover,
+.progress-item--hovered {
+  opacity: 0.5;
+}
+
+.progress-item--disabled {
+  cursor: default;
+}
+
+.progress-item--disabled:hover {
+  opacity: 1;
+}
+
+.progress-item--skeleton {
+  pointer-events: none;
+}
+
+.progress-item__indicator {
+  width: 4px;
+  height: 30px;
+  border-radius: 2px;
+  background: var(--primitive-primary, #191919);
+  flex-shrink: 0;
+}
+
+.progress-item--disabled .progress-item__indicator,
+.progress-item--skeleton .progress-item__indicator {
+  background: var(--translucent-primitive-neutral-1, rgba(25, 25, 25, 0.15));
+}
+
+.progress-item__text {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress-item--disabled .progress-item__text {
+  color: var(--primitive-neutral-4, #949494);
+}
+
+/* --- Skeleton Loaf --- */
+
+.skeleton-loaf {
+  border-radius: 18px;
+  background: var(--bg-neutral-2, #EEEEEE);
+}
+
+.skeleton-loaf--m {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-loaf--s {
+  height: 14px;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Adaptive Navigation Bar (375px wide, row)
+   -------------------------------------------------------------------------- */
+
+.navbar--adaptive {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  width: 375px;
+  padding: 6px 20px;
+  position: relative;
+}
+
+/* --- Adaptive Left Part --- */
+
+.navbar__left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+}
+
+/* --- Adaptive Right Part --- */
+
+.navbar__right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+}
+
+/* --- Adaptive Center Title --- */
+
+.navbar__center {
+  position: absolute;
+  left: 54px;
+  right: 54px;
+  top: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- Adaptive Title variants --- */
+
+.adaptive-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+  width: 100%;
+}
+
+.adaptive-title__text {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Title + Description */
+.adaptive-title--with-desc {
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 0;
+}
+
+.adaptive-title__desc {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-secondary, #676767);
+  text-align: center;
+}
+
+/* Percent Progress title */
+.adaptive-title--progress {
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 0;
+}
+
+.percent-progress {
+  width: 160px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--translucent-primitive-neutral-1, rgba(25, 25, 25, 0.15));
+  overflow: hidden;
+}
+
+.percent-progress__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--primitive-primary, #191919);
+}
+
+/* Step Progress title */
+.step-progress {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: 160px;
+}
+
+.step-progress__step {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--translucent-primitive-neutral-1, rgba(25, 25, 25, 0.15));
+}
+
+.step-progress__step--active {
+  background: var(--primitive-primary, #191919);
+}
+
+/* --- Left / Right Accessories (adaptive icon buttons) --- */
+
+.accessory-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.accessory-icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Right Accessories group wrappers --- */
+
+.right-accessories {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.right-accessories--with-counter {
+  gap: 10px;
+  justify-content: flex-end;
+  height: 44px;
+}
+
+/* --- Counter Badge --- */
+
+.counter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5px 8px;
+  border-radius: 10px;
+  background: var(--primitive-neutral-4, #949494);
+}
+
+.counter__text {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-default, #FFFFFF);
+}
+
+/* --- Action text (Right Accessories) --- */
+
+.right-accessories__action {
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-brand, #835DE1);
+  cursor: pointer;
+  padding: 16px 0;
+  border: none;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Sub-component showcase variants (standalone display)
+   -------------------------------------------------------------------------- */
+
+.subcomp-box {
+  padding: 20px;
+  border: 1px dashed var(--tech-component, #9747FF);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Navbar button showcase - show both states side by side */
+.subcomp-box--row {
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}

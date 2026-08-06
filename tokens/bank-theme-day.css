@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Bank Theme Day — auto-generated from tokens/Bank Theme/Day.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+:root,
+[data-theme="day"] {
+
+  /* Badge */
+  --bank-badge-text-risk-high: #D84D4D;
+  --bank-badge-text-risk-medium: #8A6901;
+  --bank-badge-text-risk-low: #3F9180;
+  --bank-badge-text-purple-bright: #915DE6;
+
+  /* Bg */
+  --bank-bg-haptic: rgba(148, 148, 148, 0.45);
+
+  /* Primitive */
+  --bank-primitive-border: rgba(174, 174, 174, 0.45);
+}
