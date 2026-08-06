@@ -1,0 +1,24 @@
+{
+  "Page": {
+    "Horizontal Padding": {
+      "$type": "number",
+      "$value": 20,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:c9ff380bb7925963900314b0c9429b57e0f6b1ff/3557:2",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:98dbc500027494700abf38d308aeb4864f537749/3280:13",
+          "targetVariableName": "Page/Horizontal Padding",
+          "targetVariableSetId": "VariableCollectionId:9fb4cfcfee5684be5fb5ecd65322633ce80627f3/3280:7",
+          "targetVariableSetName": "Density"
+        },
+        "com.figma.isOverride": true
+      }
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Desktop"
+  }
+}

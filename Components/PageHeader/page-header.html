@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Header — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component Styles -->
+  <link rel="stylesheet" href="page-header.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      background: var(--bg-default, #FFFFFF);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo {
+      padding: 60px;
+      max-width: 960px;
+    }
+
+    .demo__title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin-bottom: 40px;
+      color: var(--primitive-secondary, #676767);
+    }
+
+    .demo__section {
+      margin-bottom: 60px;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      letter-spacing: var(--letter-spacing-xs, 0.12px);
+      color: var(--primitive-neutral-4, #949494);
+      margin-bottom: 12px;
+    }
+
+    .demo__box {
+      border: 1px dashed var(--primitive-neutral-4, #949494);
+      border-radius: 5px;
+      padding: 0 20px 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="demo">
+
+  <h1 class="demo__title">Page Header — Component Demo</h1>
+
+  <!-- Without Description (matches Figma instance 4616:64926 exactly) -->
+  <div class="demo__section">
+    <p class="demo__label">Has Description = false (Figma instance)</p>
+    <div class="demo__box">
+      <header class="page-header">
+        <h1 class="page-header__title">Общая информация</h1>
+      </header>
+    </div>
+  </div>
+
+  <!-- With Description -->
+  <div class="demo__section">
+    <p class="demo__label">Has Description = true</p>
+    <div class="demo__box">
+      <header class="page-header">
+        <h1 class="page-header__title">Общая информация</h1>
+        <p class="page-header__description">Сохранено 30.06.25 14:08</p>
+      </header>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

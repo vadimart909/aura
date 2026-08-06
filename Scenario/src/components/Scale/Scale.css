@@ -1,0 +1,34 @@
+/* ================================================================== */
+/*  Scale — zoom controls                                              */
+/* ================================================================== */
+
+.scale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(25, 25, 25, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.scale__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #191919;
+  transition: background 0.15s ease;
+}
+
+.scale__btn:hover {
+  background: rgba(25, 25, 25, 0.1);
+}
+
+.scale__btn svg {
+  width: 16px;
+  height: 16px;
+}

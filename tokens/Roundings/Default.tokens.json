@@ -1,0 +1,227 @@
+{
+  "Button Rounding Weak": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:0ed17b60363bb072d3836d72f5d7116ed4e7de20/427:10",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:09e1f09f39cacf3edee79ac9b2670b0fceec758e/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Popup Rounding Strong": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:781481b9d04839e181b6907b4963e212ec16e86f/490:9",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:68447fffbe8c8abdaeb0970998970fc9c3a2b473/378:24",
+        "targetVariableName": "Rounding 3x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Chip Rounding Strong": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:8b122a90ae76d7b68c0bedbf59585dbeaec7e128/490:3",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:68447fffbe8c8abdaeb0970998970fc9c3a2b473/378:24",
+        "targetVariableName": "Rounding 3x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Checkbox Rounding": {
+    "$type": "number",
+    "$value": 4,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:a6024816a3322bdeb5f9b0e63dd53fb1e32d43f4/427:12",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:bdfb174c7213d1ae8e8eafde4fe6d6b7bae2dc01/378:26",
+        "targetVariableName": "Rounding 1x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Chip Rounding Weak": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:be8ee4228ab25b816011a06cdb5f15ae9123223c/490:5",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:09e1f09f39cacf3edee79ac9b2670b0fceec758e/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Button Rounding Strong": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:5e68e4870d0719dbbe6d5a064eace6e65e4d42fe/427:5",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:68447fffbe8c8abdaeb0970998970fc9c3a2b473/378:24",
+        "targetVariableName": "Rounding 3x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Form Rounding": {
+    "$type": "number",
+    "$value": 12,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:32eb8cf2b352fb38eb3c81cd205eec26b2170eb5/2909:1",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:68447fffbe8c8abdaeb0970998970fc9c3a2b473/378:24",
+        "targetVariableName": "Rounding 3x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Popup Rounding Weak": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:55bed60a1b2889f6201067056c6450258a9eefc7/490:11",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:09e1f09f39cacf3edee79ac9b2670b0fceec758e/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Cell Rounding Weak": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:d74987080455148dac09dbe5e48e8253565cd901/725:2",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:09e1f09f39cacf3edee79ac9b2670b0fceec758e/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:a1dd39bce3afeebae2ba4f7d9e66cdcaedb84eb4/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Tag Rounding Weak": {
+    "$type": "number",
+    "$value": 4,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:56c451a19ea5eebcf36cb6bd5300a8f13207e748/2807:2",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:befacbf3c5cc2f2d1cb01db415f83777b8a0570f/378:26",
+        "targetVariableName": "Rounding 1x",
+        "targetVariableSetId": "VariableCollectionId:fb7448b92136ccceea5c4cd3296c6bd45332910a/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Tag Rounding Strong": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:0f7c5b442c83f507d9c777f78d3e4822981f497c/2807:0",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:4551bfc11493da14b4b575130714ee0acb222a55/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:fb7448b92136ccceea5c4cd3296c6bd45332910a/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Tag Rounding": {
+    "$type": "number",
+    "$value": 6,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:a3afa822023bb12f5a0453182623db4c7560d275/2807:1",
+      "com.figma.scopes": [
+        "CORNER_RADIUS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:18d328500801d76e50c376f309bf9e6df6f0b2d3/2789:1",
+        "targetVariableName": "Rounding 1,5x",
+        "targetVariableSetId": "VariableCollectionId:fb7448b92136ccceea5c4cd3296c6bd45332910a/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "Form Rounding Weak": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:fa968ce1a4193bb4fc30d13d83891b07ce0fb55d/2909:0",
+      "com.figma.scopes": [
+        "CORNER_RADIUS",
+        "FONT_VARIATIONS"
+      ],
+      "com.figma.aliasData": {
+        "targetVariableId": "VariableID:4551bfc11493da14b4b575130714ee0acb222a55/378:25",
+        "targetVariableName": "Rounding 2x",
+        "targetVariableSetId": "VariableCollectionId:fb7448b92136ccceea5c4cd3296c6bd45332910a/370:14",
+        "targetVariableSetName": "Roundings"
+      },
+      "com.figma.isOverride": true
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Default"
+  }
+}

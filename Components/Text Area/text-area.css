@@ -1,0 +1,261 @@
+/* ==========================================================================
+   Text Area Component
+   Based on Figma: Bank 02 UI Kit / Text Area (node 1:1645)
+   Uses design tokens from tokens/*.css
+
+   Variant axes:
+     State:           Default | Hovered / Pressed | Focused | Disabled
+     Is Filled:       True | False
+     Has Description: True | False
+     Has Error:       True | False
+     Has Title:       boolean
+     Has Help Icon:   boolean
+     Has Counter:     boolean
+     Has Accessory:   boolean  (Icon 24 | Spinner 24)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.text-area {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: var(--form-rounding, 12px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border: 2px solid transparent;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   States
+   -------------------------------------------------------------------------- */
+
+.text-area:hover,
+.text-area--hovered {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.text-area:focus-within,
+.text-area--focused {
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border-color: var(--primitive-brand, #835DE1);
+}
+
+.text-area--disabled {
+  pointer-events: none;
+}
+
+.text-area--disabled .text-area__title,
+.text-area--disabled .text-area__help-icon,
+.text-area--disabled .text-area__value,
+.text-area--disabled .text-area__counter,
+.text-area--disabled .text-area__accessory {
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   Content
+   -------------------------------------------------------------------------- */
+
+.text-area__content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Text Block (Header + Value)
+   -------------------------------------------------------------------------- */
+
+.text-area__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Header (Title + Counter + Accessory) --- */
+
+.text-area__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.text-area__title-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.text-area__title {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.text-area__help-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.text-area__help-icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primitive-primary, #191919);
+}
+
+/* --- Counter --- */
+
+.text-area__counter {
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* --- Right Accessory (Icon 24 / Spinner 24) --- */
+
+.text-area__accessory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.text-area__accessory-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-area__accessory-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary, #191919);
+}
+
+.text-area__spinner {
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-brand, #835DE1);
+  border-radius: 50%;
+  animation: textarea-spin 0.8s linear infinite;
+}
+
+@keyframes textarea-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Value (textarea)
+   -------------------------------------------------------------------------- */
+
+.text-area__value {
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 20px;
+}
+
+.text-area__value::placeholder {
+  color: var(--primitive-neutral-4, #949494);
+}
+
+/* --------------------------------------------------------------------------
+   Divider
+   -------------------------------------------------------------------------- */
+
+.text-area__divider {
+  width: 100%;
+  border: none;
+  margin: 0;
+}
+
+.text-area__divider--default {
+  height: 1px;
+  background: var(--primitive-primary, #191919);
+}
+
+.text-area__divider--error {
+  height: 2px;
+  background: var(--primitive-error, #D84D4D);
+}
+
+/* --------------------------------------------------------------------------
+   Description
+   -------------------------------------------------------------------------- */
+
+.text-area__description-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.text-area__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Error
+   -------------------------------------------------------------------------- */
+
+.text-area__error-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.text-area__error {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-error, #D84D4D);
+  margin: 0;
+}

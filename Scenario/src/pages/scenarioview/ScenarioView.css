@@ -1,0 +1,346 @@
+/* ================================================================== */
+/*  ScenarioView — layout                                             */
+/* ================================================================== */
+
+.scenario-view {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* below Header */
+  background: #F9F9F9;
+}
+
+/* ---- Canvas ---- */
+.scenario-view__canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---- Edge label ---- */
+.scenario-view__edge-label {
+  font-size: 11px;
+  font-weight: 600;
+  dominant-baseline: text-after-edge;
+}
+
+/* ================================================================== */
+/*  Scale controls — positioning only (visuals in Scale component)     */
+/* ================================================================== */
+
+.scenario-view__scale {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 5;
+}
+
+/* ================================================================== */
+/*  Footer with "Редактировать" button                                 */
+/* ================================================================== */
+
+.scenario-view__footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 8px;
+  background: #FFFFFF;
+}
+
+.scenario-view__footer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  height: 48px;
+  padding: 0 16px;
+  background: #835DE1;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.scenario-view__footer-btn:hover {
+  background: #7350cb;
+}
+
+/* ================================================================== */
+/*  Flow Node — shared card styles                                     */
+/* ================================================================== */
+
+.flow-node {
+  position: relative;
+}
+
+.flow-node__card {
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
+  min-width: 220px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ---- Header variants ---- */
+.flow-node__header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 6px;
+}
+
+.flow-node__header-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #191919;
+}
+
+.flow-node__header--green  { background: #E6F9F0; }
+.flow-node__header--blue   { background: #E6F0FF; }
+.flow-node__header--purple { background: #F0E6FF; }
+.flow-node__header--orange { background: #FFF4E5; }
+
+/* ---- Body ---- */
+.flow-node__body {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
+  gap: 6px;
+}
+
+/* ---- Row ---- */
+.flow-node__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flow-node__row-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.flow-node__row-overline {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  color: #8C8C8C;
+}
+
+.flow-node__row-text {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #191919;
+}
+
+/* ---- Row icon circles ---- */
+.flow-node__row-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+}
+
+.flow-node__row-icon--green  { background: #D1F5E3; }
+.flow-node__row-icon--blue   { background: #D1E3FF; }
+.flow-node__row-icon--purple { background: #E5D6FF; }
+.flow-node__row-icon--orange { background: #FFE8C8; }
+
+/* ================================================================== */
+/*  End node                                                           */
+/* ================================================================== */
+
+.flow-node--end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flow-node__end-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F5F5F5;
+  border: 1px solid #E8E8E8;
+}
+
+.flow-node__end-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8C8C8C;
+}
+
+/* ================================================================== */
+/*  React Flow handle overrides                                        */
+/* ================================================================== */
+
+.flow-handle {
+  width: 10px !important;
+  height: 10px !important;
+  border: 2px solid #C8C8C8 !important;
+  background: #FFFFFF !important;
+  border-radius: 50% !important;
+}
+
+.flow-handle--yes {
+  border-color: #00B96B !important;
+}
+
+.flow-handle--no {
+  border-color: #FF4D4F !important;
+}
+
+/* Hide default React Flow attribution */
+.react-flow__attribution {
+  display: none !important;
+}
+
+/* Make node wrapper not clip handles */
+.react-flow__node {
+  overflow: visible !important;
+}
+
+/* ================================================================== */
+/*  ScenarioInfoPopup — "О сценарии" modal                             */
+/* ================================================================== */
+
+/* Overlay */
+.scenario-info-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(25, 25, 25, 0.4);
+}
+
+/* Popup container */
+.scenario-info {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-height: 80vh;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* ---- Header ---- */
+.scenario-info__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 56px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.scenario-info__title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #191919;
+}
+
+/* Badge */
+.scenario-info__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.01em;
+  color: #676767;
+}
+
+.scenario-info__badge--grey   { background: #E1E1E1; }
+.scenario-info__badge--purple { background: #E5D6FF; color: #6B3FA0; }
+.scenario-info__badge--yellow { background: #FFF4CC; color: #8A6D00; }
+.scenario-info__badge--red    { background: #FFE0E0; color: #C73636; }
+
+/* ---- Content ---- */
+.scenario-info__content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.scenario-info__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 20px;
+}
+
+.scenario-info__name {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #191919;
+}
+
+.scenario-info__description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  color: #676767;
+}
+
+/* ---- Footer ---- */
+.scenario-info__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.scenario-info__close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  background: #835DE1;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.scenario-info__close-btn:hover {
+  background: #7350cb;
+}

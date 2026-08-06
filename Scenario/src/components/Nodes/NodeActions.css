@@ -1,0 +1,45 @@
+/* ==========================================================================
+   NodeActions — кнопки действий (дублировать / удалить), появляются при ховере
+   ========================================================================== */
+
+.node-actions {
+  display: none;
+  position: absolute;
+  top: -32px;
+  right: 0;
+  z-index: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  background: transparent;
+}
+
+/* ---------- Action button ---------- */
+
+.node-actions__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease;
+}
+
+.node-actions__btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.node-actions__btn:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.node-actions__btn img {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}

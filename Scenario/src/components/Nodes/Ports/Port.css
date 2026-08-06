@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Port — единичный порт (эллипс 12×12)
+   Дизайн: Figma .🛠 port
+   ========================================================================== */
+
+.port {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* State=Default: fill #FFFFFF, stroke #949494 2px */
+.port--default {
+  background: #FFFFFF;
+  border: 2px solid #949494;
+}
+
+/* Hover на default → Active/Hover стиль из Figma */
+.port--default:hover {
+  background: #949494;
+  border-color: #FFFFFF;
+}
+
+/* State=Active: fill #949494, stroke #FFFFFF 2px */
+.port--active {
+  background: #949494;
+  border: 2px solid #FFFFFF;
+}
+
+/* Color variants */
+.port--green {
+  background: #FFFFFF;
+  border: 2px solid #4CAF50;
+}
+
+.port--red {
+  background: #FFFFFF;
+  border: 2px solid #D84D4D;
+}
+
+.port--green:hover {
+  background: #4CAF50;
+  border-color: #FFFFFF;
+}
+
+.port--red:hover {
+  background: #D84D4D;
+  border-color: #FFFFFF;
+}

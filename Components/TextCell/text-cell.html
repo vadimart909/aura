@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="day" data-rounding="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TextCell — Component Demo</title>
+
+  <!-- Design Tokens -->
+  <link rel="stylesheet" href="../../tokens/colors.css">
+  <link rel="stylesheet" href="../../tokens/typography-primitives.css">
+  <link rel="stylesheet" href="../../tokens/theme-day.css">
+  <link rel="stylesheet" href="../../tokens/spacings-default.css">
+  <link rel="stylesheet" href="../../tokens/shadows.css">
+  <link rel="stylesheet" href="../../tokens/roundings-default.css">
+  <link rel="stylesheet" href="../../tokens/roundings-base.css">
+
+  <!-- Component -->
+  <link rel="stylesheet" href="text-cell.css">
+
+  <!-- Inline SVG icons reused across demos -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      background: var(--page-secondary, #F9F9F9);
+      font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+      color: var(--primitive-primary, #191919);
+    }
+
+    .demo__title {
+      font-size: var(--font-size-4xl, 36px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-4xl, 40px);
+      margin: 0 0 40px 0;
+    }
+
+    .demo__section {
+      margin-bottom: 48px;
+    }
+
+    .demo__section-title {
+      font-size: var(--font-size-2xl, 24px);
+      font-weight: var(--font-weight-semibold, 600);
+      line-height: var(--line-height-2xl, 30px);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__section-subtitle {
+      font-size: var(--font-size-s, 14px);
+      font-weight: var(--font-weight-regular, 400);
+      line-height: var(--line-height-s, 18px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 20px 0;
+    }
+
+    .demo__label {
+      font-size: var(--font-size-xs, 12px);
+      font-weight: var(--font-weight-medium, 500);
+      line-height: var(--line-height-xs, 15px);
+      color: var(--primitive-secondary, #676767);
+      margin: 0 0 8px 0;
+    }
+
+    .demo__card {
+      width: 375px;
+      background: var(--container-default, #FFFFFF);
+      border-radius: var(--card-rounding, 12px);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .demo__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .demo__item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Divider between grouped cells */
+    .demo__divider {
+      height: 1px;
+      background: var(--primitive-neutral-1, #E1E1E1);
+      margin: 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="demo__title">TextCell</h1>
+
+<!-- ===================================================================
+     SECTION 1: Size Scale
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Size Scale</h2>
+  <p class="demo__section-subtitle">5XL through XS — Default Vertical + Horizontal Spacing</p>
+
+  <div class="demo__row">
+    <div class="demo__item">
+      <p class="demo__label">All sizes (with disclosure)</p>
+      <div class="demo__card">
+
+        <!-- 5XL — no left accessory -->
+        <div class="text-cell text-cell--5xl text-cell--v-default text-cell--h-on">
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text 5XL</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- 4XL — Icon 30 left -->
+        <div class="text-cell text-cell--4xl text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--30">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text 4XL</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- 3XL — Icon 30 left -->
+        <div class="text-cell text-cell--3xl text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--30">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text 3XL</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- 2XL — Icon 30 left -->
+        <div class="text-cell text-cell--2xl text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--30">
+              <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text 2XL</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- XL — Avatar 44 left -->
+        <div class="text-cell text-cell--xl text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--xl"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text XL</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- L — Avatar 44 left -->
+        <div class="text-cell text-cell--l text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--xl"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text L</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- M — Avatar 34 left -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text M</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- S — Icon 24 left -->
+        <div class="text-cell text-cell--s text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text S</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- XS — Icon 18 left -->
+        <div class="text-cell text-cell--xs text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--18">
+              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text XS</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 2: Subtitle & Description (M size)
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Subtitle & Description</h2>
+  <p class="demo__section-subtitle">Size M — optional subtitle (above) and description (below)</p>
+
+  <div class="demo__row">
+
+    <!-- Title only -->
+    <div class="demo__item">
+      <p class="demo__label">Title only</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Основной счёт</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title + Description -->
+    <div class="demo__item">
+      <p class="demo__label">Title + Description</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Основной счёт</p>
+              <p class="text-cell__description">1 250 000,50 ₽</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtitle + Title -->
+    <div class="demo__item">
+      <p class="demo__label">Subtitle + Title</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__subtitle">Счёт ИП</p>
+              <p class="text-cell__title">Основной счёт</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subtitle + Title + Description -->
+    <div class="demo__item">
+      <p class="demo__label">Subtitle + Title + Description</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__subtitle">Счёт ИП</p>
+              <p class="text-cell__title">Основной счёт</p>
+              <p class="text-cell__description">1 250 000,50 ₽</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 3: Vertical Spacing Variants
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Vertical Spacing</h2>
+  <p class="demo__section-subtitle">Default (15px), Compact (10px), None (0px) — Size M</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Default (15px)</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Настройки</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">Compact (10px)</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-compact text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Настройки</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo__item">
+      <p class="demo__label">None (0px)</p>
+      <div class="demo__card">
+        <div class="text-cell text-cell--m text-cell--v-none text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Настройки</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 4: Right Accessories
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Right Accessories</h2>
+  <p class="demo__section-subtitle">Various right-side elements — Size M</p>
+
+  <div class="demo__row">
+
+    <div class="demo__item">
+      <p class="demo__label">Various Right Accessories</p>
+      <div class="demo__card">
+
+        <!-- Disclosure -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Disclosure</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Text S + Disclosure -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Text + Disclosure</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-combo">
+                <span class="text-cell__right-text text-cell__right-text--s">Подробнее</span>
+                <span class="text-cell__disclosure">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Counter + Disclosure -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Counter + Disclosure</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-combo">
+                <span class="text-cell__counter">5</span>
+                <span class="text-cell__disclosure">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Text M -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Right Text M</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__right-text text-cell__right-text--m">Значение</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Counter -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Counter</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__counter">12</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Notification Indicator -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Notification</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__notification"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Spinner 24 -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Spinner</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__spinner text-cell__spinner--24"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Stacked Text M + Text XS -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Stacked Text</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-stack">
+                <span class="text-cell__right-stack-primary">125 000 ₽</span>
+                <span class="text-cell__right-stack-secondary">Сегодня</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 5: Left Accessories
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Left Accessories</h2>
+  <p class="demo__section-subtitle">Avatar, Icon, Card Preview — Size M</p>
+
+  <div class="demo__row">
+    <div class="demo__item">
+      <p class="demo__label">Various Left Accessories</p>
+      <div class="demo__card">
+
+        <!-- Avatar M -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__avatar text-cell__avatar--m"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Avatar (34px)</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Icon 24 -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Icon 24</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Icon 18 -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--18">
+              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7.2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Icon 18</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- Card Preview -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <div class="text-cell__card-preview"></div>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Card Preview</p>
+              <p class="text-cell__description">**** 1234</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <!-- No left accessory -->
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Без аксессуара</p>
+              <p class="text-cell__description">Описание элемента</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 6: Type = Bullet
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Type = Bullet</h2>
+  <p class="demo__section-subtitle">Em dash prefix, no accessories</p>
+
+  <div class="demo__row">
+    <div class="demo__item">
+      <p class="demo__label">Bullet lists (various sizes)</p>
+      <div class="demo__card">
+
+        <div class="text-cell text-cell--xl text-cell--bullet text-cell--v-default text-cell--h-on">
+          <span class="text-cell__bullet">—</span>
+          <p class="text-cell__title">Bullet XL: первый пункт</p>
+        </div>
+
+        <div class="text-cell text-cell--l text-cell--bullet text-cell--v-default text-cell--h-on">
+          <span class="text-cell__bullet">—</span>
+          <p class="text-cell__title">Bullet L: второй пункт</p>
+        </div>
+
+        <div class="text-cell text-cell--m text-cell--bullet text-cell--v-default text-cell--h-on">
+          <span class="text-cell__bullet">—</span>
+          <p class="text-cell__title">Bullet M: третий пункт</p>
+        </div>
+
+        <div class="text-cell text-cell--s text-cell--bullet text-cell--v-default text-cell--h-on">
+          <span class="text-cell__bullet">—</span>
+          <p class="text-cell__title">Bullet S: четвёртый пункт</p>
+        </div>
+
+        <div class="text-cell text-cell--xs text-cell--bullet text-cell--v-default text-cell--h-on">
+          <span class="text-cell__bullet">—</span>
+          <p class="text-cell__title">Bullet XS: пятый пункт</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     SECTION 7: Practical Example — Settings List
+     =================================================================== -->
+<div class="demo__section">
+  <h2 class="demo__section-title">Practical Example</h2>
+  <p class="demo__section-subtitle">Settings-like list — Size M, mixed accessories</p>
+
+  <div class="demo__row">
+    <div class="demo__item">
+      <p class="demo__label">Settings Page</p>
+      <div class="demo__card">
+
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Общие настройки</p>
+              <p class="text-cell__description">Язык, регион, уведомления</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__disclosure">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Безопасность</p>
+              <p class="text-cell__description">Пароли и биометрия</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-combo">
+                <span class="text-cell__right-text text-cell__right-text--s">Включено</span>
+                <span class="text-cell__disclosure">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9z" stroke="currentColor" stroke-width="1.8"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Уведомления</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-combo">
+                <span class="text-cell__counter">3</span>
+                <span class="text-cell__disclosure">
+                  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__title">Почта</p>
+              <p class="text-cell__description">user@example.com</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <span class="text-cell__notification"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo__divider"></div>
+
+        <div class="text-cell text-cell--m text-cell--v-default text-cell--h-on">
+          <div class="text-cell__left-accessory">
+            <span class="text-cell__icon text-cell__icon--24">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+          <div class="text-cell__content">
+            <div class="text-cell__text">
+              <p class="text-cell__subtitle">Последнее обновление</p>
+              <p class="text-cell__title">Версия приложения</p>
+              <p class="text-cell__description">v2.4.1 — 08.02.2026</p>
+            </div>
+            <div class="text-cell__right-accessory">
+              <div class="text-cell__right-stack">
+                <span class="text-cell__right-stack-primary">Актуально</span>
+                <span class="text-cell__right-stack-secondary">Обновлено</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

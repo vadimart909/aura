@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Footer Component — Layout Only
+   Based on Figma: Bank 02 UI Kit / Footer (node 62040:68196)
+   Uses design tokens from tokens/*.css
+
+   IMPORTANT: Button atoms (.footer__btn, .footer__btn--primary,
+   .footer__btn--secondary, .footer__icon-btn, loading states)
+   are provided by ../Buttons/buttons.css — import it BEFORE this file.
+
+   Variant axes:
+     is Adaptive:     False (desktop 1440) | True (mobile 375)
+     Type:            1 Button | 2 Buttons In Line | 2 Buttons In Column |
+                      3 Buttons | Stepper + Button | Page Control + Button
+     Has Description: boolean
+
+   This file provides:
+     - Footer container layout
+     - Description text
+     - Buttons row / column arrangement
+     - Button sizing overrides for footer context
+     - Stepper sub-component
+     - Page Control sub-component
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-default, #FFFFFF);
+  padding: 20px 0;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+}
+
+/* Adaptive (mobile): padding 10/20 */
+.footer--adaptive {
+  padding: 10px 20px;
+}
+
+/* Stepper + Button: horizontal layout */
+.footer--stepper {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.footer--adaptive.footer--stepper {
+  justify-content: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   Description (optional)
+   -------------------------------------------------------------------------- */
+
+.footer__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+  text-align: center;
+}
+
+.footer--adaptive .footer__description {
+  text-align: left;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons Row / Column
+   -------------------------------------------------------------------------- */
+
+.footer__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.footer__buttons--column {
+  flex-direction: column;
+}
+
+.footer--adaptive .footer__buttons {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Button sizing overrides for footer context
+   (base .footer__btn styles come from ../Buttons/buttons.css)
+   -------------------------------------------------------------------------- */
+
+/* In button row — share space equally */
+.footer__buttons .footer__btn {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Adaptive single button — full width */
+.footer--adaptive > .footer__btn {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Adaptive column — full width */
+.footer__buttons--column .footer__btn {
+  width: 100%;
+}
+
+/* Stepper layout — button fills remaining space */
+.footer--stepper .footer__btn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Stepper
+   115×50, r=10, bg container-transparent-1
+   Minus (44×50) / Value / Plus (44×50)
+   -------------------------------------------------------------------------- */
+
+.footer__stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.footer__stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 50px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.footer__stepper-btn:hover {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+.footer__stepper-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary, #191919);
+}
+
+.footer__stepper-btn--disabled {
+  pointer-events: none;
+}
+
+.footer__stepper-btn--disabled svg {
+  opacity: 0.5;
+}
+
+.footer__stepper-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  min-width: 23px;
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+}
+
+/* --------------------------------------------------------------------------
+   Page Control (Page Indicator)
+   Dots 6×6, inactive #E1E1E1, active #835DE1
+   -------------------------------------------------------------------------- */
+
+.footer__page-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.footer__page-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primitive-neutral-2, #E1E1E1);
+}
+
+.footer__page-dot--active {
+  background: var(--primitive-brand, #835DE1);
+}

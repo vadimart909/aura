@@ -1,0 +1,421 @@
+/* ==========================================================================
+   TextCell Component
+   Based on Figma: Bank 02 UI Kit / TextCells (node 3563:5376)
+   Uses design tokens from tokens/*.css
+
+   Size scale:  5XL | 4XL | 3XL | 2XL | XL | L | M | S | XS
+   Type:        Cell | Bullet
+   Subtitle:    Off | On       (4XL–M, S)
+   Description: Off | On       (4XL–M)
+   Vertical Spacing:   Default | Compact | None
+   Horizontal Spacing: On | Off
+   Left Accessory:     Avatar | Icon 30 | Icon 24 | Icon 18 | Card Preview | …
+   Right Accessory:    Disclosure | Text | Counter | Avatar | Switch | …
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Cell
+   -------------------------------------------------------------------------- */
+
+.text-cell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+}
+
+/* --------------------------------------------------------------------------
+   Vertical Spacing
+   -------------------------------------------------------------------------- */
+
+/* Default: 15px top/bottom */
+.text-cell--v-default {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* Compact: 10px top/bottom */
+.text-cell--v-compact {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* None: 0 */
+.text-cell--v-none {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal Spacing
+   -------------------------------------------------------------------------- */
+
+/* On: 20px left/right */
+.text-cell--h-on {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Off: 0 */
+.text-cell--h-off {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Left Accessory
+   -------------------------------------------------------------------------- */
+
+.text-cell__left-accessory {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* --- Size-specific left accessory gap (paddingRight) --- */
+
+/* 4XL, 3XL: paddingRight 20 */
+.text-cell--5xl .text-cell__left-accessory,
+.text-cell--4xl .text-cell__left-accessory,
+.text-cell--3xl .text-cell__left-accessory {
+  padding-right: 20px;
+}
+
+/* 2XL, XL, L: paddingRight 16 */
+.text-cell--2xl .text-cell__left-accessory,
+.text-cell--xl .text-cell__left-accessory,
+.text-cell--l .text-cell__left-accessory {
+  padding-right: 16px;
+}
+
+/* M, S, XS: paddingRight 12 */
+.text-cell--m .text-cell__left-accessory,
+.text-cell--s .text-cell__left-accessory,
+.text-cell--xs .text-cell__left-accessory {
+  padding-right: 12px;
+}
+
+/* --- Accessory elements --- */
+
+.text-cell__avatar {
+  border-radius: 50%;
+  background: var(--bg-brand-2, #E2DDF6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.text-cell__avatar--xl {
+  width: 44px;
+  height: 44px;
+}
+
+.text-cell__avatar--m {
+  width: 34px;
+  height: 34px;
+}
+
+.text-cell__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.text-cell__icon svg {
+  color: var(--primitive-primary, #191919);
+}
+
+.text-cell__icon--30 { width: 30px; height: 30px; }
+.text-cell__icon--30 svg { width: 30px; height: 30px; }
+
+.text-cell__icon--24 { width: 24px; height: 24px; }
+.text-cell__icon--24 svg { width: 24px; height: 24px; }
+
+.text-cell__icon--18 { width: 18px; height: 18px; }
+.text-cell__icon--18 svg { width: 18px; height: 18px; }
+
+.text-cell__card-preview {
+  width: 60px;
+  height: 38px;
+  border-radius: var(--rounding-2x, 8px);
+  background: var(--bg-neutral-2, #EEEEEE);
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Content Area
+   -------------------------------------------------------------------------- */
+
+.text-cell__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Text Block
+   -------------------------------------------------------------------------- */
+
+.text-cell__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.text-cell__subtitle {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+.text-cell__title {
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.text-cell__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --- Title size scale --- */
+
+.text-cell--5xl .text-cell__title {
+  font-size: var(--font-size-5xl, 42px);
+  line-height: var(--line-height-5xl, 48px);
+  letter-spacing: var(--letter-spacing-5xl, 0px);
+}
+
+.text-cell--4xl .text-cell__title {
+  font-size: var(--font-size-4xl, 36px);
+  line-height: var(--line-height-4xl, 40px);
+  letter-spacing: var(--letter-spacing-4xl, 0px);
+}
+
+.text-cell--3xl .text-cell__title {
+  font-size: var(--font-size-3xl, 30px);
+  line-height: var(--line-height-3xl, 36px);
+  letter-spacing: var(--letter-spacing-3xl, 0px);
+}
+
+.text-cell--2xl .text-cell__title {
+  font-size: var(--font-size-2xl, 24px);
+  line-height: var(--line-height-2xl, 30px);
+  letter-spacing: var(--letter-spacing-2xl, 0px);
+}
+
+.text-cell--xl .text-cell__title {
+  font-size: var(--font-size-xl, 20px);
+  line-height: var(--line-height-xl, 26px);
+  letter-spacing: var(--letter-spacing-xl, 0px);
+}
+
+.text-cell--l .text-cell__title {
+  font-size: var(--font-size-l, 18px);
+  line-height: var(--line-height-l, 22px);
+  letter-spacing: var(--letter-spacing-l, 0px);
+}
+
+.text-cell--m .text-cell__title {
+  font-size: var(--font-size-m, 16px);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+}
+
+.text-cell--s .text-cell__title {
+  font-size: var(--font-size-s, 14px);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+}
+
+.text-cell--xs .text-cell__title {
+  font-size: var(--font-size-xs, 12px);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+}
+
+/* --------------------------------------------------------------------------
+   Right Accessory
+   -------------------------------------------------------------------------- */
+
+.text-cell__right-accessory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* --- Disclosure (Chevron Right) --- */
+
+.text-cell__disclosure {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.text-cell__disclosure svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primitive-primary, #191919);
+}
+
+/* --- Right text --- */
+
+.text-cell__right-text {
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+.text-cell__right-text--l {
+  font-size: var(--font-size-l, 18px);
+  line-height: var(--line-height-l, 22px);
+  letter-spacing: var(--letter-spacing-l, 0px);
+}
+
+.text-cell__right-text--m {
+  font-size: var(--font-size-m, 16px);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+}
+
+.text-cell__right-text--s {
+  font-size: var(--font-size-s, 14px);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+}
+
+/* --- Right text + disclosure combo --- */
+
+.text-cell__right-combo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Counter --- */
+
+.text-cell__counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5px 8px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--primitive-neutral-4, #949494);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-default, #FFFFFF);
+  flex-shrink: 0;
+}
+
+/* --- Notification Indicator --- */
+
+.text-cell__notification {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primitive-error, #D84D4D);
+  flex-shrink: 0;
+}
+
+/* --- Spinner --- */
+
+.text-cell__spinner {
+  border: 2.5px solid var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-brand, #835DE1);
+  border-radius: 50%;
+  animation: text-cell-spin 0.8s linear infinite;
+}
+
+.text-cell__spinner--24 {
+  width: 24px;
+  height: 24px;
+}
+
+.text-cell__spinner--34 {
+  width: 34px;
+  height: 34px;
+}
+
+@keyframes text-cell-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Right stacked text --- */
+
+.text-cell__right-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.text-cell__right-stack-primary {
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.text-cell__right-stack-secondary {
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Type = Bullet
+   -------------------------------------------------------------------------- */
+
+.text-cell--bullet {
+  gap: 5px;
+}
+
+.text-cell__bullet {
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Bullet inherits title size from parent size modifier */
+.text-cell--5xl .text-cell__bullet { font-size: var(--font-size-5xl, 42px); line-height: var(--line-height-5xl, 48px); }
+.text-cell--4xl .text-cell__bullet { font-size: var(--font-size-4xl, 36px); line-height: var(--line-height-4xl, 40px); }
+.text-cell--3xl .text-cell__bullet { font-size: var(--font-size-3xl, 30px); line-height: var(--line-height-3xl, 36px); }
+.text-cell--2xl .text-cell__bullet { font-size: var(--font-size-2xl, 24px); line-height: var(--line-height-2xl, 30px); }
+.text-cell--xl .text-cell__bullet  { font-size: var(--font-size-xl, 20px);  line-height: var(--line-height-xl, 26px); }
+.text-cell--l .text-cell__bullet   { font-size: var(--font-size-l, 18px);   line-height: var(--line-height-l, 22px); }
+.text-cell--m .text-cell__bullet   { font-size: var(--font-size-m, 16px);   line-height: var(--line-height-m, 20px); }
+.text-cell--s .text-cell__bullet   { font-size: var(--font-size-s, 14px);   line-height: var(--line-height-s, 18px); }
+.text-cell--xs .text-cell__bullet  { font-size: var(--font-size-xs, 12px);  line-height: var(--line-height-xs, 15px); }

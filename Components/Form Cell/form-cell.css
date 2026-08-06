@@ -1,0 +1,344 @@
+/* ==========================================================================
+   Form Cell Component
+   Based on Figma: Bank 02 UI Kit / Form Cell (node 4934:1214)
+   Uses design tokens from tokens/*.css
+
+   Variant axes:
+     Type:             Switch | Checkbox | Radio
+     Position:         Single | Top | Middle | Bottom
+     Has Subtitle:     On | Off
+     Has Description:  On | Off
+     Has Error:        boolean
+     Is Loading:       boolean
+     Has Left Accessory: boolean
+     Left Accessory:   Avatar | Card Preview
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.form-cell {
+  display: flex;
+  flex-direction: column;
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border-radius: var(--form-rounding, 12px);
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  align-items: center;
+}
+
+/* --- Position variants (border-radius) --- */
+
+.form-cell--top {
+  border-radius: var(--form-rounding, 12px) var(--form-rounding, 12px) 0 0;
+}
+
+.form-cell--middle {
+  border-radius: 0;
+}
+
+.form-cell--bottom {
+  border-radius: 0 0 var(--form-rounding, 12px) var(--form-rounding, 12px);
+}
+
+/* --------------------------------------------------------------------------
+   Content Row
+   -------------------------------------------------------------------------- */
+
+.form-cell__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   Left Accessory (Avatar / Card Preview placeholder)
+   -------------------------------------------------------------------------- */
+
+.form-cell__left-accessory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
+  flex-shrink: 0;
+}
+
+.form-cell__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-brand-2, #E2DDF6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.form-cell__avatar-text {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--primitive-primary, #191919);
+}
+
+.form-cell__card-preview {
+  width: 44px;
+  height: 30px;
+  border-radius: var(--rounding-1-5x, 6px);
+  background: var(--bg-neutral-2, #EEEEEE);
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Text Block
+   -------------------------------------------------------------------------- */
+
+.form-cell__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.form-cell__subtitle {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.form-cell__title {
+  font-size: var(--font-size-m, 16px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-m, 20px);
+  letter-spacing: var(--letter-spacing-m, 0.16px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+.form-cell__description {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-secondary, #676767);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Right Accessory
+   -------------------------------------------------------------------------- */
+
+.form-cell__right-accessory {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Switch Control — 56x32, border-radius 16, brand purple body, white knob
+   -------------------------------------------------------------------------- */
+
+.switch {
+  position: relative;
+  width: 56px;
+  height: 32px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch__track {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--primitive-neutral-3, #C8C8C8);
+  transition: background 0.2s ease;
+}
+
+.switch__input:checked + .switch__track {
+  background: var(--primitive-brand, #835DE1);
+}
+
+.switch__knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primitive-default, #FFFFFF);
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.switch__input:checked ~ .switch__knob {
+  transform: translateX(24px);
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox Control — 24x24
+   -------------------------------------------------------------------------- */
+
+.checkbox {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox__box {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--checkbox-rounding, 4px);
+  border: 2px solid var(--primitive-neutral-3, #C8C8C8);
+  background: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.checkbox__input:checked + .checkbox__box {
+  background: var(--primitive-brand, #835DE1);
+  border-color: var(--primitive-brand, #835DE1);
+}
+
+.checkbox__check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.checkbox__input:checked ~ .checkbox__check {
+  opacity: 1;
+}
+
+.checkbox__check svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Radio Control — 24x24
+   -------------------------------------------------------------------------- */
+
+.radio {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.radio__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio__circle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--primitive-neutral-3, #C8C8C8);
+  background: transparent;
+  transition: border-color 0.15s ease;
+}
+
+.radio__input:checked + .radio__circle {
+  border-color: var(--primitive-brand, #835DE1);
+}
+
+.radio__dot {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primitive-brand, #835DE1);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.radio__input:checked ~ .radio__dot {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Spinner (Loading State)
+   -------------------------------------------------------------------------- */
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--primitive-neutral-3, #C8C8C8);
+  border-top-color: var(--primitive-brand, #835DE1);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Error Block
+   -------------------------------------------------------------------------- */
+
+.form-cell__error {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+.form-cell__error-divider {
+  width: 100%;
+  height: 2px;
+  background: var(--primitive-error, #D84D4D);
+  border: none;
+}
+
+.form-cell__error-text {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-error, #D84D4D);
+  margin: 0;
+}

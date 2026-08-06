@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Spacings Default — auto-generated from tokens/Spacings/Default.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+:root {
+  --spacing-0-5x:  2px;
+  --spacing-1x:    4px;
+  --spacing-1-5x:  6px;
+  --spacing-2x:    8px;
+  --spacing-2-5x:  10px;
+  --spacing-3x:    12px;
+  --spacing-3-5x:  14px;
+  --spacing-4x:    16px;
+  --spacing-4-5x:  18px;
+  --spacing-5x:    20px;
+  --spacing-6x:    24px;
+  --spacing-8x:    32px;
+  --spacing-10x:   40px;
+  --spacing-12x:   48px;
+  --spacing-14x:   56px;
+  --spacing-16x:   64px;
+  --spacing-20x:   80px;
+  --spacing-24x:   96px;
+  --spacing-30x:   120px;
+  --spacing-40x:   160px;
+}

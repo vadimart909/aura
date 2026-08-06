@@ -1,0 +1,81 @@
+---
+description: Генерация CSS-токенов из Figma JSON файлов
+globs: tokens/**/*.json
+alwaysApply: false
+---
+
+# Генерация CSS-токенов из Figma JSON
+
+При создании CSS-токенов из файлов `tokens/*.json`:
+
+## Формат
+
+- CSS custom properties в `:root`
+- Именование: `--section-name-shade` в kebab-case
+- Комментарий в начале файла: `/* auto-generated from {source} — Do not edit manually */`
+- Файлы сохранять в `tokens/` рядом с JSON
+
+## Цвета
+
+- alpha = 1 → hex `#RRGGBB`
+- alpha < 1 → `rgba(R, G, B, alpha)`
+
+## Числовые токены
+
+- Значение в `px` (например: `--spacing-2x: 8px;`)
+
+## Темы (Day/Night)
+
+- Day: `:root, [data-theme="day"]`
+- Night: `[data-theme="night"]`
+- Одинаковые имена переменных, разные значения
+
+## Типографика
+
+### Шрифты
+
+- Основной: `'TT Norms Tochka Extended', sans-serif` → `--font-family-primary`
+- Скриптовый: `'Tochka Script', cursive` → `--font-family-script`
+
+### Примитивы
+
+- `fontFamily` → строка в кавычках с fallback
+- `fontSize`, `lineHeight` → значение в `px`
+- `fontWeight` → числовое значение без единиц (`400`, `500`, `600`)
+- `letterSpacing` → значение в `px`
+- Шкала размеров: `7xl`, `6xl`, `5xl`, `4xl`, `3xl`, `2xl`, `xl`, `l`, `m`, `s`, `xs`, `xxs`
+
+### Составные стили (Text Styles)
+
+- Каждое CSS-свойство стиля — отдельная переменная
+- Именование: `--{font}-{size}-{weight}-{property}` в kebab-case
+- Весовые варианты: `regular` (400), `medium` (500), `semibold` (600)
+- `fontFamily` в составных стилях ссылается на примитив: `var(--font-family-primary)`
+- `lineHeight`: если значение > 3 — в `px`, если ≤ 3 — безразмерный множитель
+- TT Norms: все размеры (7XL–XXS) × все веса (400, 500, 600)
+- Tochka Script: размеры 7XL–M, только вес 400
+
+## Пример
+
+```css
+/* auto-generated from tokens/Colors.json — Do not edit manually */
+
+:root {
+  --brand-purple-055: #7F42E1;
+  --alpha-neutral-020-050: rgba(25, 25, 25, 0.50);
+  --spacing-2x: 8px;
+}
+```
+
+```css
+/* Typography primitives */
+:root {
+  --font-family-primary: 'TT Norms Tochka Extended', sans-serif;
+  --font-family-script:  'Tochka Script', cursive;
+  --font-size-7xl: 60px;
+  --font-size-m:   16px;
+  --font-weight-semibold: 600;
+  --line-height-7xl: 66px;
+  --letter-spacing-m: 0.16px;
+}
+```

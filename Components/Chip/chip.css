@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Chip Component
+   Based on Figma: Bank 02 UI Kit / Chip (node 62040:26382)
+   Uses design tokens from tokens/*.css
+
+   Variant axes:
+     Type:                Chip | Tab | Dropdown | Action
+     State:               Default | Hovered | Disabled | Pressed
+     Is Selected:         False | True
+     Has Reset Icon:      False | True
+     Has Left Accessory:  boolean  (Icon 18 | Logo | 2 Logos)
+     Has Right Accessory: boolean  (Counter — Tab only)
+     Has Text:            boolean
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Chip
+   -------------------------------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 10px;
+  gap: 10px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+  border: 2px solid transparent;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Text
+   -------------------------------------------------------------------------- */
+
+.chip__text {
+  font-size: var(--font-size-s, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-s, 18px);
+  letter-spacing: var(--letter-spacing-s, 0.14px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Left Accessory
+   -------------------------------------------------------------------------- */
+
+.chip__left-accessory {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Icon 18 */
+.chip__icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chip__icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primitive-primary, #191919);
+  transition: color 0.15s ease;
+}
+
+/* Logo (mini avatar) */
+.chip__logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-brand-2, #E2DDF6);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 2 Logos (stacked) */
+.chip__logos {
+  display: flex;
+  flex-direction: row;
+}
+
+.chip__logos .chip__logo {
+  margin-left: -2px;
+}
+
+.chip__logos .chip__logo:first-child {
+  margin-left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Right Accessory — Counter (Tab type)
+   -------------------------------------------------------------------------- */
+
+.chip__counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5px 8px;
+  border-radius: var(--rounding-2-5x, 10px);
+  background: var(--primitive-neutral-4, #949494);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-default, #FFFFFF);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Chevron
+   -------------------------------------------------------------------------- */
+
+.chip__chevron {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chip__chevron svg {
+  width: 12px;
+  height: 12px;
+  color: var(--primitive-primary, #191919);
+  transition: color 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Reset Icon (Cross)
+   -------------------------------------------------------------------------- */
+
+.chip__reset {
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chip__reset svg {
+  width: 10px;
+  height: 10px;
+  color: var(--primitive-default, #FFFFFF);
+}
+
+/* ==========================================================================
+   STATE: Hovered
+   ========================================================================== */
+
+.chip:hover,
+.chip--hovered {
+  background: var(--container-transparent-2, rgba(25, 25, 25, 0.10));
+}
+
+/* ==========================================================================
+   STATE: Disabled
+   ========================================================================== */
+
+.chip--disabled,
+.chip:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.chip--disabled .chip__text,
+.chip:disabled .chip__text {
+  opacity: 0.5;
+}
+
+.chip--disabled .chip__icon svg,
+.chip:disabled .chip__icon svg {
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   STATE: Selected  (Type = Chip)
+   ========================================================================== */
+
+.chip--selected {
+  background: var(--primitive-brand, #835DE1);
+  border-color: transparent;
+}
+
+.chip--selected .chip__text {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--selected .chip__icon svg {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--selected:hover,
+.chip--selected.chip--hovered {
+  background: var(--state-bg-brand-active, #9B7EF1);
+}
+
+/* ==========================================================================
+   TYPE: Tab
+   ========================================================================== */
+
+.chip--tab {
+  /* default state same as base chip */
+}
+
+.chip--tab.chip--selected {
+  background: transparent;
+  border-color: var(--translucent-primitive-neutral-4, rgba(25, 25, 25, 0.45));
+}
+
+.chip--tab.chip--selected .chip__text {
+  color: var(--primitive-primary, #191919);
+}
+
+.chip--tab.chip--selected .chip__icon svg {
+  color: var(--primitive-primary, #191919);
+}
+
+.chip--tab.chip--selected .chip__counter {
+  background: var(--primitive-primary, #191919);
+}
+
+.chip--tab.chip--selected:hover,
+.chip--tab.chip--selected.chip--hovered {
+  background: var(--container-transparent-1, rgba(25, 25, 25, 0.05));
+}
+
+/* ==========================================================================
+   TYPE: Dropdown
+   ========================================================================== */
+
+.chip--dropdown {
+  /* default state same as base chip */
+}
+
+.chip--dropdown.chip--selected {
+  background: var(--primitive-brand, #835DE1);
+  border-color: transparent;
+}
+
+.chip--dropdown.chip--selected .chip__text {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--dropdown.chip--selected .chip__chevron svg {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--dropdown.chip--selected:hover,
+.chip--dropdown.chip--selected.chip--hovered {
+  background: var(--state-bg-brand-active, #9B7EF1);
+}
+
+/* ==========================================================================
+   TYPE: Action
+   ========================================================================== */
+
+.chip--action .chip__text {
+  color: var(--primitive-brand, #835DE1);
+}
+
+.chip--action .chip__icon svg {
+  color: var(--primitive-brand, #835DE1);
+}
+
+.chip--action.chip--selected {
+  background: var(--primitive-brand, #835DE1);
+  border-color: transparent;
+}
+
+.chip--action.chip--selected .chip__text {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--action.chip--selected .chip__icon svg {
+  color: var(--primitive-default, #FFFFFF);
+}
+
+.chip--action.chip--selected:hover,
+.chip--action.chip--selected.chip--hovered {
+  background: var(--state-bg-brand-active, #9B7EF1);
+}

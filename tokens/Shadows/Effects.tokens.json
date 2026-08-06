@@ -1,0 +1,237 @@
+{
+  "Surfaces": {
+    "Drawer Left": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": -1,
+          "offsetY": 0,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(255, 255, 255, 0.20)"
+        },
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 20,
+          "blur": 40,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Drawer Right": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": 1,
+          "offsetY": 0,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(255, 255, 255, 0.20)"
+        },
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 20,
+          "blur": 40,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Brand": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 20,
+          "blur": 40,
+          "spread": 0,
+          "color": "rgba(126, 89, 224, 0.30)"
+        }
+      ]
+    },
+    "Floating": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 20,
+          "blur": 60,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Popup Inverse": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 6,
+          "blur": 10,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Popout": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 20,
+          "blur": 40,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Card": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 5,
+          "blur": 15,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.05)"
+        }
+      ]
+    },
+    "Raised": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 1,
+          "blur": 1,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    }
+  },
+  "States": {
+    "Hovered": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 12,
+          "blur": 25,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.10)"
+        }
+      ]
+    },
+    "Pressed": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": 3,
+          "blur": 5,
+          "spread": 0,
+          "color": "rgba(0, 0, 0, 0.14)"
+        }
+      ]
+    }
+  },
+  "Sticky": {
+    "Left": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": -20,
+          "offsetY": 0,
+          "blur": 35,
+          "spread": 0,
+          "color": "rgba(0, 24, 55, 0.10)"
+        }
+      ]
+    },
+    "Top": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "dropShadow",
+          "offsetX": 0,
+          "offsetY": -1,
+          "blur": 8,
+          "spread": 0,
+          "color": "rgba(0, 24, 55, 0.10)"
+        }
+      ]
+    }
+  },
+  "Borders": {
+    "Right Line": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": -0.5,
+          "offsetY": 0,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(174, 174, 174, 0.45)"
+        }
+      ]
+    },
+    "Left Line": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": 0.5,
+          "offsetY": 0,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(174, 174, 174, 0.45)"
+        }
+      ]
+    },
+    "Bottom Line": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": 0,
+          "offsetY": -0.5,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(174, 174, 174, 0.45)"
+        }
+      ]
+    },
+    "Top Line": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "type": "innerShadow",
+          "offsetX": 0,
+          "offsetY": 0.5,
+          "blur": 0,
+          "spread": 0,
+          "color": "rgba(174, 174, 174, 0.45)"
+        }
+      ]
+    }
+  },
+  "$extensions": {
+    "com.figma.source": "Bank-01-Foundation / Shadows and Borders (node 10962:232)"
+  }
+}

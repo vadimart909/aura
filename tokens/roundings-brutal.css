@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Roundings Brutal — auto-generated from tokens/Roundings/Brutal.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+:root,
+[data-rounding="brutal"] {
+  --button-rounding-weak: 0px;
+  --button-rounding-strong: 0px;
+  --card-rounding: 0px;
+  --popup-rounding-strong: 0px;
+  --popup-rounding-weak: 0px;
+  --chip-rounding-strong: 0px;
+  --chip-rounding-weak: 0px;
+  --checkbox-rounding: 0px;
+  --form-rounding: 0px;
+  --form-rounding-weak: 0px;
+  --cell-rounding-strong: 0px;
+  --cell-rounding-weak: 0px;
+  --slider-rounding: 0px;
+  --tag-rounding-strong: 0px;
+  --tag-rounding: 0px;
+  --tag-rounding-weak: 0px;
+}

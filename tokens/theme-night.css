@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Theme Night — auto-generated from tokens/Theme/Night.tokens.json
+   Do not edit manually
+   ========================================================================== */
+
+[data-theme="night"] {
+
+  /* ========================================================================
+     Primitive
+     ======================================================================== */
+
+  --primitive-primary-fixed: #191919;
+  --primitive-primary: #FFFFFF;
+  --primitive-primary-on-inverse: #191919;
+  --primitive-secondary-fixed: #676767;
+  --primitive-secondary: #AEAEAE;
+  --primitive-secondary-on-inverse: #676767;
+  --primitive-neutral-4-fixed: #949494;
+  --primitive-neutral-4: #777777;
+  --primitive-neutral-4-on-inverse: #949494;
+  --primitive-neutral-2-fixed: #D4D4D4;
+  --primitive-neutral-1: #474747;
+  --primitive-default: #191919;
+  --primitive-default-fixed: #FFFFFF;
+  --primitive-brand: #9B7EF1;
+  --primitive-brand-fixed: #835DE1;
+  --primitive-success: #5CAD9A;
+  --primitive-success-fixed: #5CAD9A;
+  --primitive-error: #FC6667;
+  --primitive-error-fixed: #D84D4D;
+  --primitive-error-on-inverse: #D84D4D;
+  --primitive-warning: #F0C555;
+  --primitive-neutral-3: #5E5E5E;
+  --primitive-primary-on-inverse-fixed: #FFFFFF;
+  --primitive-secondary-on-inverse-fixed: #AEAEAE;
+
+  /* ========================================================================
+     Bg
+     ======================================================================== */
+
+  --bg-neutral-4: #676767;
+  --bg-neutral-3: #474747;
+  --bg-neutral-2: #3B3B3B;
+  --bg-neutral-1: #303030;
+  --bg-default: #191919;
+  --bg-default-fixed: #FFFFFF;
+  --bg-inverse: #FFFFFF;
+  --bg-inverse-fixed: #191919;
+  --bg-brand: #7945EB;
+  --bg-brand-2: #534B79;
+  --bg-brand-1: #3B364F;
+  --bg-success: #3F9180;
+  --bg-success-2: #385E55;
+  --bg-success-1: #2B403B;
+  --bg-error: #BB4343;
+  --bg-error-2: #704542;
+  --bg-error-1: #542F2C;
+  --bg-warning: #DAAE2F;
+  --bg-warning-3: #786741;
+  --bg-warning-2: #5F5135;
+  --bg-warning-1: #443920;
+  --bg-brand-4: #978DBE;
+  --bg-warning-4: #AB925C;
+
+  /* ========================================================================
+     Container
+     ======================================================================== */
+
+  --container-default: rgba(255, 255, 255, 0.10);
+  --container-transparent-1: rgba(255, 255, 255, 0.10);
+  --container-transparent-2: rgba(255, 255, 255, 0.15);
+  --container-transparent-1-on-inverse: rgba(25, 25, 25, 0.05);
+  --container-transparent-2-on-inverse: rgba(25, 25, 25, 0.10);
+  --container-transparent-1-fixed: rgba(25, 25, 25, 0.05);
+  --container-transparent-1-on-inverse-fixed: rgba(255, 255, 255, 0.10);
+  --container-transparent-2-fixed: rgba(25, 25, 25, 0.10);
+  --container-transparent-2-on-inverse-fixed: rgba(255, 255, 255, 0.15);
+
+  /* ========================================================================
+     Popup
+     ======================================================================== */
+
+  --popup-primary: #303030;
+  --popup-secondary: #303030;
+
+  /* ========================================================================
+     Page
+     ======================================================================== */
+
+  --page-primary: #191919;
+  --page-secondary: #191919;
+
+  /* ========================================================================
+     Category
+     ======================================================================== */
+
+  --category-sand: #AE653F;
+  --category-coral: #B65B5E;
+  --category-flamingo: #AF5692;
+  --category-orchid: #9C58BC;
+  --category-amethyst: #895ECE;
+  --category-lavender: #716AD1;
+  --category-indigo: #5C79B6;
+  --category-sky: #4A86A1;
+  --category-mint: #4D8989;
+  --category-emerald: #5C8C52;
+  --category-orchid-fixed: #C799DF;
+  --category-indigo-fixed: #95AEE2;
+  --category-sky-fixed: #82BAD4;
+
+  /* ========================================================================
+     Marketing
+     ======================================================================== */
+
+  --marketing-amaranth-7-fixed: #A32881;
+  --marketing-amaranth-2-fixed: #F6D1E9;
+  --marketing-herbal-2-fixed: #CCF1DE;
+
+  /* ========================================================================
+     Tech
+     ======================================================================== */
+
+  /* Tech / iOS */
+  --tech-ios-primitive-default: #FFFFFF;
+  --tech-ios-primitive-white: #FFFFFF;
+  --tech-ios-primitive-black: #000000;
+  --tech-ios-bg-black: #000000;
+  --tech-ios-bg-additional: #141415;
+  --tech-ios-miscelanious-keyboard-icon: #FFFFFF;
+
+  /* Tech / Library */
+  --tech-library-demo: #000000;
+  --tech-library-component-fixed: #9747FF;
+
+  /* ========================================================================
+     State
+     ======================================================================== */
+
+  /* State / Container */
+  --state-container-transparent-1-active: rgba(255, 255, 255, 0.15);
+  --state-container-transparent-1-on-inverse-active: rgba(25, 25, 25, 0.10);
+  --state-container-transparent-2-active: rgba(255, 255, 255, 0.20);
+  --state-container-transparent-2-on-inverse-active: rgba(25, 25, 25, 0.15);
+  --state-container-transparent-1-fixed-active: rgba(25, 25, 25, 0.10);
+  --state-container-transparent-1-on-inverse-fixed-active: rgba(255, 255, 255, 0.15);
+  --state-container-transparent-2-fixed-active: rgba(25, 25, 25, 0.15);
+  --state-container-transparent-2-on-inverse-fixed-active: rgba(255, 255, 255, 0.20);
+
+  /* State / Bg */
+  --state-bg-default-active: #474747;
+  --state-bg-inverse-active: #E1E1E1;
+  --state-bg-brand-active: #835DE1;
+  --state-bg-inverse-fixed-active: rgba(25, 25, 25, 0.80);
+  --state-bg-default-fixed-active: rgba(255, 255, 255, 0.90);
+
+  /* ========================================================================
+     Translucent
+     ======================================================================== */
+
+  --translucent-primitive-neutral-2: rgba(255, 255, 255, 0.25);
+  --translucent-primitive-neutral-2-on-inverse: rgba(25, 25, 25, 0.20);
+  --translucent-primitive-neutral-3: rgba(255, 255, 255, 0.30);
+  --translucent-primitive-neutral-3-on-inverse: rgba(25, 25, 25, 0.25);
+  --translucent-primitive-neutral-2-fixed: rgba(25, 25, 25, 0.20);
+  --translucent-primitive-neutral-3-fixed: rgba(25, 25, 25, 0.25);
+  --translucent-primitive-neutral-3-on-inverse-fixed: rgba(255, 255, 255, 0.30);
+  --translucent-primitive-neutral-1: rgba(255, 255, 255, 0.20);
+  --translucent-primitive-neutral-4: rgba(255, 255, 255, 0.40);
+  --translucent-primitive-secondary-on-inverse: rgba(25, 25, 25, 0.65);
+
+  /* ========================================================================
+     Overlay
+     ======================================================================== */
+
+  --overlay-popup: rgba(25, 25, 25, 0.50);
+  --overlay-primary-alpha-050-fixed: rgba(25, 25, 25, 0.50);
+
+  /* ========================================================================
+     Extended
+     ======================================================================== */
+
+  /* Extended / Popup / Primary */
+  --extended-popup-primary-elevation-1: #454545;
+  --extended-popup-primary-elevation-2: #585858;
+  --extended-popup-primary-elevation-3: #696969;
+
+  /* Extended / Popup / Secondary */
+  --extended-popup-secondary-elevation-1: #454545;
+  --extended-popup-secondary-elevation-2: #585858;
+  --extended-popup-secondary-elevation-3: #696969;
+}

@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Page Header Component
+   Based on Figma: Админка рассылок / Page Header (node 4616:64926)
+   Uses design tokens from tokens/*.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container
+   -------------------------------------------------------------------------- */
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  gap: 10px;
+  font-family: var(--font-family-primary, 'TT Norms Tochka Extended', sans-serif);
+}
+
+/* --------------------------------------------------------------------------
+   Title — TTN 600/4XL
+   -------------------------------------------------------------------------- */
+
+.page-header__title {
+  font-size: var(--font-size-4xl, 36px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-4xl, 40px);
+  letter-spacing: var(--letter-spacing-4xl, 0px);
+  color: var(--primitive-primary, #191919);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Description — TTN 400/XS
+   Toggled via "Has Description" boolean property in Figma
+   -------------------------------------------------------------------------- */
+
+.page-header__description {
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-regular, 400);
+  line-height: var(--line-height-xs, 15px);
+  letter-spacing: var(--letter-spacing-xs, 0.12px);
+  color: var(--primitive-success, #5CAD9A);
+  margin: 0;
+}

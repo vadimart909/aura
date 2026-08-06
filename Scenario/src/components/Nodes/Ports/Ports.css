@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Ports — контейнер портов (вертикальный flex-column 8×80)
+   Дизайн: Figma .🛠 Ports
+   ========================================================================== */
+
+.ports {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 10px;
+  height: 80px;
+}
+
+/* Gap: 10px для 1 порта, 14px для 2–3 портов */
+.ports--count-1 {
+  gap: 10px;
+}
+
+.ports--count-2,
+.ports--count-3 {
+  gap: 14px;
+}
+
+/* Side positioning */
+.ports--right {
+  right: -5px;
+}
+
+.ports--left {
+  left: -5px;
+}
