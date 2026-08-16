@@ -1,0 +1,265 @@
+/* ==========================================================================
+   DrawerWaiting — правый боковой drawer для настройки блока «Ожидание»
+   ========================================================================== */
+
+/* ---- Overlay ---- */
+.drawer-waiting-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--overlay-popup);
+  animation: overlay-in 300ms ease both;
+}
+
+/* ---- Drawer panel ---- */
+.drawer-waiting {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--shadow-drawer-right);
+  animation: slide-right-in 300ms ease both;
+}
+
+/* ---- Header (64px) ---- */
+.drawer-waiting__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.drawer-waiting__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: center;
+}
+
+.drawer-waiting__close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-waiting__close-btn:hover {
+  background: var(--container-transparent-1);
+  transform: scale(1.02);
+}
+
+.drawer-waiting__close-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---- Content (scrollable) ---- */
+.drawer-waiting__content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 16px;
+}
+
+/* ---- Fields container ---- */
+.drawer-waiting__fields {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0;
+  gap: 16px;
+}
+
+/* ---- Field (shared base for dropdown & input) ---- */
+.drawer-waiting__field {
+  display: flex;
+  align-items: stretch;
+  padding: 0 20px;
+  background: rgba(25, 25, 25, 0.05);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.drawer-waiting__field--dropdown {
+  cursor: pointer;
+}
+
+.drawer-waiting__field--focused {
+  border-color: var(--primitive-brand);
+}
+
+.drawer-waiting__field-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  gap: 8px;
+}
+
+.drawer-waiting__field-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-waiting__field-value {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-waiting__field-placeholder {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #949494;
+}
+
+/* ---- Field accessory (chevron) ---- */
+.drawer-waiting__field-accessory {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0 0 16px;
+  flex-shrink: 0;
+  color: var(--primitive-primary);
+}
+
+/* ---- Dropdown wrapper (for absolute positioning) ---- */
+.drawer-waiting__field-wrapper {
+  position: relative;
+}
+
+/* ---- Dropdown options list ---- */
+.drawer-waiting__dropdown-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--bg-default);
+  border-radius: var(--rounding-3x);
+  box-shadow: var(--shadow-popout);
+  z-index: 10;
+  padding: 4px 0;
+}
+
+.drawer-waiting__dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  transition: background 0.15s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.drawer-waiting__dropdown-option:hover {
+  background: var(--container-transparent-1);
+}
+
+.drawer-waiting__dropdown-option--selected {
+  font-weight: var(--font-weight-medium);
+}
+
+.drawer-waiting__dropdown-option-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Input field ---- */
+.drawer-waiting__input {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+.drawer-waiting__input::placeholder {
+  color: #949494;
+}
+
+/* ---- Footer ---- */
+.drawer-waiting__footer {
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.drawer-waiting__save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--rounding-2-5x);
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-waiting__save-btn:hover {
+  background: var(--state-bg-brand-active);
+  transform: scale(1.02);
+}
+
+.drawer-waiting__save-btn:active {
+  transform: scale(0.98);
+}
+

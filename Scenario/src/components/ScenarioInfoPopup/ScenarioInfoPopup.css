@@ -1,0 +1,25 @@
+/* ================================================================== */
+/*  ScenarioInfoPopup — minimal overrides (layout via DS Modal)        */
+/* ================================================================== */
+
+.scenario-info__header-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3x);
+}
+
+.scenario-info__cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5x);
+}
+
+.scenario-info__name {
+  color: var(--primitive-primary);
+}
+
+.scenario-info__description {
+  color: var(--primitive-secondary);
+}
+
+/* (Status tag color classes moved to global.css) */

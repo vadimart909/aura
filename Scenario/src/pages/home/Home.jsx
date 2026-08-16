@@ -3,13 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import './home.css'
 import { useScenariosContext } from '../../context/ScenariosContext'
 import dogDigging from './dog-digging.svg'
+import { Chip } from '@ds/components/Chip'
+import { Button } from '@ds/components/Button'
+import { Tag } from '@ds/components/Tag'
 
-const statusClassMap = {
-  draft: 'badge--grey',
-  published: 'badge--purple',
-  started: 'badge--yellow',
-  stopped: 'badge--red',
-  finishing: 'badge--red',
+function DotsIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+    </svg>
+  )
 }
 
 function SearchIcon() {
@@ -27,26 +32,15 @@ function SearchIcon() {
   )
 }
 
-function PlusCircleIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 7C11.4477 7 11 7.44772 11 8V11H8C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H11V16C11 16.5523 11.4477 17 12 17C12.5523 17 13 16.5523 13 16V13H16C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11H13V8C13 7.44772 12.5523 7 12 7Z"
-        fill="white"
-      />
-    </svg>
-  )
+const statusTagClassMap = {
+  draft: 'tag--status-grey',
+  published: 'tag--status-purple',
+  started: 'tag--status-yellow',
+  stopped: 'tag--status-red',
+  finishing: 'tag--status-red',
 }
 
-function DotsIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="5" cy="12" r="1.5" fill="currentColor" />
-      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-      <circle cx="19" cy="12" r="1.5" fill="currentColor" />
-    </svg>
-  )
-}
+const CURRENT_USER = 'Вадим Артёменко'
 
 function Home() {
   const navigate = useNavigate()
@@ -55,13 +49,17 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const showAuthor = filter === 'all'
 
+  const baseScenarios = filter === 'my'
+    ? scenarios.filter((s) => s.author === CURRENT_USER)
+    : scenarios
+
   const query = searchQuery.toLowerCase().trim()
-  const filteredScenarios = scenarios.filter((row) => {
+  const filteredScenarios = baseScenarios.filter((row) => {
     if (!query) return true
     return (
       row.name.toLowerCase().includes(query) ||
       row.description.toLowerCase().includes(query) ||
-      row.author.toLowerCase().includes(query)
+      (showAuthor && row.author.toLowerCase().includes(query))
     )
   })
 
@@ -72,27 +70,24 @@ function Home() {
         <div className="scenarios__search-block">
           <div className="scenarios__actions">
             <div className="scenarios__chips">
-              <button
-                type="button"
-                className={`chip-tab${filter === 'my' ? ' chip-tab--selected' : ''}`}
+              <Chip
+                variant="tab"
+                isSelected={filter === 'my'}
                 onClick={() => setFilter('my')}
               >
                 Мои сценарии
-              </button>
-              <button
-                type="button"
-                className={`chip-tab${filter === 'all' ? ' chip-tab--selected' : ''}`}
+              </Chip>
+              <Chip
+                variant="tab"
+                isSelected={filter === 'all'}
                 onClick={() => setFilter('all')}
               >
                 Все
-              </button>
+              </Chip>
             </div>
-            <button type="button" className="btn btn--brand" onClick={() => navigate('/scenario/create')}>
-              <span className="btn__icon">
-                <PlusCircleIcon />
-              </span>
-              <span className="btn__label">Создать сценарий</span>
-            </button>
+            <Button variant="primary" onClick={() => navigate('/scenario/create')}>
+              Создать сценарий
+            </Button>
           </div>
 
           <div className="search-bar">
@@ -111,19 +106,21 @@ function Home() {
           </div>
         </div>
 
-        {filter === 'my' ? (
-          <div className="empty-view">
-            <img src={dogDigging} alt="" className="empty-view__image" />
-            <div className="empty-view__text-block">
-              <p className="empty-view__text">Здесь будут твои сценарии. Пока их нет.</p>
+        {filteredScenarios.length === 0 ? (
+          filter === 'my' && !query ? (
+            <div className="empty-view">
+              <img src={dogDigging} alt="" className="empty-view__image" />
+              <div className="empty-view__text-block">
+                <p className="empty-view__text">Здесь будут твои сценарии. Пока их нет.</p>
+              </div>
             </div>
-          </div>
-        ) : filteredScenarios.length === 0 ? (
-          <div className="search-empty-view">
-            <p className="search-empty-view__text">
-              Ничего не найдено. Попробуй изменить поисковый запрос.
-            </p>
-          </div>
+          ) : (
+            <div className="search-empty-view">
+              <p className="search-empty-view__text">
+                Ничего не найдено. Попробуй изменить поисковый запрос.
+              </p>
+            </div>
+          )
         ) : (
           <div className="table">
             {/* Table Header */}
@@ -158,9 +155,9 @@ function Home() {
                     </div>
                   </div>
                   <div className="table__cell table__cell--status">
-                    <span className={`badge ${statusClassMap[row.status]}`}>
+                    <Tag size="s" className={statusTagClassMap[row.status]}>
                       {row.statusLabel}
-                    </span>
+                    </Tag>
                   </div>
                   {showAuthor && (
                     <div className="table__cell table__cell--author">
@@ -189,7 +186,7 @@ function Home() {
 
             {/* Table Footer */}
             <div className="table__footer">
-              <span className="table__footer-text">Показано {filteredScenarios.length} из {scenarios.length}</span>
+              <span className="table__footer-text">Показано {filteredScenarios.length} из {baseScenarios.length}</span>
             </div>
           </div>
         )}

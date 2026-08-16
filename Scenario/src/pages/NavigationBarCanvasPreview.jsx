@@ -63,6 +63,15 @@ export default function NavigationBarCanvasPreview() {
           onBack={() => window.history.back()}
         />
       </div>
+
+      <div>
+        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Edit mode (toolbar)</h3>
+        <NavigationBarCanvas
+          mode="edit"
+          onBack={() => window.history.back()}
+          onToolbarItemClick={(id) => alert(`Toolbar item: ${id}`)}
+        />
+      </div>
     </div>
   );
 }

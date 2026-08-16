@@ -26,12 +26,14 @@
   border-radius: var(--rounding-2x);
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
   overflow: visible;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
+/* Hover: elevated shadow + lift */
 .node-waiting:hover .node-waiting__card,
 .node-waiting--hover .node-waiting__card {
-  box-shadow: var(--shadow-popout);
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 /* Click/Active: outline + bg AROUND the card */
@@ -155,6 +157,10 @@
   text-overflow: ellipsis;
   flex: 1;
   min-width: 0;
+}
+
+.node-waiting__row-text--filled {
+  color: #191919;
 }
 
 .node-waiting__row--error .node-waiting__row-text {

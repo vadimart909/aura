@@ -11,6 +11,8 @@ import iconWarning from './icons/icon-warning.svg';
  * @param {object}  props
  * @param {string}  [props.title='Коммуникация']  — заголовок в шапке
  * @param {boolean} [props.showError=true]          — строка «Ошибка»
+ * @param {string}  [props.templateTitle]           — название выбранного шаблона
+ * @param {string}  [props.templateDescription]     — каналы (например «Email, Пуш, Чат»)
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {function} [props.onClick]
  * @param {string}  [props.className]
@@ -18,6 +20,9 @@ import iconWarning from './icons/icon-warning.svg';
 export default function NodeCommunicationCard({
   title = 'Коммуникация',
   showError = true,
+  showActions = true,
+  templateTitle = '',
+  templateDescription = '',
   state = 'default',
   className = '',
   onClick,
@@ -32,7 +37,7 @@ export default function NodeCommunicationCard({
   return (
     <div className={`node-communication ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      <NodeActions />
+      {showActions && <NodeActions />}
 
       {/* ---- Card ---- */}
       <div className="node-communication__card">
@@ -48,7 +53,18 @@ export default function NodeCommunicationCard({
             <span className="node-communication__row-avatar node-communication__row-avatar--filled">
               <img src={iconDocumentList} alt="" width="10" height="10" />
             </span>
-            <span className="node-communication__row-text">Шаблон</span>
+            {templateTitle ? (
+              <span className="node-communication__row-text-group">
+                <span className="node-communication__row-text">{templateTitle}</span>
+                {templateDescription && (
+                  <span className="node-communication__row-description">
+                    {templateDescription}
+                  </span>
+                )}
+              </span>
+            ) : (
+              <span className="node-communication__row-text">Шаблон</span>
+            )}
             {/* ---- Ports ---- */}
             <Ports count={1} side="left" />
             <Ports count={1} side="right" />

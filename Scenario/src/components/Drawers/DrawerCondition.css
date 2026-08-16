@@ -1,0 +1,237 @@
+/* ==========================================================================
+   DrawerCondition — правый боковой drawer для настройки блока «Условие»
+   ========================================================================== */
+
+/* ---- Overlay ---- */
+.drawer-condition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--overlay-popup);
+  animation: overlay-in 300ms ease both;
+}
+
+/* ---- Drawer panel ---- */
+.drawer-condition {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--shadow-drawer-right);
+  animation: slide-right-in 300ms ease both;
+}
+
+/* ---- Header (64px) ---- */
+.drawer-condition__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.drawer-condition__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: center;
+}
+
+.drawer-condition__close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-condition__close-btn:hover {
+  background: var(--container-transparent-1);
+  transform: scale(1.02);
+}
+
+.drawer-condition__close-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---- Content (scrollable) ---- */
+.drawer-condition__content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 16px;
+}
+
+/* ---- Action cell (Добавить) ---- */
+.drawer-condition__action-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  min-height: 48px;
+  background: var(--container-transparent-1);
+  border-radius: var(--cell-rounding-strong);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-condition__action-cell:hover {
+  background: var(--state-container-transparent-1-active);
+  transform: scale(1.02);
+}
+
+.drawer-condition__action-cell:active {
+  transform: scale(0.98);
+}
+
+.drawer-condition__action-cell-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  color: var(--primitive-brand);
+}
+
+.drawer-condition__action-cell-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-brand);
+}
+
+/* ---- Conditions list ---- */
+.drawer-condition__conditions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- Condition card ---- */
+.drawer-condition__condition-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+}
+
+.drawer-condition__condition-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  gap: 2px;
+}
+
+.drawer-condition__condition-overline {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #676767;
+}
+
+.drawer-condition__condition-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-condition__condition-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.drawer-condition__condition-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #676767;
+  cursor: pointer;
+  border-radius: var(--rounding-1x);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-condition__condition-action-btn:hover {
+  color: var(--primitive-primary);
+  transform: scale(1.02);
+}
+
+.drawer-condition__condition-action-btn:active {
+  transform: scale(0.98);
+}
+
+.drawer-condition__condition-action-btn--delete:hover {
+  color: var(--primitive-error);
+}
+
+/* ---- Footer ---- */
+.drawer-condition__footer {
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.drawer-condition__save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--rounding-2-5x);
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-condition__save-btn:hover {
+  background: var(--state-bg-brand-active);
+  transform: scale(1.02);
+}
+
+.drawer-condition__save-btn:active {
+  transform: scale(0.98);
+}

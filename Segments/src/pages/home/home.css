@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Страница «Все сегменты» — стили
+   Используем CSS-переменные из tokens.css
+   ========================================================================== */
+
+/* --- Layout --- */
+.segments-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: var(--spacing-5x);
+  overflow: hidden;
+}
+
+.segments-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-5x);
+  width: 100%;
+  max-width: 1400px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* --- Search & Filters Block --- */
+.segments-page__search-block {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-3x);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.segments-page__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2x);
+  height: 40px;
+}
+
+.segments-page__chips {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2x);
+  flex: 1;
+}
+
+/* --- Search Bar --- */
+.segments-page__search {
+  display: flex;
+  align-items: stretch;
+  padding: 0 var(--spacing-3x);
+  height: var(--spacing-12x);
+  background: var(--container-transparent-1);
+  border-radius: var(--form-rounding);
+  gap: var(--spacing-2x);
+}
+
+.segments-page__search-icon {
+  display: flex;
+  align-items: center;
+  color: var(--primitive-neutral-4);
+  flex-shrink: 0;
+}
+
+.segments-page__search-icon svg {
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+.segments-page__search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  outline: none;
+}
+
+.segments-page__search-input::placeholder {
+  color: var(--primitive-neutral-4);
+}
+
+/* --- Chip Tabs --- */
+.chip-tab {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-2x);
+  height: var(--spacing-8x);
+  border: none;
+  border-radius: var(--chip-rounding-weak);
+  background: var(--container-transparent-1);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.chip-tab:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+.chip-tab--selected {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.4px var(--primitive-primary);
+}
+
+.chip-tab--selected:hover {
+  background: var(--container-transparent-1);
+}
+
+/* --- Button --- */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2x);
+  padding: 0 var(--spacing-3x);
+  height: 40px;
+  border: none;
+  border-radius: var(--button-rounding-weak);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn--brand {
+  background: var(--bg-brand);
+  color: var(--primitive-default);
+}
+
+.btn--brand:hover {
+  background: var(--state-bg-brand-active);
+}
+
+.btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn__icon svg {
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+
+/* --- Table --- */
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5x);
+  width: 100%;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.table__header {
+  display: flex;
+  gap: var(--spacing-0-5x);
+  border-radius: var(--form-rounding) var(--form-rounding) 0 0;
+  overflow: hidden;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.table__header .table__cell {
+  background: var(--container-transparent-1);
+  padding: var(--spacing-2-5x) var(--spacing-5x);
+  min-height: auto;
+}
+
+.table__header-text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.table__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5x);
+  overflow-y: auto;
+}
+
+.table__row {
+  display: flex;
+  gap: var(--spacing-0-5x);
+  align-items: center;
+}
+
+.table__cell {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2-5x) var(--spacing-5x);
+  background: var(--container-transparent-1);
+  min-height: 100px;
+}
+
+/* Column widths */
+.table__cell--segment {
+  flex: 1;
+  min-width: 0;
+}
+
+.table__cell--clients {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.table__cell--date {
+  width: 175px;
+  flex-shrink: 0;
+}
+
+.table__cell--actions {
+  width: 64px;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+
+/* --- Cell content --- */
+.table__cell-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5x);
+  width: 100%;
+  min-width: 0;
+}
+
+.table__cell-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table__cell-desc {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* --- Action button --- */
+.table__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primitive-primary);
+  padding: var(--spacing-1x);
+  border-radius: var(--rounding-1x);
+  transition: background-color 0.15s ease;
+}
+
+.table__action-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.table__action-btn svg {
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+/* --- Table Footer --- */
+.table__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--spacing-2-5x) var(--spacing-5x);
+  background: var(--container-transparent-1);
+  border-radius: 0 0 var(--form-rounding) var(--form-rounding);
+  min-height: 42px;
+  flex-shrink: 0;
+}
+
+.table__footer-text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+
+/* --- Search Empty View (Not Found) --- */
+.search-empty-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 80px 20px 32px;
+  gap: 16px;
+  width: 100%;
+}
+
+.search-empty-view__text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+  text-align: center;
+}
+
+/* --- Empty View --- */
+.empty-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 80px 20px;
+  gap: 40px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.empty-view__text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+}
+
+.empty-view__text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+  text-align: center;
+}
+
+/* --- Header column text alignment --- */
+.table__header .table__cell--clients .table__header-text,
+.table__header .table__cell--date .table__header-text {
+  text-align: left;
+  width: 100%;
+}
+

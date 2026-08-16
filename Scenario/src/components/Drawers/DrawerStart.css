@@ -1,0 +1,524 @@
+/* ==========================================================================
+   DrawerStart — правый боковой drawer для настройки блока «Старт»
+   ========================================================================== */
+
+/* ---- Overlay ---- */
+.drawer-start-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--overlay-popup);
+  animation: overlay-in 300ms ease both;
+}
+
+/* ---- Drawer panel ---- */
+.drawer-start {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--shadow-drawer-right);
+  animation: slide-right-in 300ms ease both;
+}
+
+/* ---- Header (64px) ---- */
+.drawer-start__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.drawer-start__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: center;
+}
+
+.drawer-start__close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-start__close-btn:hover {
+  background: var(--container-transparent-1);
+  transform: scale(1.02);
+}
+
+.drawer-start__close-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---- Content (scrollable) ---- */
+.drawer-start__content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 32px;
+}
+
+/* ---- Section ---- */
+.drawer-start__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drawer-start__section-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  color: var(--primitive-primary);
+}
+
+/* ---- Chips (условия запуска) ---- */
+.drawer-start__chips {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-start__chip {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  gap: 8px;
+  border: none;
+  border-radius: var(--chip-rounding-strong);
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.drawer-start__chip--active {
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+}
+
+.drawer-start__chip--inactive {
+  background: var(--container-transparent-1);
+  color: var(--primitive-primary);
+}
+
+.drawer-start__chip--inactive:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-start__chip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* ---- Days of week chips ---- */
+.drawer-start__days {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-start__day-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: var(--chip-rounding-strong);
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.drawer-start__day-chip--active {
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+}
+
+.drawer-start__day-chip--inactive {
+  background: var(--container-transparent-1);
+  color: var(--primitive-primary);
+}
+
+.drawer-start__day-chip--inactive:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+/* ---- Action cell (Добавить триггер/сегмент) ---- */
+.drawer-start__action-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  min-height: 48px;
+  background: var(--container-transparent-1);
+  border-radius: var(--cell-rounding-strong);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-start__action-cell:hover {
+  background: var(--state-container-transparent-1-active);
+  transform: scale(1.02);
+}
+
+.drawer-start__action-cell:active {
+  transform: scale(0.98);
+}
+
+.drawer-start__action-cell-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  color: var(--primitive-brand);
+}
+
+.drawer-start__action-cell-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-brand);
+}
+
+/* ---- Selected trigger card ---- */
+.drawer-start__trigger-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawer-start__trigger-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #C799DF;
+  color: var(--primitive-default);
+}
+
+.drawer-start__trigger-info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-start__trigger-overline {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+.drawer-start__trigger-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-start__trigger-description {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+.drawer-start__trigger-delete {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-1x);
+  transition: color 0.15s ease;
+}
+
+.drawer-start__trigger-delete:hover {
+  color: var(--primitive-brand);
+}
+
+/* ---- Dropdown (Время) ---- */
+.drawer-start__dropdown-wrapper {
+  position: relative;
+}
+
+.drawer-start__dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  padding: 0 20px;
+  background: var(--container-transparent-1);
+  border-radius: var(--rounding-3x);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.drawer-start__dropdown:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-start__dropdown-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawer-start__dropdown-text {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 12px 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-start__dropdown-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-start__dropdown-value {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-neutral-4);
+}
+
+.drawer-start__dropdown-value--selected {
+  color: var(--primitive-primary);
+}
+
+/* ---- Dropdown input (combobox) ---- */
+.drawer-start__dropdown-input {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  cursor: text;
+}
+
+.drawer-start__dropdown-input::placeholder {
+  color: var(--primitive-neutral-4);
+}
+
+.drawer-start__dropdown-input--has-value {
+  color: var(--primitive-primary);
+}
+
+.drawer-start__dropdown--open {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-start__dropdown-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--primitive-primary);
+}
+
+.drawer-start__dropdown-description {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.drawer-start__dropdown-divider {
+  height: 0.5px;
+  background: rgba(25, 25, 25, 0.2);
+}
+
+.drawer-start__dropdown-hint {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+/* ---- Dropdown options list ---- */
+.drawer-start__dropdown-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--bg-default);
+  border-radius: var(--rounding-3x);
+  box-shadow: var(--shadow-popout);
+  z-index: 10;
+  padding: 4px 0;
+}
+
+.drawer-start__dropdown-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  transition: background 0.15s ease;
+  text-align: left;
+  gap: 12px;
+}
+
+.drawer-start__dropdown-option:hover {
+  background: var(--container-transparent-1);
+}
+
+.drawer-start__dropdown-option--selected {
+  color: var(--primitive-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.drawer-start__dropdown-option-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-start__dropdown-option-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-success);
+}
+
+.drawer-start__dropdown-no-results {
+  padding: 10px 20px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+/* ---- Footer ---- */
+.drawer-start__footer {
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.drawer-start__save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--rounding-2-5x);
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-start__save-btn:hover {
+  background: var(--state-bg-brand-active);
+  transform: scale(1.02);
+}
+
+.drawer-start__save-btn:active {
+  transform: scale(0.98);
+}

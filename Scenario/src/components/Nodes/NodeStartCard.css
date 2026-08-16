@@ -27,13 +27,14 @@
   border-radius: var(--rounding-2x);
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
   overflow: visible;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover: elevated shadow */
+/* Hover: elevated shadow + lift */
 .node-start:hover .node-start__card,
 .node-start--hover .node-start__card {
-  box-shadow: var(--shadow-popout);
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 /* Click/Active: purple outline + purple bg AROUND the card */
@@ -98,6 +99,15 @@
   background: var(--primitive-default);
 }
 
+/* When a row has a text-group (overline / description), align icon to top */
+.node-start__row:has(.node-start__row-text-group) {
+  align-items: flex-start;
+}
+
+.node-start__row:has(.node-start__row-text-group) .node-start__row-avatar {
+  margin-top: 2px;
+}
+
 .node-start__row:last-child {
   border-radius: 0 0 var(--rounding-2x) var(--rounding-2x);
 }
@@ -155,3 +165,44 @@
   color: var(--primitive-error);
 }
 
+/* ---------- Row — Text group (overline + label) ---------- */
+
+.node-start__row-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.node-start__row-overline {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.01em;
+  color: #676767;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-start__row-text-group .node-start__row-text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #191919;
+}
+
+.node-start__row-description {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.01em;
+  color: #676767;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

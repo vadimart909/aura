@@ -1,0 +1,187 @@
+@import "./tokens.css";
+
+:root {
+  font-family: var(--font-family-tt-norms-tochka-extended), Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: var(--font-weight-regular);
+  color: var(--primitive-primary);
+  background-color: var(--page-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Header — Main Page Navigation Bar
+   Based on Figma node 19910:44075
+   ========================================================================== */
+.header {
+  position: relative;
+  background-color: var(--page-primary);
+  padding: var(--spacing-5x) 0; /* 20px 0 */
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* --- Logo area --- */
+.header__logo {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-5x); /* 0 20px */
+  width: 122px;
+  flex-shrink: 0;
+}
+
+.header__logo-icon {
+  width: 81px;
+  height: 20px;
+}
+
+/* --- Navigation area --- */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2-5x); /* 10px */
+  padding: 0 var(--spacing-5x); /* 0 20px */
+  flex: 1;
+  height: 32px;
+}
+
+.header__nav-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2-5x) var(--spacing-4x); /* 10px 16px */
+  gap: var(--spacing-2-5x); /* 10px */
+  border-radius: var(--rounding-2-5x); /* 10px */
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m); /* 16px */
+  font-weight: var(--font-weight-medium); /* 500 */
+  line-height: var(--line-height-m); /* 20px */
+  letter-spacing: var(--letter-spacing-tight); /* 0.01em */
+  color: var(--primitive-primary);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.header__nav-btn:hover {
+  background-color: var(--container-transparent-1);
+}
+
+.header__nav-btn--active {
+  color: var(--primitive-brand); /* #835DE1 purple */
+  background-color: var(--bg-neutral-1); /* #F4F4F4 */
+}
+
+/* --- User / Settings area --- */
+.header__user {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-5x); /* 20px */
+  padding: 0 var(--spacing-5x); /* 0 20px */
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.header__avatar {
+  width: var(--icon-size-l); /* 32px */
+  height: var(--icon-size-l);
+  border-radius: 50%;
+  background-color: var(--category-indigo); /* #95AEE2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.header__avatar-text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-xs); /* 12px */
+  font-weight: var(--font-weight-demibold); /* 600 */
+  line-height: var(--line-height-xs); /* 15px */
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-default); /* white */
+}
+
+.header__username {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-size: var(--font-size-m); /* 16px */
+  font-weight: var(--font-weight-medium); /* 500 */
+  line-height: var(--line-height-m); /* 20px */
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  white-space: nowrap;
+}
+
+/* --- Separator line --- */
+.header__separator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--bg-neutral-3); /* #E1E1E1 */
+}
+
+/* ==========================================================================
+   General page utilities
+   ========================================================================== */
+.page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.page h1 {
+  margin-bottom: 1rem;
+  font-size: var(--font-size-3xl);
+}
+
+.page p {
+  margin-bottom: 1rem;
+  color: var(--primitive-secondary);
+}
+
+.page nav a {
+  color: var(--primitive-brand);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.page nav a:hover {
+  text-decoration: underline;
+}

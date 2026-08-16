@@ -9,18 +9,23 @@ import iconWarning from './icons/icon-warning.svg';
  * NodeConditionCard — карточка ноды «Условие».
  *
  * @param {object}  props
- * @param {string}  [props.title='Условие']       — заголовок в шапке
- * @param {number}  [props.conditions=1]           — кол-во строк условий (1–3)
- * @param {boolean} [props.showShowAll=false]       — ссылка «Показать все»
- * @param {boolean} [props.showError=true]          — строка «Ошибка»
+ * @param {string}  [props.title='Условие']            — заголовок в шапке
+ * @param {number}  [props.conditions=1]                — кол-во строк условий (1–3)
+ * @param {string[]} [props.conditionLabels=[]]         — названия выбранных условий/сегментов
+ * @param {string[]} [props.conditionOverlines=[]]      — overline-текст (категория) для каждого условия
+ * @param {boolean} [props.showShowAll=false]            — ссылка «Показать все»
+ * @param {boolean} [props.showError=true]               — строка «Ошибка»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {string}  [props.className]
  */
 export default function NodeConditionCard({
   title = 'Условие',
   conditions = 1,
+  conditionLabels = [],
+  conditionOverlines = [],
   showShowAll = false,
   showError = true,
+  showActions = true,
   state = 'default',
   className = '',
   onClick,
@@ -37,7 +42,7 @@ export default function NodeConditionCard({
   return (
     <div className={`node-condition ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      <NodeActions />
+      {showActions && <NodeActions />}
 
       {/* ---- Card ---- */}
       <div className="node-condition__card">
@@ -46,37 +51,44 @@ export default function NodeConditionCard({
           <span className="node-condition__header-title">{title}</span>
         </div>
 
-        {/* Content */}
-        <div className="node-condition__content">
-          {/* Condition rows */}
-          {Array.from({ length: conditionCount }, (_, i) => (
-            <div key={i} className="node-condition__row">
-              <span className="node-condition__row-avatar node-condition__row-avatar--filled">
-                <img src={iconCheckmarkCircle} alt="" width="10" height="10" />
-              </span>
-              <span className="node-condition__row-text">Условие</span>
-              {/* Ports on the first condition row */}
-              {i === 0 && (
-                <>
-                  <Ports count={1} side="left" />
-                  <Ports count={2} side="right" colors={['green', 'red']} />
-                </>
-              )}
-            </div>
-          ))}
+        {/* Content wrapper — ports center relative to this */}
+        <div className="node-condition__content-wrapper">
+          <div className="node-condition__content">
+            {/* Condition rows */}
+            {Array.from({ length: conditionCount }, (_, i) => (
+              <div key={i} className="node-condition__row">
+                <span className="node-condition__row-avatar node-condition__row-avatar--filled">
+                  <img src={iconCheckmarkCircle} alt="" width="10" height="10" />
+                </span>
+                {conditionOverlines[i] ? (
+                  <span className="node-condition__row-text-wrap">
+                    <span className="node-condition__row-overline">{conditionOverlines[i]}</span>
+                    <span className="node-condition__row-title">{conditionLabels[i] || 'Условие'}</span>
+                  </span>
+                ) : (
+                  <span className="node-condition__row-text">{conditionLabels[i] || 'Условие'}</span>
+                )}
+              </div>
+            ))}
 
-          {/* «Показать все» link */}
-          {showShowAll && (
-            <div className="node-condition__show-all">
-              <span className="node-condition__show-all-text">Показать все</span>
-            </div>
-          )}
+            {/* «Показать все» link + badge */}
+            {showShowAll && (
+              <div className="node-condition__show-all">
+                <span className="node-condition__show-all-text">Показать все</span>
+                <span className="node-condition__show-all-badge">{conditions}</span>
+              </div>
+            )}
 
-          {showError && (
-            <div className="node-condition__row node-condition__row--error">
-              <span className="node-condition__row-text">Ошибка</span>
-            </div>
-          )}
+            {showError && (
+              <div className="node-condition__row node-condition__row--error">
+                <span className="node-condition__row-text">Ошибка</span>
+              </div>
+            )}
+          </div>
+
+          {/* Ports — center vertically across the full content-wrapper */}
+          <Ports count={1} side="left" />
+          <Ports count={2} side="right" colors={['green', 'red']} />
         </div>
       </div>
 

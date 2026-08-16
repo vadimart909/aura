@@ -1,0 +1,76 @@
+/* ==========================================================================
+   CreateScenarioCanvas — страница «Создание сценария» (Шаг 2 — канвас)
+   ========================================================================== */
+
+.flow-scenario-canvas {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: var(--page-secondary);
+  position: relative;
+}
+
+/* ---- Canvas area ---- */
+
+.flow-scenario-canvas__area {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ReactFlow needs an explicit height on its container */
+.flow-scenario-canvas__area .react-flow {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide default ReactFlow background dots — canvas uses solid background */
+.flow-scenario-canvas__area .react-flow__background {
+  display: none;
+}
+
+/* Scale positioning */
+.flow-scenario-canvas__scale {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  z-index: 5;
+}
+
+/* ---- Footer ---- */
+
+.flow-scenario-canvas__footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-default);
+}
+
+.flow-scenario-canvas__footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 12px 20px;
+  gap: 8px;
+}
+
+.flow-scenario-canvas__footer-hint {
+  color: var(--primitive-secondary);
+  text-align: center;
+}
+
+.flow-scenario-canvas__footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* --- Button width override for footer --- */
+.flow-scenario-canvas__btn-width {
+  width: 320px;
+  min-width: 320px;
+}
+
+/* (Draft/Publish modals now use DS FlowResultView) */

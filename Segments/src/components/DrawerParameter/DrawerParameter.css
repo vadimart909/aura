@@ -1,0 +1,308 @@
+/* ==========================================================================
+   DrawerParameter — правый боковой drawer для добавления параметра
+   Based on Figma node 23191:187218
+   ========================================================================== */
+
+/* ---- Overlay ---- */
+.drawer-param-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--overlay-popup);
+}
+
+/* ---- Drawer panel ---- */
+.drawer-param {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--shadow-drawer-right);
+}
+
+/* ---- Header (64px) ---- */
+.drawer-param__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.drawer-param__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: center;
+}
+
+.drawer-param__close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease;
+}
+
+.drawer-param__close-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+/* ---- Content (scrollable) ---- */
+.drawer-param__content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 16px;
+}
+
+/* ---- Dropdown field ---- */
+/* ---- Dropdown wrap (positioning context for options) ---- */
+.drawer-param__dropdown-wrap {
+  position: relative;
+}
+
+.drawer-param__dropdown {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  background: var(--container-transparent-1);
+  border-radius: var(--form-rounding);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.drawer-param__dropdown:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-param__dropdown--open {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-param__dropdown-inner {
+  display: flex;
+  align-items: center;
+}
+
+.drawer-param__dropdown-text {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  gap: 8px;
+  flex: 1;
+}
+
+.drawer-param__dropdown-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-param__dropdown-value {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+/* Search input inside parameter dropdown */
+.drawer-param__dropdown-input {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-param__dropdown-input::placeholder {
+  color: var(--primitive-tertiary);
+}
+
+.drawer-param__dropdown-value--placeholder {
+  color: var(--primitive-neutral-4);
+}
+
+.drawer-param__dropdown-accessory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-left: 16px;
+  color: var(--primitive-primary);
+}
+
+/* ---- Dropdown description (shown when category has description) ---- */
+.drawer-param__dropdown-description {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.drawer-param__dropdown-divider {
+  height: 0.5px;
+  background: rgba(25, 25, 25, 0.2);
+}
+
+.drawer-param__dropdown-hint {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Footer ---- */
+.drawer-param__footer {
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.drawer-param__add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--rounding-2-5x);
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.drawer-param__add-btn:hover {
+  background: var(--state-bg-brand-active);
+}
+
+/* --------------------------------------------------------------------------
+   Category options list (context menu)
+   Based on Figma node 23191:187369
+   -------------------------------------------------------------------------- */
+
+.drawer-param__options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--bg-default);
+  border-radius: var(--form-rounding);
+  box-shadow: var(--shadow-popout);
+  z-index: 10;
+  padding: 4px 0;
+}
+
+.drawer-param__option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.drawer-param__option:hover {
+  background: var(--container-transparent-1);
+}
+
+.drawer-param__option-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-param__option-name {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-param__option-desc {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.drawer-param__option--empty {
+  cursor: default;
+  pointer-events: none;
+}
+
+.drawer-param__option--empty .drawer-param__option-name {
+  color: var(--primitive-secondary);
+}
+
+.drawer-param__option-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-success);
+}

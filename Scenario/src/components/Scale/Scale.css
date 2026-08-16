@@ -21,11 +21,16 @@
   background: transparent;
   cursor: pointer;
   color: #191919;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .scale__btn:hover {
   background: rgba(25, 25, 25, 0.1);
+  transform: scale(1.02);
+}
+
+.scale__btn:active {
+  transform: scale(0.98);
 }
 
 .scale__btn svg {

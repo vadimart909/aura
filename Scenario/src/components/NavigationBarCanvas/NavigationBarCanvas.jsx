@@ -1,5 +1,9 @@
 import './NavigationBarCanvas.css';
 
+import iconNetwork from '../Nodes/icons/icon-network.svg';
+import iconWatch from '../Nodes/icons/icon-watch.svg';
+import iconAirplanePaper from '../Nodes/icons/icon-airplane-paper.svg';
+
 /* --------------------------------------------------------------------------
    Status → badge CSS-class mapping
    -------------------------------------------------------------------------- */
@@ -10,6 +14,15 @@ const badgeClassMap = {
   stopped: 'nav-bar-canvas__badge--red',
   finishing: 'nav-bar-canvas__badge--red',
 };
+
+/* --------------------------------------------------------------------------
+   Toolbar items for Edit mode
+   -------------------------------------------------------------------------- */
+const toolbarItems = [
+  { id: 'condition', icon: iconNetwork, label: 'Условие' },
+  { id: 'waiting', icon: iconWatch, label: 'Ожидание' },
+  { id: 'communication', icon: iconAirplanePaper, label: 'Коммуникация' },
+];
 
 /* --------------------------------------------------------------------------
    Inline SVG icons
@@ -74,16 +87,19 @@ function PlayIcon() {
  * Navigation bar for the scenario canvas (editor / viewer).
  *
  * @param {Object}   props
- * @param {string}   props.title       — scenario name
- * @param {string}   props.status      — status key (draft | published | started | stopped | finishing)
- * @param {string}   props.statusLabel — human-readable status text (e.g. "Черновик")
- * @param {Function} [props.onBack]    — callback for back button
- * @param {Function} [props.onInfo]    — callback for info button
- * @param {Function} [props.onMore]    — callback for dots/more button
- * @param {Function} [props.onAction]  — callback for the primary action button
- * @param {string}   [props.actionLabel] — label for the action button (default: none, icon-only)
+ * @param {'read'|'edit'} [props.mode='read'] — display mode
+ * @param {string}   [props.title]      — scenario name (read mode)
+ * @param {string}   [props.status]     — status key (read mode)
+ * @param {string}   [props.statusLabel] — human-readable status text (read mode)
+ * @param {Function} [props.onBack]     — callback for back button
+ * @param {Function} [props.onInfo]     — callback for info button
+ * @param {Function} [props.onMore]     — callback for dots/more button
+ * @param {Function} [props.onAction]   — callback for the primary action button (read mode)
+ * @param {string}   [props.actionLabel] — label for the action button (read mode)
+ * @param {Function} [props.onToolbarItemClick] — callback when toolbar button is clicked (edit mode)
  */
 export default function NavigationBarCanvas({
+  mode = 'read',
   title = '',
   status = 'draft',
   statusLabel = 'Черновик',
@@ -92,11 +108,13 @@ export default function NavigationBarCanvas({
   onMore,
   onAction,
   actionLabel,
+  onToolbarItemClick,
 }) {
+  const isEdit = mode === 'edit';
   const badgeClass = badgeClassMap[status] || badgeClassMap.draft;
 
   return (
-    <nav className="nav-bar-canvas">
+    <nav className={`nav-bar-canvas ${isEdit ? 'nav-bar-canvas--edit' : ''}`}>
       {/* Back button */}
       <button
         type="button"
@@ -107,11 +125,46 @@ export default function NavigationBarCanvas({
         <ArrowLeftIcon />
       </button>
 
-      {/* Title + status */}
-      <div className="nav-bar-canvas__title-block">
-        {title && <h2 className="nav-bar-canvas__title">{title}</h2>}
-        <span className={`nav-bar-canvas__badge ${badgeClass}`}>{statusLabel}</span>
-      </div>
+      {/* ---- Read mode: Title + status ---- */}
+      {!isEdit && (
+        <div className="nav-bar-canvas__title-block">
+          {title && <h2 className="nav-bar-canvas__title">{title}</h2>}
+          <span className={`nav-bar-canvas__badge ${badgeClass}`}>{statusLabel}</span>
+        </div>
+      )}
+
+      {/* ---- Edit mode: Toolbar (hint + buttons) ---- */}
+      {isEdit && (
+        <div className="nav-bar-canvas__toolbar">
+          <div className="nav-bar-canvas__toolbar-hint">
+            Перетащи на рабочую область
+          </div>
+          <div className="nav-bar-canvas__toolbar-buttons">
+            {toolbarItems.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="nav-bar-canvas__toolbar-btn"
+                draggable
+                onDragStart={(event) => {
+                  event.dataTransfer.setData('application/reactflow', item.id);
+                  event.dataTransfer.effectAllowed = 'move';
+                }}
+                onClick={() => onToolbarItemClick?.(item.id)}
+              >
+                <img
+                  src={item.icon}
+                  alt=""
+                  className="nav-bar-canvas__toolbar-btn-icon"
+                  width={24}
+                  height={24}
+                />
+                <span className="nav-bar-canvas__toolbar-btn-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Right controls */}
       <div className="nav-bar-canvas__right">
