@@ -12,20 +12,29 @@ import iconWarning from './icons/icon-warning.svg';
  * @param {object}  props
  * @param {string}  [props.title='Старт']  — заголовок в шапке
  * @param {boolean} [props.showTrigger=true]  — строка «Триггер»
- * @param {boolean} [props.showSchedule=true] — строка «Расписание»
- * @param {boolean} [props.showTime=true]     — строка «Время»
+ * @param {boolean} [props.showSchedule=true] — строка «Расписание» (combined with time)
  * @param {boolean} [props.showSegment=true]  — строка «Сегмент»
  * @param {boolean} [props.showError=true]    — строка «Ошибка»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {string}  [props.className]
+ * @param {string}  [props.scheduleLabel]     — time value for schedule (e.g. "12:30")
+ * @param {string}  [props.scheduleOverline]  — overline for schedule (e.g. "Ежедневно")
+ * @param {string}  [props.scheduleDescription] — description for schedule (e.g. "Москва (UTC+3)")
  */
 export default function NodeStartCard({
   title = 'Старт',
   showTrigger = true,
-  showSchedule = true,
-  showTime = true,
+  showSchedule = false,
+  showScheduleDays = false,
   showSegment = true,
   showError = true,
+  triggerLabel = '',
+  segmentLabel = '',
+  scheduleLabel = '',
+  scheduleOverline = '',
+  scheduleDescription = '',
+  scheduleDaysLabel = '',
+  scheduleDaysOverline = '',
   state = 'default',
   className = '',
   onClick,
@@ -50,16 +59,37 @@ export default function NodeStartCard({
         <div className="node-start__content-wrapper">
           <div className="node-start__content">
             {showTrigger && (
-              <InfoRow icon={iconTrigger} label="Триггер" filled />
+              <InfoRow
+                icon={iconTrigger}
+                label={triggerLabel || 'Триггер'}
+                overline={triggerLabel ? 'Триггер' : ''}
+                filled
+              />
+            )}
+            {showScheduleDays && (
+              <InfoRow
+                icon={iconCalendar}
+                label={scheduleDaysLabel || 'В конкретные дни'}
+                overline={scheduleDaysOverline || ''}
+                filled
+              />
             )}
             {showSchedule && (
-              <InfoRow icon={iconCalendar} label="Расписание" filled />
-            )}
-            {showTime && (
-              <InfoRow icon={iconWatch} label="Время" filled />
+              <InfoRow
+                icon={iconWatch}
+                label={scheduleLabel || 'Расписание'}
+                overline={scheduleOverline || ''}
+                description={scheduleDescription || ''}
+                filled
+              />
             )}
             {showSegment && (
-              <InfoRow icon={iconPerson} label="Сегмент" filled />
+              <InfoRow
+                icon={iconPerson}
+                label={segmentLabel || 'Сегмент'}
+                overline={segmentLabel ? 'Сегмент' : ''}
+                filled
+              />
             )}
             {showError && (
               <div className="node-start__row node-start__row--error">
@@ -78,7 +108,8 @@ export default function NodeStartCard({
 
 /* ---------- Internal sub-component ---------- */
 
-function InfoRow({ icon, label, filled = false }) {
+function InfoRow({ icon, label, overline = '', description = '', filled = false }) {
+  const hasTextGroup = overline || description;
   return (
     <div className="node-start__row">
       <span
@@ -86,7 +117,19 @@ function InfoRow({ icon, label, filled = false }) {
       >
         <img src={icon} alt="" width={filled ? 10 : 16} height={filled ? 10 : 16} />
       </span>
-      <span className="node-start__row-text">{label}</span>
+      {hasTextGroup ? (
+        <span className="node-start__row-text-group">
+          {overline && (
+            <span className="node-start__row-overline">{overline}</span>
+          )}
+          <span className="node-start__row-text">{label}</span>
+          {description && (
+            <span className="node-start__row-description">{description}</span>
+          )}
+        </span>
+      ) : (
+        <span className="node-start__row-text">{label}</span>
+      )}
     </div>
   );
 }

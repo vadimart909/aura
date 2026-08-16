@@ -11,6 +11,7 @@ import iconWarning from './icons/icon-warning.svg';
  * @param {object}  props
  * @param {string}  [props.title='Ожидание']  — заголовок в шапке
  * @param {boolean} [props.showError=true]     — строка «Ошибка»
+ * @param {string}  [props.waitingLabel]       — заполненное значение, напр. «4 часа» / «3 дня»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {function} [props.onClick]
  * @param {string}  [props.className]
@@ -18,6 +19,8 @@ import iconWarning from './icons/icon-warning.svg';
 export default function NodeWaitingCard({
   title = 'Ожидание',
   showError = true,
+  showActions = true,
+  waitingLabel = '',
   state = 'default',
   className = '',
   onClick,
@@ -32,7 +35,7 @@ export default function NodeWaitingCard({
   return (
     <div className={`node-waiting ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      <NodeActions />
+      {showActions && <NodeActions />}
 
       {/* ---- Card ---- */}
       <div className="node-waiting__card">
@@ -43,12 +46,18 @@ export default function NodeWaitingCard({
 
         {/* Content */}
         <div className="node-waiting__content">
-          {/* Строка «Ожидание» */}
+          {/* Строка «Ожидание» / заполненное значение */}
           <div className="node-waiting__row">
             <span className="node-waiting__row-avatar node-waiting__row-avatar--filled">
               <img src={iconHourglass} alt="" width="10" height="10" />
             </span>
-            <span className="node-waiting__row-text">Ожидание</span>
+            {waitingLabel ? (
+              <span className="node-waiting__row-text node-waiting__row-text--filled">
+                {waitingLabel}
+              </span>
+            ) : (
+              <span className="node-waiting__row-text">Ожидание</span>
+            )}
             {/* ---- Ports ---- */}
             <Ports count={1} side="left" />
             <Ports count={1} side="right" />

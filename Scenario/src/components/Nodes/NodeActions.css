@@ -27,15 +27,17 @@
   background: transparent;
   cursor: pointer;
   border-radius: var(--rounding-2x);
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .node-actions__btn:hover {
   background: rgba(0, 0, 0, 0.06);
+  transform: scale(1.02);
 }
 
 .node-actions__btn:active {
   background: rgba(0, 0, 0, 0.1);
+  transform: scale(0.98);
 }
 
 .node-actions__btn img {

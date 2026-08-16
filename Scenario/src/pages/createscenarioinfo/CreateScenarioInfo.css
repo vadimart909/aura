@@ -1,0 +1,122 @@
+/* ==========================================================================
+   CreateScenarioInfo — страница «Создание сценария» (Шаг 1 — форма)
+   ========================================================================== */
+
+.flow-scenario {
+  display: flex;
+  min-height: calc(100vh - 74px); /* viewport minus header */
+  background: var(--page-secondary);
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar (Navigation Bar)
+   -------------------------------------------------------------------------- */
+
+.flow-scenario__sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  padding: 32px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.flow-scenario__back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--translucent-primitives-neutral-3);
+  border-radius: var(--rounding-2-5x);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.flow-scenario__back-btn:hover {
+  background: var(--container-transparent-1);
+  transform: scale(1.02);
+}
+
+.flow-scenario__back-btn:active {
+  transform: scale(0.98);
+}
+
+.flow-scenario__back-btn svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-primary);
+}
+
+.flow-scenario__sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flow-scenario__sidebar-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-demibold);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-2xl);
+  color: var(--primitive-primary);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Content area (centered form)
+   -------------------------------------------------------------------------- */
+
+.flow-scenario__main {
+  position: absolute;
+  left: 50vw;
+  transform: translateX(-50%);
+  width: 720px;
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  /* leave room for the sticky footer */
+  padding-bottom: 100px;
+}
+
+.flow-scenario__form {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* (Input / TextArea field styles removed — now handled by DS Input & TextArea components) */
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.flow-scenario__footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-default);
+  z-index: 10;
+}
+
+.flow-scenario__footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+}
+
+/* --- Buttons --- */
+
+/* Button width override for footer */
+.flow-scenario__footer-content .button {
+  width: 320px;
+}
+
+/* (Draft modal now uses DS FlowResultView) */

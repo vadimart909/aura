@@ -3,57 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useScenariosContext } from '../../context/ScenariosContext';
 import NavigationBarCanvas from '../../components/NavigationBarCanvas/NavigationBarCanvas';
+import ScenarioInfoPopup from '../../components/ScenarioInfoPopup';
 import NodeStartCard from '../../components/Nodes/NodeStartCard';
 import Scale from '../../components/Scale';
+import { Button } from '@ds/components/Button';
 
 import './ScenarioView.css';
-
-/* ------------------------------------------------------------------ */
-/*  Status → badge CSS-class mapping (reused from NavigationBarCanvas) */
-/* ------------------------------------------------------------------ */
-const popupBadgeClassMap = {
-  draft: 'scenario-info__badge--grey',
-  published: 'scenario-info__badge--purple',
-  started: 'scenario-info__badge--yellow',
-  stopped: 'scenario-info__badge--red',
-  finishing: 'scenario-info__badge--red',
-};
-
-/* ------------------------------------------------------------------ */
-/*  ScenarioInfoPopup                                                  */
-/* ------------------------------------------------------------------ */
-function ScenarioInfoPopup({ name, description, status, statusLabel, onClose }) {
-  const badgeClass = popupBadgeClassMap[status] || popupBadgeClassMap.draft;
-
-  return (
-    <div className="scenario-info-overlay" onClick={onClose}>
-      <div className="scenario-info" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="scenario-info__header">
-          <span className="scenario-info__title">О сценарии</span>
-          <span className={`scenario-info__badge ${badgeClass}`}>{statusLabel}</span>
-        </div>
-
-        {/* Content */}
-        <div className="scenario-info__content">
-          <div className="scenario-info__cell">
-            <span className="scenario-info__name">{name}</span>
-            {description && (
-              <span className="scenario-info__description">{description}</span>
-            )}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="scenario-info__footer">
-          <button type="button" className="scenario-info__close-btn" onClick={onClose}>
-            Закрыть
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  Page component                                                     */
@@ -69,10 +24,11 @@ export default function ScenarioView() {
     <div className="scenario-view">
       {/* ---- Navigation Bar Canvas ---- */}
       <NavigationBarCanvas
+        mode="read"
         title={scenario?.name ?? 'Сценарий'}
         status={scenario?.status ?? 'draft'}
         statusLabel={scenario?.statusLabel ?? ''}
-        onBack={() => navigate(-1)}
+        onBack={() => navigate('/')}
         onInfo={() => setShowInfo(true)}
       />
 
@@ -88,9 +44,11 @@ export default function ScenarioView() {
 
       {/* ---- Footer ---- */}
       <footer className="scenario-view__footer">
-        <button type="button" className="scenario-view__footer-btn">
-          Редактировать
-        </button>
+        <div className="scenario-view__footer-content">
+          <Button variant="primary" onClick={() => navigate(`/scenario/edit/${id}`)}>
+            Редактировать
+          </Button>
+        </div>
       </footer>
 
       {/* ---- Info Popup ---- */}

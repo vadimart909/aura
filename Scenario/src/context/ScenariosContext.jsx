@@ -10,8 +10,18 @@ export function ScenariosProvider({ children }) {
     setScenarios((prev) => [scenario, ...prev]);
   }
 
+  function updateScenario(id, updates) {
+    setScenarios((prev) =>
+      prev.map((s) => (String(s.id) === String(id) ? { ...s, ...updates } : s)),
+    );
+  }
+
+  function removeScenario(id) {
+    setScenarios((prev) => prev.filter((s) => String(s.id) !== String(id)));
+  }
+
   return (
-    <ScenariosContext.Provider value={{ scenarios, addScenario }}>
+    <ScenariosContext.Provider value={{ scenarios, addScenario, updateScenario, removeScenario }}>
       {children}
     </ScenariosContext.Provider>
   );

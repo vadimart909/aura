@@ -1,19 +1,62 @@
-@import "./tokens.css";
+/* Design-system style tokens */
+@import "@ds/assets/Style/color.css";
+@import "@ds/assets/Style/font.css";
+@import "@ds/assets/Style/radius.css";
+@import "@ds/assets/Style/spacing.css";
+@import "@ds/assets/Style/shadow.css";
+@import "@ds/assets/Style/animation.css";
+@import "@ds/assets/Icon/icon.css";
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
   font-family: var(--font-family-tt-norms-tochka-extended), Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: var(--font-weight-regular);
   color: var(--primitive-primary);
   background-color: var(--page-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  /* Font-weight aliases (not shipped by DS tokens — kept for custom components) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-demibold: 600;
+
+  /* Font-size aliases (not shipped by DS tokens — use ts-* classes where possible) */
+  --font-size-xxs: 10px;
+  --font-size-xs: 12px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+
+  /* Line-height aliases */
+  --line-height-xxs: 13px;
+  --line-height-xs: 15px;
+  --line-height-s: 18px;
+  --line-height-m: 20px;
+  --line-height-l: 22px;
+  --line-height-xl: 26px;
+  --line-height-2xl: 30px;
+  --line-height-3xl: 36px;
+  --line-height-4xl: 40px;
+
+  /* Letter-spacing alias */
+  --letter-spacing-tight: 0.01em;
+
+  /* Shadow aliases — DS tokens use capitalized names (--Popout, --Drawer-Right, …),
+     but component CSS references lowercase-prefixed variants. Bridge them here. */
+  --shadow-popout: var(--Popout);
+  --shadow-drawer-right: var(--Drawer-Right);
+  --shadow-floating: var(--Floating);
 }
 
 body {
@@ -38,123 +81,22 @@ main {
 }
 
 /* ==========================================================================
-   Header — Main Page Navigation Bar
-   Based on Figma node 19910:44075
+   Page transition animation (fade-in on route change)
    ========================================================================== */
-.header {
+
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.page-transition {
+  animation: page-fade-in 300ms ease both;
   position: relative;
-  background-color: var(--page-primary);
-  padding: var(--spacing-5x) 0; /* 20px 0 */
+  z-index: 200; /* > 100 (header), чтобы fixed-дроверы внутри были поверх */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-}
-
-.header__content {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-/* --- Logo area --- */
-.header__logo {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--spacing-5x); /* 0 20px */
-  width: 122px;
-  flex-shrink: 0;
-}
-
-.header__logo-icon {
-  width: 81px;
-  height: 20px;
-}
-
-/* --- Navigation area --- */
-.header__nav {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2-5x); /* 10px */
-  padding: 0 var(--spacing-5x); /* 0 20px */
-  flex: 1;
-  height: 32px;
-}
-
-.header__nav-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--spacing-2-5x) var(--spacing-4x); /* 10px 16px */
-  gap: var(--spacing-2-5x); /* 10px */
-  border-radius: var(--rounding-2-5x); /* 10px */
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-size: var(--font-size-m); /* 16px */
-  font-weight: var(--font-weight-medium); /* 500 */
-  line-height: var(--line-height-m); /* 20px */
-  letter-spacing: var(--letter-spacing-tight); /* 0.01em */
-  color: var(--primitive-primary);
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.header__nav-btn:hover {
-  background-color: var(--container-transparent-1);
-}
-
-.header__nav-btn--active {
-  color: var(--primitive-brand); /* #835DE1 purple */
-  background-color: var(--bg-neutral-1); /* #F4F4F4 */
-}
-
-/* --- User / Settings area --- */
-.header__user {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-5x); /* 20px */
-  padding: 0 var(--spacing-5x); /* 0 20px */
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-.header__avatar {
-  width: var(--icon-size-l); /* 32px */
-  height: var(--icon-size-l);
-  border-radius: 50%;
-  background-color: var(--category-indigo); /* #95AEE2 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.header__avatar-text {
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-size: var(--font-size-xs); /* 12px */
-  font-weight: var(--font-weight-demibold); /* 600 */
-  line-height: var(--line-height-xs); /* 15px */
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--primitive-default); /* white */
-}
-
-.header__username {
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-size: var(--font-size-m); /* 16px */
-  font-weight: var(--font-weight-medium); /* 500 */
-  line-height: var(--line-height-m); /* 20px */
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--primitive-primary);
-  white-space: nowrap;
-}
-
-/* --- Separator line --- */
-.header__separator {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: var(--bg-neutral-3); /* #E1E1E1 */
+  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -168,7 +110,7 @@ main {
 
 .page h1 {
   margin-bottom: 1rem;
-  font-size: var(--font-size-3xl);
+  font-size: 30px;
 }
 
 .page p {
@@ -179,9 +121,33 @@ main {
 .page nav a {
   color: var(--primitive-brand);
   text-decoration: none;
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
 }
 
 .page nav a:hover {
   text-decoration: underline;
+}
+
+/* ==========================================================================
+   Status Tag color overrides (DS Tag is neutral by default)
+   Shared across Home table rows and ScenarioInfoPopup.
+   ========================================================================== */
+.tag--status-grey {
+  background: var(--bg-neutral-3);
+  color: var(--primitive-secondary);
+}
+
+.tag--status-purple {
+  background: var(--bg-brand-2);
+  color: var(--primitive-brand);
+}
+
+.tag--status-yellow {
+  background: var(--bg-warning-2);
+  color: var(--primitive-warning-2);
+}
+
+.tag--status-red {
+  background: var(--bg-error-2);
+  color: var(--primitive-error);
 }

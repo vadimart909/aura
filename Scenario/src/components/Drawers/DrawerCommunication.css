@@ -1,0 +1,434 @@
+/* ==========================================================================
+   DrawerCommunication — правый боковой drawer для настройки блока «Коммуникация»
+   ========================================================================== */
+
+/* ---- Overlay ---- */
+.drawer-communication-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--overlay-popup);
+  animation: overlay-in 300ms ease both;
+}
+
+/* ---- Drawer panel ---- */
+.drawer-communication {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--shadow-drawer-right);
+  animation: slide-right-in 300ms ease both;
+}
+
+/* ---- Header (64px) ---- */
+.drawer-communication__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.drawer-communication__title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: center;
+}
+
+.drawer-communication__close-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-2x);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-communication__close-btn:hover {
+  background: var(--container-transparent-1);
+  transform: scale(1.02);
+}
+
+.drawer-communication__close-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---- Content (scrollable) ---- */
+.drawer-communication__content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 32px;
+}
+
+/* ---- Section ---- */
+.drawer-communication__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drawer-communication__section-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  color: var(--primitive-primary);
+}
+
+/* ---- Action cell (Добавить / Сменить шаблон) ---- */
+.drawer-communication__action-cell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  min-height: 48px;
+  background: var(--container-transparent-1);
+  border-radius: var(--cell-rounding-strong);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-communication__action-cell:hover {
+  background: var(--state-container-transparent-1-active);
+  transform: scale(1.02);
+}
+
+.drawer-communication__action-cell:active {
+  transform: scale(0.98);
+}
+
+.drawer-communication__action-cell-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  color: var(--primitive-brand);
+}
+
+.drawer-communication__action-cell-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-brand);
+}
+
+/* ---- Selected template card ---- */
+.drawer-communication__template-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawer-communication__template-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #95AEE2;
+  color: var(--primitive-default);
+}
+
+.drawer-communication__template-info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-communication__template-overline {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+.drawer-communication__template-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-communication__template-description {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
+}
+
+.drawer-communication__template-delete {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  border-radius: var(--rounding-1x);
+  transition: color 0.15s ease;
+}
+
+.drawer-communication__template-delete:hover {
+  color: var(--primitive-brand);
+}
+
+/* ---- Channels multiselect (Каналы рассылки) ---- */
+.drawer-communication__channels-wrapper {
+  position: relative;
+}
+
+.drawer-communication__channels {
+  padding: 0 20px;
+  background: var(--container-transparent-1);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.drawer-communication__channels--focused {
+  border-color: var(--primitive-brand);
+}
+
+.drawer-communication__channels-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.drawer-communication__channels-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-communication__channels-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.drawer-communication__channels-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.drawer-communication__channel-chip {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 1px;
+}
+
+.drawer-communication__channel-chip-label {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: var(--container-transparent-1);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  white-space: nowrap;
+}
+
+.drawer-communication__channel-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+  border: none;
+  background: var(--container-transparent-1);
+  color: var(--primitive-primary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.drawer-communication__channel-chip-remove:hover {
+  color: var(--primitive-brand);
+}
+
+/* ---- Channels placeholder (empty state) ---- */
+.drawer-communication__channels-placeholder {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #949494;
+}
+
+/* ---- Channels error state ---- */
+.drawer-communication__channels--error {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.drawer-communication__channels-error {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 12px;
+  gap: 8px;
+}
+
+.drawer-communication__channels-error-divider {
+  height: 2px;
+  background: #D84D4D;
+}
+
+.drawer-communication__channels-error-text {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #D84D4D;
+}
+
+/* ---- Channels accessory (chevron) ---- */
+.drawer-communication__channels-accessory {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0 0 16px;
+  border: none;
+  background: transparent;
+  color: var(--primitive-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.drawer-communication__channels-accessory:hover {
+  color: var(--primitive-brand);
+}
+
+/* ---- Channels dropdown (removed channels) ---- */
+.drawer-communication__channels-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-default);
+  border-radius: 12px;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.drawer-communication__channels-dropdown-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.drawer-communication__channels-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+
+.drawer-communication__channels-dropdown-item:hover {
+  background: var(--container-transparent-1);
+}
+
+/* ---- Footer ---- */
+.drawer-communication__footer {
+  flex-shrink: 0;
+  padding: 10px 20px;
+}
+
+.drawer-communication__save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--rounding-2-5x);
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.drawer-communication__save-btn:hover {
+  background: var(--state-bg-brand-active);
+  transform: scale(1.02);
+}
+
+.drawer-communication__save-btn:active {
+  transform: scale(0.98);
+}

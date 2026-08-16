@@ -5,8 +5,9 @@
 .scenario-view {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px); /* below Header */
-  background: #F9F9F9;
+  flex: 1;
+  min-height: 0;
+  background: var(--page-secondary);
 }
 
 /* ---- Canvas ---- */
@@ -29,47 +30,33 @@
 
 .scenario-view__scale {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  right: 32px;
+  bottom: 32px;
   z-index: 5;
 }
 
 /* ================================================================== */
-/*  Footer with "Редактировать" button                                 */
+/*  Footer with action buttons                                         */
 /* ================================================================== */
 
 .scenario-view__footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  gap: 8px;
-  background: #FFFFFF;
+  background: var(--bg-default);
 }
 
-.scenario-view__footer-btn {
+.scenario-view__footer-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 320px;
-  height: 48px;
-  padding: 0 16px;
-  background: #835DE1;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 12px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition: background 0.15s ease;
+  padding: var(--spacing-3x) var(--spacing-5x);
+  gap: var(--spacing-2x);
 }
 
-.scenario-view__footer-btn:hover {
-  background: #7350cb;
+/* Button width override */
+.scenario-view__footer-content .button {
+  width: 320px;
 }
 
 /* ================================================================== */
@@ -215,132 +202,4 @@
 /* Make node wrapper not clip handles */
 .react-flow__node {
   overflow: visible !important;
-}
-
-/* ================================================================== */
-/*  ScenarioInfoPopup — "О сценарии" modal                             */
-/* ================================================================== */
-
-/* Overlay */
-.scenario-info-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(25, 25, 25, 0.4);
-}
-
-/* Popup container */
-.scenario-info {
-  display: flex;
-  flex-direction: column;
-  width: 480px;
-  max-height: 80vh;
-  background: #FFFFFF;
-  border-radius: 12px;
-  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-/* ---- Header ---- */
-.scenario-info__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  height: 56px;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-.scenario-info__title {
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #191919;
-}
-
-/* Badge */
-.scenario-info__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 5px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 0.01em;
-  color: #676767;
-}
-
-.scenario-info__badge--grey   { background: #E1E1E1; }
-.scenario-info__badge--purple { background: #E5D6FF; color: #6B3FA0; }
-.scenario-info__badge--yellow { background: #FFF4CC; color: #8A6D00; }
-.scenario-info__badge--red    { background: #FFE0E0; color: #C73636; }
-
-/* ---- Content ---- */
-.scenario-info__content {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 0;
-  overflow-y: auto;
-}
-
-.scenario-info__cell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 12px 20px;
-}
-
-.scenario-info__name {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
-  color: #191919;
-}
-
-.scenario-info__description {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  letter-spacing: 0.01em;
-  color: #676767;
-}
-
-/* ---- Footer ---- */
-.scenario-info__footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 20px;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.scenario-info__close-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  background: #835DE1;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 12px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.scenario-info__close-btn:hover {
-  background: #7350cb;
 }
