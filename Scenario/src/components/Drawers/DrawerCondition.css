@@ -167,7 +167,7 @@
 }
 
 .drawer-condition__condition-boolean-value {
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   color: var(--primitive-secondary);
 }
 
