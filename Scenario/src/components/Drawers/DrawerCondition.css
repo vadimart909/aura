@@ -166,6 +166,11 @@
   color: var(--primitive-primary);
 }
 
+.drawer-condition__condition-boolean-value {
+  font-weight: var(--font-weight-regular);
+  color: var(--primitive-secondary);
+}
+
 .drawer-condition__condition-actions {
   display: flex;
   align-items: center;

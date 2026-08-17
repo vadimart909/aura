@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(25, 25, 25, 0.4);
+  animation: overlay-in 0.2s ease forwards;
 }
 
 /* ---- Modal ---- */
@@ -22,6 +23,7 @@
   border-radius: var(--rounding-4-5x);
   overflow: hidden;
   box-shadow: var(--shadow-floating);
+  animation: popup-in 0.5s ease forwards;
 }
 
 /* ---- Header (64px) ---- */

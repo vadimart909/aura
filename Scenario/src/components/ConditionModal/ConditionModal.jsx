@@ -40,6 +40,23 @@ function CheckmarkIcon() {
   );
 }
 
+function RadioSelectedIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="5" fill="currentColor" />
+    </svg>
+  );
+}
+
+function RadioUnselectedIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+
 /**
  * ConditionModal — modal for selecting a condition (category + parameter).
  *
@@ -47,7 +64,7 @@ function CheckmarkIcon() {
  * @param {Function} props.onClose  — close without selecting
  * @param {Function} props.onSelect — callback({ id, title, category }) when user confirms
  */
-export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, excludeParamIds = [] }) {
+export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, excludeParamIds = [] }) {
   /* ---- State ---- */
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -55,6 +72,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [selectedParamId, setSelectedParamId] = useState(initialParamId || '');
   const [isParamOpen, setIsParamOpen] = useState(false);
   const [paramSearch, setParamSearch] = useState('');
+  const [booleanValue, setBooleanValue] = useState(initialBooleanValue !== undefined ? initialBooleanValue : true);
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
@@ -127,6 +145,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setSelectedParamId(id);
     setIsParamOpen(false);
     setParamSearch('');
+    setBooleanValue(true);
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -136,13 +155,18 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const handleSubmit = () => {
     if (!selectedParam) return;
     const categoryObj = CONDITION_CATEGORIES.find((c) => c.value === selectedParam.category);
-    onSelect({
+    const result = {
       id: selectedParam.id,
       title: selectedParam.title,
       description: selectedParam.description,
       category: selectedParam.category,
       categoryLabel: categoryObj?.label || selectedParam.category,
-    });
+      type: selectedParam.type,
+    };
+    if (selectedParam.type === 'boolean') {
+      result.booleanValue = booleanValue;
+    }
+    onSelect(result);
   };
 
   const handleOverlayClick = (e) => {
@@ -188,6 +212,33 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
             filteredParams={filteredParams}
             onSelect={handleParamSelect}
           />
+
+          {/* Boolean radio group */}
+          {selectedParam?.type === 'boolean' && (
+            <div className="condition-modal__radio-group">
+              <button
+                type="button"
+                className="condition-modal__radio-cell condition-modal__radio-cell--top"
+                onClick={() => setBooleanValue(true)}
+              >
+                <span className="condition-modal__radio-label">Да</span>
+                <span className={`condition-modal__radio-icon${booleanValue === true ? ' condition-modal__radio-icon--selected' : ''}`}>
+                  {booleanValue === true ? <RadioSelectedIcon /> : <RadioUnselectedIcon />}
+                </span>
+              </button>
+              <div className="condition-modal__radio-divider" />
+              <button
+                type="button"
+                className="condition-modal__radio-cell condition-modal__radio-cell--bottom"
+                onClick={() => setBooleanValue(false)}
+              >
+                <span className="condition-modal__radio-label">Нет</span>
+                <span className={`condition-modal__radio-icon${booleanValue === false ? ' condition-modal__radio-icon--selected' : ''}`}>
+                  {booleanValue === false ? <RadioSelectedIcon /> : <RadioUnselectedIcon />}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Footer */}

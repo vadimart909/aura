@@ -144,6 +144,11 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                     )}
                     <span className="drawer-condition__condition-title">
                       {condition.title}
+                      {condition.type === 'boolean' && (
+                        <span className="drawer-condition__condition-boolean-value">
+                          {' — '}{condition.booleanValue ? 'Да' : 'Нет'}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <div className="drawer-condition__condition-actions">
@@ -189,6 +194,7 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
           onSelect={handleConditionSelect}
           initialCategory={editingCondition?.category}
           initialParamId={editingCondition?.id}
+          initialBooleanValue={editingCondition?.booleanValue}
           excludeParamIds={conditions
             .filter((c) => c.id !== editingCondition?.id)
             .map((c) => c.id)
