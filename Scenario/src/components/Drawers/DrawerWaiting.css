@@ -176,6 +176,7 @@
   box-shadow: var(--shadow-popout);
   z-index: 10;
   padding: 4px 0;
+  animation: popout-in 0.25s ease both;
 }
 
 .drawer-waiting__dropdown-option {

@@ -100,6 +100,23 @@ main {
 }
 
 /* ==========================================================================
+   Popout animation (dropdown / context-menu appearance)
+   Same speed as DS popup-in (0.5s), but uses subtle scale + fade
+   instead of large translateY — better suited for small popouts.
+   ========================================================================== */
+
+@keyframes popout-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
    General page utilities
    ========================================================================== */
 .page {
