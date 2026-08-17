@@ -107,7 +107,7 @@
 .node-condition__row {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   width: 250px;
   padding: var(--spacing-1-5x) var(--spacing-3x);
@@ -129,6 +129,7 @@
   flex-shrink: 0;
   width: 16px;
   height: 16px;
+  margin-top: 2px;
   border-radius: var(--rounding-1x);
 }
 
