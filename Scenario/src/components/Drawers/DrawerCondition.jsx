@@ -150,12 +150,20 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                         </span>
                       )}
                       {condition.type === 'date' && condition.dateOperatorLabel && (
-                        <span className="drawer-condition__condition-boolean-value">
-                          {' — '}{condition.dateOperatorLabel}
-                          {condition.dateOperator === 'period' && condition.dateFrom && condition.dateTo
-                            ? `: ${condition.dateFrom} – ${condition.dateTo}`
-                            : condition.dateValue ? `: ${condition.dateValue}` : ''}
-                        </span>
+                        <>
+                          <span className="drawer-condition__condition-date-operator">
+                            {' '}{condition.dateOperatorLabel}
+                          </span>
+                          {condition.dateOperator === 'period' && condition.dateFrom && condition.dateTo ? (
+                            <span className="drawer-condition__condition-date-value">
+                              {' '}{condition.dateFrom} – {condition.dateTo}
+                            </span>
+                          ) : condition.dateValue ? (
+                            <span className="drawer-condition__condition-date-value">
+                              {' '}{condition.dateValue}
+                            </span>
+                          ) : null}
+                        </>
                       )}
                     </span>
                   </div>
