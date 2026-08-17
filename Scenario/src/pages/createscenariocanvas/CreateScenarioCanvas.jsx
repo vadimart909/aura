@@ -289,8 +289,12 @@ function CreateScenarioCanvasInner() {
             ...node.data,
             state: isActive ? 'active' : 'default',
             conditions: hasConditions ? saved.length : 1,
-            conditionLabels: hasConditions ? saved.map((c) => c.title) : [],
-            conditionOverlines: hasConditions ? saved.map((c) => c.categoryLabel || '') : [],
+            conditionLabels: hasConditions ? saved.map((c) =>
+              c.type === 'boolean' ? (c.booleanValue ? 'Да' : 'Нет') : c.title
+            ) : [],
+            conditionOverlines: hasConditions ? saved.map((c) =>
+              c.type === 'boolean' ? c.title : (c.categoryLabel || '')
+            ) : [],
             showShowAll: hasConditions && saved.length > 3,
             showError: hasSaved && !hasConditions,
             onClick: () => {
