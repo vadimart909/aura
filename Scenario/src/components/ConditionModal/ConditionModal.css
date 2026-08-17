@@ -331,14 +331,27 @@
   margin-top: 4px;
 }
 
+.condition-modal__date-field-wrapper--period > .datepicker {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
 /* ---- Date input field ---- */
 .condition-modal__date-field {
   display: flex;
   flex-direction: column;
   padding: 0 20px;
   background: rgba(25, 25, 25, 0.05);
+  border: 2px solid transparent;
   border-radius: 12px;
   cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.condition-modal__date-field--focused {
+  border-color: #835de1;
 }
 
 .condition-modal__date-field-content {
@@ -410,6 +423,12 @@
   height: 0.5px;
   margin-top: 8px;
   background: rgba(25, 25, 25, 0.2);
+  transition: background 0.15s ease, height 0.15s ease;
+}
+
+.condition-modal__date-period-input-wrapper--focused .condition-modal__date-period-divider {
+  height: 2px;
+  background: #835de1;
 }
 
 .condition-modal__date-period-description {
