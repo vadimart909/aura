@@ -57,6 +57,15 @@ function RadioUnselectedIcon() {
   );
 }
 
+/* ---- Date operator options ---- */
+const DATE_OPERATORS = [
+  { value: 'equal', label: 'Равно' },
+  { value: 'not_equal', label: 'Не равно' },
+  { value: 'after_or_equal', label: 'Позже или равно' },
+  { value: 'before_or_equal', label: 'Раньше или равно' },
+  { value: 'period', label: 'Период' },
+];
+
 /**
  * ConditionModal — modal for selecting a condition (category + parameter).
  *
@@ -64,7 +73,7 @@ function RadioUnselectedIcon() {
  * @param {Function} props.onClose  — close without selecting
  * @param {Function} props.onSelect — callback({ id, title, category }) when user confirms
  */
-export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, excludeParamIds = [] }) {
+export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, excludeParamIds = [] }) {
   /* ---- State ---- */
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -73,9 +82,12 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [isParamOpen, setIsParamOpen] = useState(false);
   const [paramSearch, setParamSearch] = useState('');
   const [booleanValue, setBooleanValue] = useState(initialBooleanValue !== undefined ? initialBooleanValue : true);
+  const [dateOperator, setDateOperator] = useState(initialDateOperator || 'equal');
+  const [isDateOperatorOpen, setIsDateOperatorOpen] = useState(false);
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
+  const dateOperatorRef = useRef(null);
   const searchInputRef = useRef(null);
 
   /* ---- Filtered parameters ---- */
@@ -117,8 +129,11 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
       if (isParamOpen && paramRef.current && !paramRef.current.contains(e.target)) {
         setIsParamOpen(false);
       }
+      if (isDateOperatorOpen && dateOperatorRef.current && !dateOperatorRef.current.contains(e.target)) {
+        setIsDateOperatorOpen(false);
+      }
     },
-    [isCategoryOpen, isParamOpen],
+    [isCategoryOpen, isParamOpen, isDateOperatorOpen],
   );
 
   useEffect(() => {
@@ -146,6 +161,8 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setIsParamOpen(false);
     setParamSearch('');
     setBooleanValue(true);
+    setDateOperator('equal');
+    setIsDateOperatorOpen(false);
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -165,6 +182,10 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     };
     if (selectedParam.type === 'boolean') {
       result.booleanValue = booleanValue;
+    }
+    if (selectedParam.type === 'date') {
+      result.dateOperator = dateOperator;
+      result.dateOperatorLabel = DATE_OPERATORS.find((o) => o.value === dateOperator)?.label || dateOperator;
     }
     onSelect(result);
   };
@@ -212,6 +233,22 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
             filteredParams={filteredParams}
             onSelect={handleParamSelect}
           />
+
+          {/* Date operator dropdown */}
+          {selectedParam?.type === 'date' && (
+            <DateOperatorDropdown
+              dateOperatorRef={dateOperatorRef}
+              isDateOperatorOpen={isDateOperatorOpen}
+              setIsDateOperatorOpen={setIsDateOperatorOpen}
+              setIsCategoryOpen={setIsCategoryOpen}
+              setIsParamOpen={setIsParamOpen}
+              dateOperator={dateOperator}
+              onSelect={(value) => {
+                setDateOperator(value);
+                setIsDateOperatorOpen(false);
+              }}
+            />
+          )}
 
           {/* Boolean radio group */}
           {selectedParam?.type === 'boolean' && (
@@ -405,6 +442,64 @@ function ParameterDropdown({
               Параметры не найдены
             </div>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+function DateOperatorDropdown({
+  dateOperatorRef,
+  isDateOperatorOpen,
+  setIsDateOperatorOpen,
+  setIsCategoryOpen,
+  setIsParamOpen,
+  dateOperator,
+  onSelect,
+}) {
+  const selectedLabel = DATE_OPERATORS.find((o) => o.value === dateOperator)?.label || 'Равно';
+
+  return (
+    <div className="condition-modal__dropdown" ref={dateOperatorRef}>
+      <div
+        className="condition-modal__dropdown-content"
+        onClick={() => {
+          setIsDateOperatorOpen((prev) => !prev);
+          setIsCategoryOpen(false);
+          setIsParamOpen(false);
+        }}
+      >
+        <div className="condition-modal__dropdown-text">
+          <span className="condition-modal__dropdown-label">Условие</span>
+          <span className="condition-modal__dropdown-value">{selectedLabel}</span>
+        </div>
+        <div className="condition-modal__dropdown-arrow">
+          {isDateOperatorOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        </div>
+      </div>
+
+      {isDateOperatorOpen && (
+        <div className="condition-modal__options">
+          {DATE_OPERATORS.map((op) => (
+            <button
+              key={op.value}
+              type="button"
+              className={`condition-modal__option${
+                dateOperator === op.value ? ' condition-modal__option--selected' : ''
+              }`}
+              onClick={() => onSelect(op.value)}
+            >
+              <div className="condition-modal__option-text">
+                <span className="condition-modal__option-title">{op.label}</span>
+              </div>
+              {dateOperator === op.value && (
+                <span className="condition-modal__option-check">
+                  <CheckmarkIcon />
+                </span>
+              )}
+            </button>
+          ))}
         </div>
       )}
     </div>
