@@ -82,7 +82,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [isParamOpen, setIsParamOpen] = useState(false);
   const [paramSearch, setParamSearch] = useState('');
   const [booleanValue, setBooleanValue] = useState(initialBooleanValue !== undefined ? initialBooleanValue : true);
-  const [dateOperator, setDateOperator] = useState(initialDateOperator || 'equal');
+  const [dateOperator, setDateOperator] = useState(initialDateOperator || '');
   const [isDateOperatorOpen, setIsDateOperatorOpen] = useState(false);
 
   const categoryRef = useRef(null);
@@ -161,7 +161,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setIsParamOpen(false);
     setParamSearch('');
     setBooleanValue(true);
-    setDateOperator('equal');
+    setDateOperator('');
     setIsDateOperatorOpen(false);
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
@@ -458,7 +458,7 @@ function DateOperatorDropdown({
   dateOperator,
   onSelect,
 }) {
-  const selectedLabel = DATE_OPERATORS.find((o) => o.value === dateOperator)?.label || 'Равно';
+  const selectedOp = DATE_OPERATORS.find((o) => o.value === dateOperator);
 
   return (
     <div className="condition-modal__dropdown" ref={dateOperatorRef}>
@@ -472,7 +472,13 @@ function DateOperatorDropdown({
       >
         <div className="condition-modal__dropdown-text">
           <span className="condition-modal__dropdown-label">Условие</span>
-          <span className="condition-modal__dropdown-value">{selectedLabel}</span>
+          {selectedOp ? (
+            <span className="condition-modal__dropdown-value">{selectedOp.label}</span>
+          ) : (
+            <span className="condition-modal__dropdown-value condition-modal__dropdown-value--placeholder">
+              Выбери из списка
+            </span>
+          )}
         </div>
         <div className="condition-modal__dropdown-arrow">
           {isDateOperatorOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
