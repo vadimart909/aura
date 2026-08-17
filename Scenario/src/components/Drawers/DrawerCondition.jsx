@@ -149,6 +149,11 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                           {' — '}{condition.booleanValue ? 'Да' : 'Нет'}
                         </span>
                       )}
+                      {condition.type === 'date' && condition.dateOperatorLabel && (
+                        <span className="drawer-condition__condition-boolean-value">
+                          {' — '}{condition.dateOperatorLabel}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <div className="drawer-condition__condition-actions">
@@ -195,6 +200,7 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
           initialCategory={editingCondition?.category}
           initialParamId={editingCondition?.id}
           initialBooleanValue={editingCondition?.booleanValue}
+          initialDateOperator={editingCondition?.dateOperator}
           excludeParamIds={conditions
             .filter((c) => c.id !== editingCondition?.id)
             .map((c) => c.id)
