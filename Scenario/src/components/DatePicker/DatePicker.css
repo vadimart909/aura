@@ -1,0 +1,156 @@
+/* ==========================================================================
+   DatePicker — popup calendar
+   ========================================================================== */
+
+.datepicker {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* ---- Navigation header ---- */
+.datepicker__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px 8px;
+}
+
+.datepicker__nav-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: 600;
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #191919;
+  cursor: default;
+}
+
+.datepicker__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: #191919;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.datepicker__nav-btn:hover {
+  background: rgba(25, 25, 25, 0.05);
+}
+
+/* ---- Scroll area ---- */
+.datepicker__scroll {
+  padding: 0 12px 12px;
+  max-height: 344px;
+  overflow-y: auto;
+}
+
+/* ---- Month block ---- */
+.datepicker__month-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.datepicker__month-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 0 8px;
+}
+
+.datepicker__month-title {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: 600;
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #191919;
+}
+
+/* ---- Day names row ---- */
+.datepicker__day-names {
+  display: flex;
+  padding: 2px;
+  gap: 2px;
+}
+
+.datepicker__day-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 40px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #191919;
+}
+
+.datepicker__day-name--holiday {
+  color: #d84d4d;
+}
+
+/* ---- Day rows ---- */
+.datepicker__row {
+  display: flex;
+  padding: 2px;
+  gap: 2px;
+}
+
+/* ---- Day cells ---- */
+.datepicker__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #191919;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.datepicker__cell:hover {
+  background: rgba(25, 25, 25, 0.05);
+}
+
+.datepicker__cell--empty {
+  cursor: default;
+  pointer-events: none;
+}
+
+.datepicker__cell--holiday {
+  color: #d84d4d;
+}
+
+.datepicker__cell--selected {
+  background: #835de1;
+  color: #ffffff;
+}
+
+.datepicker__cell--selected:hover {
+  background: #9b7ef1;
+}
+

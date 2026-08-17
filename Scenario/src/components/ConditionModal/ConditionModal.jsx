@@ -4,6 +4,7 @@ import {
   CONDITION_CATEGORIES,
   CONDITION_PARAMETERS,
 } from '../../data/mockConditions';
+import { DatePicker } from '../DatePicker';
 
 /* ---- Inline SVG icons ---- */
 
@@ -95,6 +96,9 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [dateValue, setDateValue] = useState(initialDateValue || '');
   const [dateFrom, setDateFrom] = useState(initialDateFrom || '');
   const [dateTo, setDateTo] = useState(initialDateTo || '');
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isDateFromPickerOpen, setIsDateFromPickerOpen] = useState(false);
+  const [isDateToPickerOpen, setIsDateToPickerOpen] = useState(false);
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
@@ -177,6 +181,9 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setDateValue('');
     setDateFrom('');
     setDateTo('');
+    setIsDatePickerOpen(false);
+    setIsDateFromPickerOpen(false);
+    setIsDateToPickerOpen(false);
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -269,62 +276,90 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
                 setDateValue('');
                 setDateFrom('');
                 setDateTo('');
+                setIsDatePickerOpen(false);
+                setIsDateFromPickerOpen(false);
+                setIsDateToPickerOpen(false);
               }}
             />
           )}
 
           {/* Date input (single) — for all operators except period */}
           {selectedParam?.type === 'date' && dateOperator && dateOperator !== 'period' && (
-            <div className="condition-modal__date-field">
-              <div className="condition-modal__date-field-content">
-                <div className="condition-modal__date-field-text">
-                  <span className="condition-modal__date-field-label">Дата</span>
-                  <input
-                    type="text"
-                    className="condition-modal__date-field-input"
-                    placeholder="дд.мм.гггг"
-                    value={dateValue}
-                    onChange={(e) => setDateValue(e.target.value)}
-                  />
-                </div>
-                <div className="condition-modal__date-field-icon">
-                  <CalendarIcon />
+            <div className="condition-modal__date-field-wrapper">
+              <div
+                className="condition-modal__date-field"
+                onMouseDown={(e) => {
+                  if (!isDatePickerOpen) { setIsDatePickerOpen(true); }
+                  e.preventDefault();
+                }}
+              >
+                <div className="condition-modal__date-field-content">
+                  <div className="condition-modal__date-field-text">
+                    <span className="condition-modal__date-field-label">Дата</span>
+                    <span className={`condition-modal__date-field-value${dateValue ? '' : ' condition-modal__date-field-value--placeholder'}`}>
+                      {dateValue || 'дд.мм.гггг'}
+                    </span>
+                  </div>
+                  <div className="condition-modal__date-field-icon">
+                    <CalendarIcon />
+                  </div>
                 </div>
               </div>
+              {isDatePickerOpen && (
+                <DatePicker
+                  value={dateValue}
+                  onChange={(v) => setDateValue(v)}
+                  onClose={() => setIsDatePickerOpen(false)}
+                />
+              )}
             </div>
           )}
 
           {/* Date input (period) — two fields side by side */}
           {selectedParam?.type === 'date' && dateOperator === 'period' && (
-            <div className="condition-modal__date-field">
-              <div className="condition-modal__date-period-content">
-                <span className="condition-modal__date-field-label">Период</span>
-                <div className="condition-modal__date-period-row">
-                  <div className="condition-modal__date-period-input-wrapper">
-                    <input
-                      type="text"
-                      className="condition-modal__date-field-input"
-                      placeholder="дд.мм.гггг"
-                      value={dateFrom}
-                      onChange={(e) => setDateFrom(e.target.value)}
-                    />
-                    <div className="condition-modal__date-period-divider" />
-                  </div>
-                  <div className="condition-modal__date-period-input-wrapper">
-                    <input
-                      type="text"
-                      className="condition-modal__date-field-input"
-                      placeholder="дд.мм.гггг"
-                      value={dateTo}
-                      onChange={(e) => setDateTo(e.target.value)}
-                    />
-                    <div className="condition-modal__date-period-divider" />
+            <div className="condition-modal__date-field-wrapper">
+              <div className="condition-modal__date-field">
+                <div className="condition-modal__date-period-content">
+                  <span className="condition-modal__date-field-label">Период</span>
+                  <div className="condition-modal__date-period-row">
+                    <div
+                      className="condition-modal__date-period-input-wrapper"
+                      onMouseDown={(e) => { if (!isDateFromPickerOpen) { setIsDateFromPickerOpen(true); } setIsDateToPickerOpen(false); e.preventDefault(); }}
+                    >
+                      <span className={`condition-modal__date-field-value${dateFrom ? '' : ' condition-modal__date-field-value--placeholder'}`}>
+                        {dateFrom || 'дд.мм.гггг'}
+                      </span>
+                      <div className="condition-modal__date-period-divider" />
+                    </div>
+                    <div
+                      className="condition-modal__date-period-input-wrapper"
+                      onMouseDown={(e) => { if (!isDateToPickerOpen) { setIsDateToPickerOpen(true); } setIsDateFromPickerOpen(false); e.preventDefault(); }}
+                    >
+                      <span className={`condition-modal__date-field-value${dateTo ? '' : ' condition-modal__date-field-value--placeholder'}`}>
+                        {dateTo || 'дд.мм.гггг'}
+                      </span>
+                      <div className="condition-modal__date-period-divider" />
+                    </div>
                   </div>
                 </div>
+                <div className="condition-modal__date-period-description">
+                  Указанные даты входят в период
+                </div>
               </div>
-              <div className="condition-modal__date-period-description">
-                Указанные даты входят в период
-              </div>
+              {isDateFromPickerOpen && (
+                <DatePicker
+                  value={dateFrom}
+                  onChange={(v) => setDateFrom(v)}
+                  onClose={() => setIsDateFromPickerOpen(false)}
+                />
+              )}
+              {isDateToPickerOpen && (
+                <DatePicker
+                  value={dateTo}
+                  onChange={(v) => setDateTo(v)}
+                  onClose={() => setIsDateToPickerOpen(false)}
+                />
+              )}
             </div>
           )}
 

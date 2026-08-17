@@ -317,6 +317,20 @@
   background: rgba(25, 25, 25, 0.2);
 }
 
+/* ---- Date field wrapper (for positioning datepicker popup) ---- */
+.condition-modal__date-field-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.condition-modal__date-field-wrapper > .datepicker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+}
+
 /* ---- Date input field ---- */
 .condition-modal__date-field {
   display: flex;
@@ -324,6 +338,7 @@
   padding: 0 20px;
   background: rgba(25, 25, 25, 0.05);
   border-radius: 12px;
+  cursor: pointer;
 }
 
 .condition-modal__date-field-content {
@@ -349,12 +364,7 @@
   color: var(--primitive-primary);
 }
 
-.condition-modal__date-field-input {
-  width: 100%;
-  padding: 0;
-  border: none;
-  outline: none;
-  background: transparent;
+.condition-modal__date-field-value {
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-m);
@@ -363,7 +373,7 @@
   color: var(--primitive-primary);
 }
 
-.condition-modal__date-field-input::placeholder {
+.condition-modal__date-field-value--placeholder {
   color: #949494;
 }
 
@@ -393,6 +403,7 @@
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  cursor: pointer;
 }
 
 .condition-modal__date-period-divider {
