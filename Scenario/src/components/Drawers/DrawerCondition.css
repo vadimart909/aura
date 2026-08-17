@@ -171,6 +171,16 @@
   color: var(--primitive-primary);
 }
 
+.drawer-condition__condition-date-operator {
+  font-weight: var(--font-weight-medium);
+  color: var(--primitive-secondary);
+}
+
+.drawer-condition__condition-date-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--primitive-primary);
+}
+
 .drawer-condition__condition-actions {
   display: flex;
   align-items: center;
