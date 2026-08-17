@@ -441,6 +441,119 @@
   color: #676767;
 }
 
+/* ---- Number input field ---- */
+.condition-modal__number-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  background: rgba(25, 25, 25, 0.05);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: border-color 0.15s ease;
+}
+
+.condition-modal__number-field:focus-within {
+  border-color: #835de1;
+}
+
+.condition-modal__number-field-content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0 0;
+  gap: 8px;
+}
+
+.condition-modal__number-field-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.condition-modal__number-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.condition-modal__number-input::placeholder {
+  color: #949494;
+}
+
+/* Hide number input spinners */
+.condition-modal__number-input::-webkit-outer-spin-button,
+.condition-modal__number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.condition-modal__number-input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.condition-modal__number-field-divider {
+  height: 0.5px;
+  margin-top: 8px;
+  background: rgba(25, 25, 25, 0.2);
+  transition: background 0.15s ease, height 0.15s ease;
+}
+
+.condition-modal__number-field:focus-within .condition-modal__number-field-divider {
+  height: 2px;
+  background: #835de1;
+}
+
+/* ---- Number range fields ---- */
+.condition-modal__number-range-content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0 0;
+  gap: 8px;
+}
+
+.condition-modal__number-range-row {
+  display: flex;
+  gap: 16px;
+}
+
+.condition-modal__number-range-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.condition-modal__number-range-divider {
+  height: 0.5px;
+  margin-top: 8px;
+  background: rgba(25, 25, 25, 0.2);
+  transition: background 0.15s ease, height 0.15s ease;
+}
+
+.condition-modal__number-range-input-wrapper:focus-within .condition-modal__number-range-divider {
+  height: 2px;
+  background: #835de1;
+}
+
+.condition-modal__number-range-description {
+  padding: 0 0 12px;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: #676767;
+}
+
 /* ---- Footer ---- */
 .condition-modal__footer {
   flex-shrink: 0;

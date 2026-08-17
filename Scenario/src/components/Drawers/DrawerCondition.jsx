@@ -165,6 +165,22 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                           ) : null}
                         </>
                       )}
+                      {(condition.type === 'integer' || condition.type === 'number') && condition.numberOperatorLabel && (
+                        <>
+                          <span className="drawer-condition__condition-date-operator">
+                            {' '}{condition.numberOperatorLabel}
+                          </span>
+                          {condition.numberOperator === 'range' && condition.numberFrom !== '' && condition.numberTo !== '' ? (
+                            <span className="drawer-condition__condition-date-value">
+                              {' '}{condition.numberFrom} – {condition.numberTo}
+                            </span>
+                          ) : condition.numberValue !== undefined && condition.numberValue !== '' ? (
+                            <span className="drawer-condition__condition-date-value">
+                              {' '}{condition.numberValue}
+                            </span>
+                          ) : null}
+                        </>
+                      )}
                     </span>
                   </div>
                   <div className="drawer-condition__condition-actions">
@@ -215,6 +231,10 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
           initialDateValue={editingCondition?.dateValue}
           initialDateFrom={editingCondition?.dateFrom}
           initialDateTo={editingCondition?.dateTo}
+          initialNumberOperator={editingCondition?.numberOperator}
+          initialNumberValue={editingCondition?.numberValue}
+          initialNumberFrom={editingCondition?.numberFrom}
+          initialNumberTo={editingCondition?.numberTo}
           excludeParamIds={conditions
             .filter((c) => c.id !== editingCondition?.id)
             .map((c) => c.id)

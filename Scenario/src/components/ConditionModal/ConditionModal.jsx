@@ -75,6 +75,22 @@ const DATE_OPERATORS = [
   { value: 'period', label: 'Период' },
 ];
 
+/* ---- Number operator options ---- */
+const NUMBER_OPERATORS = [
+  { value: 'equal', label: 'Равно' },
+  { value: 'not_equal', label: 'Не равно' },
+  { value: 'greater', label: 'Больше' },
+  { value: 'greater_or_equal', label: 'Больше или равно' },
+  { value: 'less', label: 'Меньше' },
+  { value: 'less_or_equal', label: 'Меньше или равно' },
+  { value: 'range', label: 'Диапазон значений' },
+];
+
+/** Check whether a parameter type is numeric */
+function isNumericType(type) {
+  return type === 'integer' || type === 'number';
+}
+
 /**
  * ConditionModal — modal for selecting a condition (category + parameter).
  *
@@ -82,7 +98,7 @@ const DATE_OPERATORS = [
  * @param {Function} props.onClose  — close without selecting
  * @param {Function} props.onSelect — callback({ id, title, category }) when user confirms
  */
-export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, initialDateValue, initialDateFrom, initialDateTo, excludeParamIds = [] }) {
+export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, initialDateValue, initialDateFrom, initialDateTo, initialNumberOperator, initialNumberValue, initialNumberFrom, initialNumberTo, excludeParamIds = [] }) {
   /* ---- State ---- */
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -99,10 +115,16 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isDateFromPickerOpen, setIsDateFromPickerOpen] = useState(false);
   const [isDateToPickerOpen, setIsDateToPickerOpen] = useState(false);
+  const [numberOperator, setNumberOperator] = useState(initialNumberOperator || '');
+  const [isNumberOperatorOpen, setIsNumberOperatorOpen] = useState(false);
+  const [numberValue, setNumberValue] = useState(initialNumberValue ?? '');
+  const [numberFrom, setNumberFrom] = useState(initialNumberFrom ?? '');
+  const [numberTo, setNumberTo] = useState(initialNumberTo ?? '');
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
   const dateOperatorRef = useRef(null);
+  const numberOperatorRef = useRef(null);
   const searchInputRef = useRef(null);
 
   /* ---- Filtered parameters ---- */
@@ -147,8 +169,11 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
       if (isDateOperatorOpen && dateOperatorRef.current && !dateOperatorRef.current.contains(e.target)) {
         setIsDateOperatorOpen(false);
       }
+      if (isNumberOperatorOpen && numberOperatorRef.current && !numberOperatorRef.current.contains(e.target)) {
+        setIsNumberOperatorOpen(false);
+      }
     },
-    [isCategoryOpen, isParamOpen, isDateOperatorOpen],
+    [isCategoryOpen, isParamOpen, isDateOperatorOpen, isNumberOperatorOpen],
   );
 
   useEffect(() => {
@@ -184,6 +209,11 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setIsDatePickerOpen(false);
     setIsDateFromPickerOpen(false);
     setIsDateToPickerOpen(false);
+    setNumberOperator('');
+    setIsNumberOperatorOpen(false);
+    setNumberValue('');
+    setNumberFrom('');
+    setNumberTo('');
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -212,6 +242,16 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
         result.dateTo = dateTo;
       } else {
         result.dateValue = dateValue;
+      }
+    }
+    if (isNumericType(selectedParam.type)) {
+      result.numberOperator = numberOperator;
+      result.numberOperatorLabel = NUMBER_OPERATORS.find((o) => o.value === numberOperator)?.label || numberOperator;
+      if (numberOperator === 'range') {
+        result.numberFrom = numberFrom;
+        result.numberTo = numberTo;
+      } else {
+        result.numberValue = numberValue;
       }
     }
     onSelect(result);
@@ -360,6 +400,76 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
                   onClose={() => setIsDateToPickerOpen(false)}
                 />
               )}
+            </div>
+          )}
+
+          {/* Number operator dropdown */}
+          {selectedParam && isNumericType(selectedParam.type) && (
+            <NumberOperatorDropdown
+              numberOperatorRef={numberOperatorRef}
+              isNumberOperatorOpen={isNumberOperatorOpen}
+              setIsNumberOperatorOpen={setIsNumberOperatorOpen}
+              setIsCategoryOpen={setIsCategoryOpen}
+              setIsParamOpen={setIsParamOpen}
+              numberOperator={numberOperator}
+              onSelect={(value) => {
+                setNumberOperator(value);
+                setIsNumberOperatorOpen(false);
+                setNumberValue('');
+                setNumberFrom('');
+                setNumberTo('');
+              }}
+            />
+          )}
+
+          {/* Number input (single) — for all operators except range */}
+          {selectedParam && isNumericType(selectedParam.type) && numberOperator && numberOperator !== 'range' && (
+            <div className="condition-modal__number-field">
+              <div className="condition-modal__number-field-content">
+                <span className="condition-modal__number-field-label">Значение</span>
+                <input
+                  type="number"
+                  className="condition-modal__number-input"
+                  placeholder="Введите число"
+                  value={numberValue}
+                  onChange={(e) => setNumberValue(e.target.value)}
+                />
+              </div>
+              <div className="condition-modal__number-field-divider" />
+            </div>
+          )}
+
+          {/* Number input (range) — two fields */}
+          {selectedParam && isNumericType(selectedParam.type) && numberOperator === 'range' && (
+            <div className="condition-modal__number-field">
+              <div className="condition-modal__number-range-content">
+                <span className="condition-modal__number-field-label">Диапазон значений</span>
+                <div className="condition-modal__number-range-row">
+                  <div className="condition-modal__number-range-input-wrapper">
+                    <input
+                      type="number"
+                      className="condition-modal__number-input"
+                      placeholder="От"
+                      value={numberFrom}
+                      onChange={(e) => setNumberFrom(e.target.value)}
+                    />
+                    <div className="condition-modal__number-range-divider" />
+                  </div>
+                  <div className="condition-modal__number-range-input-wrapper">
+                    <input
+                      type="number"
+                      className="condition-modal__number-input"
+                      placeholder="До"
+                      value={numberTo}
+                      onChange={(e) => setNumberTo(e.target.value)}
+                    />
+                    <div className="condition-modal__number-range-divider" />
+                  </div>
+                </div>
+              </div>
+              <div className="condition-modal__number-range-description">
+                Указанные значения входят в диапазон
+              </div>
             </div>
           )}
 
@@ -562,23 +672,24 @@ function ParameterDropdown({
 }
 
 
-function DateOperatorDropdown({
-  dateOperatorRef,
-  isDateOperatorOpen,
-  setIsDateOperatorOpen,
+function OperatorDropdown({
+  operatorRef,
+  isOpen,
+  setIsOpen,
   setIsCategoryOpen,
   setIsParamOpen,
-  dateOperator,
+  selectedValue,
+  operators,
   onSelect,
 }) {
-  const selectedOp = DATE_OPERATORS.find((o) => o.value === dateOperator);
+  const selectedOp = operators.find((o) => o.value === selectedValue);
 
   return (
-    <div className="condition-modal__dropdown" ref={dateOperatorRef}>
+    <div className="condition-modal__dropdown" ref={operatorRef}>
       <div
         className="condition-modal__dropdown-content"
         onClick={() => {
-          setIsDateOperatorOpen((prev) => !prev);
+          setIsOpen((prev) => !prev);
           setIsCategoryOpen(false);
           setIsParamOpen(false);
         }}
@@ -594,25 +705,25 @@ function DateOperatorDropdown({
           )}
         </div>
         <div className="condition-modal__dropdown-arrow">
-          {isDateOperatorOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </div>
       </div>
 
-      {isDateOperatorOpen && (
+      {isOpen && (
         <div className="condition-modal__options">
-          {DATE_OPERATORS.map((op) => (
+          {operators.map((op) => (
             <button
               key={op.value}
               type="button"
               className={`condition-modal__option${
-                dateOperator === op.value ? ' condition-modal__option--selected' : ''
+                selectedValue === op.value ? ' condition-modal__option--selected' : ''
               }`}
               onClick={() => onSelect(op.value)}
             >
               <div className="condition-modal__option-text">
                 <span className="condition-modal__option-title">{op.label}</span>
               </div>
-              {dateOperator === op.value && (
+              {selectedValue === op.value && (
                 <span className="condition-modal__option-check">
                   <CheckmarkIcon />
                 </span>
@@ -622,6 +733,52 @@ function DateOperatorDropdown({
         </div>
       )}
     </div>
+  );
+}
+
+function DateOperatorDropdown({
+  dateOperatorRef,
+  isDateOperatorOpen,
+  setIsDateOperatorOpen,
+  setIsCategoryOpen,
+  setIsParamOpen,
+  dateOperator,
+  onSelect,
+}) {
+  return (
+    <OperatorDropdown
+      operatorRef={dateOperatorRef}
+      isOpen={isDateOperatorOpen}
+      setIsOpen={setIsDateOperatorOpen}
+      setIsCategoryOpen={setIsCategoryOpen}
+      setIsParamOpen={setIsParamOpen}
+      selectedValue={dateOperator}
+      operators={DATE_OPERATORS}
+      onSelect={onSelect}
+    />
+  );
+}
+
+function NumberOperatorDropdown({
+  numberOperatorRef,
+  isNumberOperatorOpen,
+  setIsNumberOperatorOpen,
+  setIsCategoryOpen,
+  setIsParamOpen,
+  numberOperator,
+  onSelect,
+}) {
+  return (
+    <OperatorDropdown
+      operatorRef={numberOperatorRef}
+      isOpen={isNumberOperatorOpen}
+      setIsOpen={setIsNumberOperatorOpen}
+      setIsCategoryOpen={setIsCategoryOpen}
+      setIsParamOpen={setIsParamOpen}
+      selectedValue={numberOperator}
+      operators={NUMBER_OPERATORS}
+      onSelect={onSelect}
+    />
   );
 }
 
