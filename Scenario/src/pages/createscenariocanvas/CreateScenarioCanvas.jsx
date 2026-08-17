@@ -291,7 +291,13 @@ function CreateScenarioCanvasInner() {
             conditions: hasConditions ? saved.length : 1,
             conditionLabels: hasConditions ? saved.map((c) => {
               if (c.type === 'boolean') return c.booleanValue ? 'Да' : 'Нет';
-              if (c.type === 'date' && c.dateOperatorLabel) return c.dateOperatorLabel;
+              if (c.type === 'date' && c.dateOperatorLabel) {
+                if (c.dateOperator === 'period' && c.dateFrom && c.dateTo) {
+                  return `${c.dateOperatorLabel}: ${c.dateFrom} – ${c.dateTo}`;
+                }
+                if (c.dateValue) return `${c.dateOperatorLabel}: ${c.dateValue}`;
+                return c.dateOperatorLabel;
+              }
               return c.title;
             }) : [],
             conditionOverlines: hasConditions ? saved.map((c) => {
