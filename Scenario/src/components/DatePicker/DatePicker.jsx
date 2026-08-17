@@ -161,15 +161,21 @@ export default function DatePicker({ value, onChange, onClose }) {
   const secondMonth = baseMonth === 11 ? 0 : baseMonth + 1;
   const secondYear = baseMonth === 11 ? baseYear + 1 : baseYear;
 
-  // Outside click
+  // Outside click — delay registration so the opening mousedown
+  // doesn't immediately trigger onClose via propagation
   useEffect(() => {
     function handleClick(e) {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
         onClose();
       }
     }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    const raf = requestAnimationFrame(() => {
+      document.addEventListener('mousedown', handleClick);
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('mousedown', handleClick);
+    };
   }, [onClose]);
 
   const goPrev = useCallback(() => {
