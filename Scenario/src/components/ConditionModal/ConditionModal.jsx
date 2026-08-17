@@ -287,7 +287,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
           {selectedParam?.type === 'date' && dateOperator && dateOperator !== 'period' && (
             <div className="condition-modal__date-field-wrapper">
               <div
-                className="condition-modal__date-field"
+                className={`condition-modal__date-field${isDatePickerOpen ? ' condition-modal__date-field--focused' : ''}`}
                 onMouseDown={(e) => {
                   if (!isDatePickerOpen) { setIsDatePickerOpen(true); }
                   e.preventDefault();
@@ -317,13 +317,13 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
 
           {/* Date input (period) — two fields side by side */}
           {selectedParam?.type === 'date' && dateOperator === 'period' && (
-            <div className="condition-modal__date-field-wrapper">
-              <div className="condition-modal__date-field">
+            <div className="condition-modal__date-field-wrapper condition-modal__date-field-wrapper--period">
+              <div className={`condition-modal__date-field${isDateFromPickerOpen || isDateToPickerOpen ? ' condition-modal__date-field--focused' : ''}`}>
                 <div className="condition-modal__date-period-content">
                   <span className="condition-modal__date-field-label">Период</span>
                   <div className="condition-modal__date-period-row">
                     <div
-                      className="condition-modal__date-period-input-wrapper"
+                      className={`condition-modal__date-period-input-wrapper${isDateFromPickerOpen ? ' condition-modal__date-period-input-wrapper--focused' : ''}`}
                       onMouseDown={(e) => { if (!isDateFromPickerOpen) { setIsDateFromPickerOpen(true); } setIsDateToPickerOpen(false); e.preventDefault(); }}
                     >
                       <span className={`condition-modal__date-field-value${dateFrom ? '' : ' condition-modal__date-field-value--placeholder'}`}>
@@ -332,7 +332,7 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
                       <div className="condition-modal__date-period-divider" />
                     </div>
                     <div
-                      className="condition-modal__date-period-input-wrapper"
+                      className={`condition-modal__date-period-input-wrapper${isDateToPickerOpen ? ' condition-modal__date-period-input-wrapper--focused' : ''}`}
                       onMouseDown={(e) => { if (!isDateToPickerOpen) { setIsDateToPickerOpen(true); } setIsDateFromPickerOpen(false); e.preventDefault(); }}
                     >
                       <span className={`condition-modal__date-field-value${dateTo ? '' : ' condition-modal__date-field-value--placeholder'}`}>
