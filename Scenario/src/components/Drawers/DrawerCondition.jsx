@@ -152,6 +152,9 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                       {condition.type === 'date' && condition.dateOperatorLabel && (
                         <span className="drawer-condition__condition-boolean-value">
                           {' — '}{condition.dateOperatorLabel}
+                          {condition.dateOperator === 'period' && condition.dateFrom && condition.dateTo
+                            ? `: ${condition.dateFrom} – ${condition.dateTo}`
+                            : condition.dateValue ? `: ${condition.dateValue}` : ''}
                         </span>
                       )}
                     </span>
@@ -201,6 +204,9 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
           initialParamId={editingCondition?.id}
           initialBooleanValue={editingCondition?.booleanValue}
           initialDateOperator={editingCondition?.dateOperator}
+          initialDateValue={editingCondition?.dateValue}
+          initialDateFrom={editingCondition?.dateFrom}
+          initialDateTo={editingCondition?.dateTo}
           excludeParamIds={conditions
             .filter((c) => c.id !== editingCondition?.id)
             .map((c) => c.id)

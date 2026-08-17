@@ -40,6 +40,14 @@ function CheckmarkIcon() {
   );
 }
 
+function CalendarIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2C16.5523 2 17 2.44772 17 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H7V3C7 2.44772 7.44772 2 8 2C8.55228 2 9 2.44772 9 3V4H15V3C15 2.44772 15.4477 2 16 2ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4V19ZM5 6C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H17V7C17 7.55228 16.5523 8 16 8C15.4477 8 15 7.55228 15 7V6H9V7C9 7.55228 8.55228 8 8 8C7.44772 8 7 7.55228 7 7V6H5Z" fill="#949494"/>
+    </svg>
+  );
+}
+
 function RadioSelectedIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +81,7 @@ const DATE_OPERATORS = [
  * @param {Function} props.onClose  — close without selecting
  * @param {Function} props.onSelect — callback({ id, title, category }) when user confirms
  */
-export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, excludeParamIds = [] }) {
+export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, initialDateValue, initialDateFrom, initialDateTo, excludeParamIds = [] }) {
   /* ---- State ---- */
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -84,6 +92,9 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [booleanValue, setBooleanValue] = useState(initialBooleanValue !== undefined ? initialBooleanValue : true);
   const [dateOperator, setDateOperator] = useState(initialDateOperator || '');
   const [isDateOperatorOpen, setIsDateOperatorOpen] = useState(false);
+  const [dateValue, setDateValue] = useState(initialDateValue || '');
+  const [dateFrom, setDateFrom] = useState(initialDateFrom || '');
+  const [dateTo, setDateTo] = useState(initialDateTo || '');
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
@@ -163,6 +174,9 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setBooleanValue(true);
     setDateOperator('');
     setIsDateOperatorOpen(false);
+    setDateValue('');
+    setDateFrom('');
+    setDateTo('');
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -186,6 +200,12 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     if (selectedParam.type === 'date') {
       result.dateOperator = dateOperator;
       result.dateOperatorLabel = DATE_OPERATORS.find((o) => o.value === dateOperator)?.label || dateOperator;
+      if (dateOperator === 'period') {
+        result.dateFrom = dateFrom;
+        result.dateTo = dateTo;
+      } else {
+        result.dateValue = dateValue;
+      }
     }
     onSelect(result);
   };
@@ -246,8 +266,66 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
               onSelect={(value) => {
                 setDateOperator(value);
                 setIsDateOperatorOpen(false);
+                setDateValue('');
+                setDateFrom('');
+                setDateTo('');
               }}
             />
+          )}
+
+          {/* Date input (single) — for all operators except period */}
+          {selectedParam?.type === 'date' && dateOperator && dateOperator !== 'period' && (
+            <div className="condition-modal__date-field">
+              <div className="condition-modal__date-field-content">
+                <div className="condition-modal__date-field-text">
+                  <span className="condition-modal__date-field-label">Дата</span>
+                  <input
+                    type="text"
+                    className="condition-modal__date-field-input"
+                    placeholder="дд.мм.гггг"
+                    value={dateValue}
+                    onChange={(e) => setDateValue(e.target.value)}
+                  />
+                </div>
+                <div className="condition-modal__date-field-icon">
+                  <CalendarIcon />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Date input (period) — two fields side by side */}
+          {selectedParam?.type === 'date' && dateOperator === 'period' && (
+            <div className="condition-modal__date-field">
+              <div className="condition-modal__date-period-content">
+                <span className="condition-modal__date-field-label">Период</span>
+                <div className="condition-modal__date-period-row">
+                  <div className="condition-modal__date-period-input-wrapper">
+                    <input
+                      type="text"
+                      className="condition-modal__date-field-input"
+                      placeholder="дд.мм.гггг"
+                      value={dateFrom}
+                      onChange={(e) => setDateFrom(e.target.value)}
+                    />
+                    <div className="condition-modal__date-period-divider" />
+                  </div>
+                  <div className="condition-modal__date-period-input-wrapper">
+                    <input
+                      type="text"
+                      className="condition-modal__date-field-input"
+                      placeholder="дд.мм.гггг"
+                      value={dateTo}
+                      onChange={(e) => setDateTo(e.target.value)}
+                    />
+                    <div className="condition-modal__date-period-divider" />
+                  </div>
+                </div>
+              </div>
+              <div className="condition-modal__date-period-description">
+                Указанные даты входят в период
+              </div>
+            </div>
           )}
 
           {/* Boolean radio group */}
