@@ -43,8 +43,8 @@ function CheckmarkIcon() {
 function RadioSelectedIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="5" fill="currentColor" />
+      <circle cx="12" cy="12" r="12" fill="#835DE1" />
+      <circle cx="12" cy="12" r="6" fill="white" />
     </svg>
   );
 }
@@ -52,7 +52,7 @@ function RadioSelectedIcon() {
 function RadioUnselectedIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="11.25" stroke="#191919" strokeOpacity="0.25" strokeWidth="1.5" />
     </svg>
   );
 }
@@ -222,20 +222,22 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
                 onClick={() => setBooleanValue(true)}
               >
                 <span className="condition-modal__radio-label">Да</span>
-                <span className={`condition-modal__radio-icon${booleanValue === true ? ' condition-modal__radio-icon--selected' : ''}`}>
+                <span className="condition-modal__radio-icon">
                   {booleanValue === true ? <RadioSelectedIcon /> : <RadioUnselectedIcon />}
                 </span>
               </button>
-              <div className="condition-modal__radio-divider" />
               <button
                 type="button"
                 className="condition-modal__radio-cell condition-modal__radio-cell--bottom"
                 onClick={() => setBooleanValue(false)}
               >
-                <span className="condition-modal__radio-label">Нет</span>
-                <span className={`condition-modal__radio-icon${booleanValue === false ? ' condition-modal__radio-icon--selected' : ''}`}>
-                  {booleanValue === false ? <RadioSelectedIcon /> : <RadioUnselectedIcon />}
-                </span>
+                <div className="condition-modal__radio-divider" />
+                <div className="condition-modal__radio-cell-content">
+                  <span className="condition-modal__radio-label">Нет</span>
+                  <span className="condition-modal__radio-icon">
+                    {booleanValue === false ? <RadioSelectedIcon /> : <RadioUnselectedIcon />}
+                  </span>
+                </div>
               </button>
             </div>
           )}

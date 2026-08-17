@@ -256,29 +256,47 @@
 .condition-modal__radio-group {
   display: flex;
   flex-direction: column;
-  border-radius: 12px;
-  background: rgba(25, 25, 25, 0.05);
-  overflow: hidden;
 }
 
 .condition-modal__radio-cell {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
+  flex-direction: column;
+  padding: 0 20px;
   border: none;
-  background: transparent;
+  background: rgba(25, 25, 25, 0.05);
   cursor: pointer;
   transition: background 0.15s ease;
 }
 
 .condition-modal__radio-cell:hover {
-  background: rgba(25, 25, 25, 0.03);
+  background: rgba(25, 25, 25, 0.08);
+}
+
+.condition-modal__radio-cell--top {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-radius: 12px 12px 0 0;
+  gap: 16px;
+}
+
+.condition-modal__radio-cell--bottom {
+  border-radius: 0 0 12px 12px;
+  gap: 12px;
+}
+
+.condition-modal__radio-cell-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  gap: 16px;
 }
 
 .condition-modal__radio-label {
   font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
@@ -291,18 +309,12 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  color: var(--primitive-secondary);
   flex-shrink: 0;
 }
 
-.condition-modal__radio-icon--selected {
-  color: var(--primitive-brand);
-}
-
 .condition-modal__radio-divider {
-  height: 1px;
-  margin: 0 20px;
-  background: rgba(25, 25, 25, 0.08);
+  height: 0.5px;
+  background: rgba(25, 25, 25, 0.2);
 }
 
 /* ---- Footer ---- */
