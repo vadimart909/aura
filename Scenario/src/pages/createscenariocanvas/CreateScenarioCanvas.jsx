@@ -298,11 +298,21 @@ function CreateScenarioCanvasInner() {
                 if (c.dateValue) return `${c.dateOperatorLabel}: ${c.dateValue}`;
                 return c.dateOperatorLabel;
               }
+              if ((c.type === 'integer' || c.type === 'number') && c.numberOperatorLabel) {
+                if (c.numberOperator === 'range' && c.numberFrom !== '' && c.numberTo !== '') {
+                  return `${c.numberOperatorLabel}: ${c.numberFrom} – ${c.numberTo}`;
+                }
+                if (c.numberValue !== undefined && c.numberValue !== '') {
+                  return `${c.numberOperatorLabel}: ${c.numberValue}`;
+                }
+                return c.numberOperatorLabel;
+              }
               return c.title;
             }) : [],
             conditionOverlines: hasConditions ? saved.map((c) => {
               if (c.type === 'boolean') return c.title;
               if (c.type === 'date' && c.dateOperatorLabel) return c.title;
+              if ((c.type === 'integer' || c.type === 'number') && c.numberOperatorLabel) return c.title;
               return c.categoryLabel || '';
             }) : [],
             showShowAll: hasConditions && saved.length > 3,
