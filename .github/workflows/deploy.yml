@@ -34,6 +34,15 @@ jobs:
         working-directory: Scenario
         run: npx vite build
 
+      # GitHub Pages serves static files and has no SPA rewrite, so any deep
+      # link (/aura/scenario/view/3, a shared URL, a browser reload) hit its own
+      # 404 instead of the app. Pages falls back to 404.html for unmatched
+      # paths, so shipping index.html under that name hands the URL to the
+      # router, which already knows every route including its own NotFound.
+      - name: SPA fallback for GitHub Pages
+        working-directory: Scenario
+        run: cp dist/index.html dist/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
