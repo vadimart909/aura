@@ -73,4 +73,15 @@
   min-width: 320px;
 }
 
+/* --- Publish validation alert --- */
+
+/* The DS Alert puts `position: fixed; top: 0` on its ROOT (.alert__wrapper)
+   while the `className` prop lands on the inner .alert — so the offset can
+   only come from a descendant selector. (0,2,0) beats alert.css's (0,1,0),
+   which makes stylesheet order irrelevant. */
+.flow-scenario-canvas .alert__wrapper {
+  top: 74px; /* height of .main-page-navigation-bar__content */
+  z-index: 1001; /* above the drawer overlays (1000), below the modals (1100) */
+}
+
 /* (Draft/Publish modals now use DS FlowResultView) */

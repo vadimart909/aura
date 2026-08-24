@@ -3,14 +3,13 @@ import { Ports } from './Ports';
 import NodeActions from './NodeActions';
 
 import iconDocumentList from './icons/icon-document-list.svg';
-import iconWarning from './icons/icon-warning.svg';
 
 /**
  * NodeCommunicationCard — карточка ноды «Коммуникация».
  *
  * @param {object}  props
  * @param {string}  [props.title='Коммуникация']  — заголовок в шапке
- * @param {boolean} [props.showError=true]          — строка «Ошибка»
+ * @param {boolean} [props.showError=true]          — строка «Заполни поля»
  * @param {string}  [props.templateTitle]           — название выбранного шаблона
  * @param {string}  [props.templateDescription]     — каналы (например «Email, Пуш, Чат»)
  * @param {'default'|'hover'|'active'} [props.state='default']
@@ -26,6 +25,7 @@ export default function NodeCommunicationCard({
   state = 'default',
   className = '',
   onClick,
+  onDelete,
 }) {
   const stateClass =
     state === 'hover'
@@ -37,7 +37,7 @@ export default function NodeCommunicationCard({
   return (
     <div className={`node-communication ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      {showActions && <NodeActions />}
+      {showActions && <NodeActions onDelete={onDelete} />}
 
       {/* ---- Card ---- */}
       <div className="node-communication__card">
@@ -72,7 +72,7 @@ export default function NodeCommunicationCard({
 
           {showError && (
             <div className="node-communication__row node-communication__row--error">
-              <span className="node-communication__row-text">Ошибка</span>
+              <span className="node-communication__row-text">Заполни поля</span>
             </div>
           )}
         </div>

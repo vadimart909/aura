@@ -1,34 +1,22 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams, useLocation, useBlocker } from 'react-router-dom';
-import { useScenariosContext } from '../../context/ScenariosContext';
+import { useScenariosContext } from '../../context/useScenariosContext';
+import { canvasFingerprint, baselineCanvasFingerprint } from '../createscenariocanvas/canvasSnapshot';
 import UnsavedChangesModal from '../../components/UnsavedChangesModal';
 import { Input } from '@ds/components/Input';
 import { TextArea } from '@ds/components/TextArea';
 import { Button } from '@ds/components/Button';
+import { NavigationBar } from '@ds/components/NavigationBar';
 import { FlowResultView } from '@ds/components/FlowResultView/FlowResultView';
 import './CreateScenarioInfo.css';
 
 const MAX_DESCRIPTION_LENGTH = 500;
 
-function ArrowLeftIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M15 6L9 12L15 18"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function CreateScenarioInfo() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
-  const { scenarios, addScenario, updateScenario } = useScenariosContext();
+  const { scenarios, addScenario, updateScenario, replaceScenario, removeScenario } = useScenariosContext();
 
   const isEditMode = Boolean(id);
   const existingScenario = isEditMode
@@ -41,21 +29,35 @@ export default function CreateScenarioInfo() {
   const [showDraftModal, setShowDraftModal] = useState(false);
   const [savedScenarioId, setSavedScenarioId] = useState(id ?? null);
 
-  // Original scenario from BEFORE the current editing session started.
-  // Passed back from Canvas via navigation state when user clicks "Назад".
-  // Used to revert the scenario data when user clicks "Выйти без сохранения".
-  const originalScenarioRef = useRef(
-    location.state?.originalScenario ?? null,
+  // The whole scenario as of the last commit point — entering the editing flow,
+  // or the last explicit save. Everything is diffed against this, and «Выйти без
+  // сохранения» restores it.
+  //
+  // `'originalScenario' in state` rather than `?? fallback`: the create flow
+  // forwards a deliberate `null` meaning "no committed version exists yet, so
+  // discard = delete", and `null ?? {...existingScenario}` would silently
+  // promote that to "revert to the half-finished draft".
+  const baselineRef = useRef(
+    location.state && 'originalScenario' in location.state
+      ? location.state.originalScenario
+      : (existingScenario ? { ...existingScenario } : null),
   );
 
-  // Baseline for dirty detection: the form values when the component MOUNTED.
-  // This captures what the user sees when they first land on the page.
-  // Changes are detected by comparing current form values against these initial values.
-  const initialNameRef = useRef(existingScenario?.name ?? '');
-  const initialDescriptionRef = useRef(existingScenario?.description ?? '');
-
-  const hasUnsavedChanges =
-    name !== initialNameRef.current || description !== initialDescriptionRef.current;
+  // Canvas edits made earlier in this session are already in the store by now
+  // (the canvas persists on unmount), so leaving from step 1 has to account for
+  // them too — otherwise a graph change followed by a back-press exits silently.
+  const currentScenario = scenarios.find((s) => String(s.id) === String(id ?? savedScenarioId));
+  const hasUnsavedChanges = (() => {
+    const base = baselineRef.current;
+    // Only diff the canvas once the scenario exists in the store. In create mode
+    // it doesn't, and `canvasFingerprint(undefined)` is '' — which never equals
+    // the pristine baseline, so a blank form read dirty from frame one and the
+    // exit guard trapped the user behind «Данные не сохранятся».
+    if (currentScenario && canvasFingerprint(currentScenario.canvas) !== baselineCanvasFingerprint(base)) return true;
+    return base
+      ? name !== (base.name ?? '') || description !== (base.description ?? '')
+      : Boolean(name.trim() || description.trim());
+  })();
 
   // Ref to temporarily skip the blocker for intentional navigations
   // (e.g. "Продолжить" saves & navigates, "Готово" in draft modal)
@@ -66,14 +68,20 @@ export default function CreateScenarioInfo() {
     skipBlockerRef.current = false;
   }, []);
 
+  const canvasPath = `/scenario/canvas/${id ?? savedScenarioId}`;
+
   // Block client-side navigation (back arrow, Header NavLinks, browser back)
   // ONLY when the user has made changes in the form since it was opened
   const shouldBlock = useCallback(
     ({ currentLocation, nextLocation }) =>
       !skipBlockerRef.current &&
       hasUnsavedChanges &&
-      currentLocation.pathname !== nextLocation.pathname,
-    [hasUnsavedChanges],
+      currentLocation.pathname !== nextLocation.pathname &&
+      // The canvas is the other half of this flow, not an exit from it. Matching
+      // on the path (not just skipBlockerRef) is what keeps browser
+      // back/forward between the two steps quiet.
+      nextLocation.pathname !== canvasPath,
+    [hasUnsavedChanges, canvasPath],
   );
   const blocker = useBlocker(shouldBlock);
 
@@ -92,38 +100,21 @@ export default function CreateScenarioInfo() {
   const existingDescription = existingScenario?.description;
 
   // Sync form fields when navigating to edit mode or switching between scenarios.
-  // Also update the dirty-detection baseline so that values loaded from context
-  // are not treated as "unsaved changes".
+  // The dirty baseline is `baselineRef`, captured once at mount — it must NOT be
+  // re-armed here, or a canvas round trip would launder the user's edits into
+  // the baseline and the exit guard would read clean.
   useEffect(() => {
     if (existingName !== undefined) {
-      const n = existingName ?? '';
-      const d = existingDescription ?? '';
-      setName(n);
-      setDescription(d);
-      initialNameRef.current = n;
-      initialDescriptionRef.current = d;
+      setName(existingName ?? '');
+      setDescription(existingDescription ?? '');
     } else if (!id) {
       setName('');
       setDescription('');
-      initialNameRef.current = '';
-      initialDescriptionRef.current = '';
     }
   }, [id, existingName, existingDescription]);
 
   const descriptionCount = description.length;
   const isDescriptionError = descriptionCount >= MAX_DESCRIPTION_LENGTH;
-  const counterText = `${String(descriptionCount).padStart(2, '0')} / ${MAX_DESCRIPTION_LENGTH}`;
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-    if (nameError) {
-      setNameError(false);
-    }
-  }
 
   /** Save as draft */
   function handleSaveDraft() {
@@ -137,33 +128,41 @@ export default function CreateScenarioInfo() {
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
 
+    // An explicit save is a new commit point: re-arm the baseline so the flow
+    // reads clean again. The store update is async, so build the merged object
+    // here rather than reading it back.
     if (isEditMode || savedScenarioId) {
       const idToUpdate = id || savedScenarioId;
-      updateScenario(idToUpdate, {
+      const patch = {
         name: name.trim(),
         description: description.trim(),
         date: `${dd}.${mm}.${yyyy}`,
-      });
+      };
+      // `existingScenario` is null when there is no `id` and only a
+      // `savedScenarioId`, so read the live object out of the array instead.
+      const current = scenarios.find((s) => String(s.id) === String(idToUpdate));
+      updateScenario(idToUpdate, patch);
+      baselineRef.current = { ...current, ...patch };
     } else {
-      const newId = Date.now();
-      addScenario({
-        id: newId,
+      const created = {
+        id: Date.now(),
         name: name.trim(),
         description: description.trim(),
         status: 'draft',
         statusLabel: 'Черновик',
         author: 'Вадим Артёменко',
         authorInitials: 'ВА',
-        authorColor: '#82C9A1',
+        authorColor: 'var(--category-emerald)',
         date: `${dd}.${mm}.${yyyy}`,
-      });
-      setSavedScenarioId(newId);
+      };
+      addScenario(created);
+      // No longer null: a committed version now exists, so a later discard
+      // reverts to this draft instead of deleting it.
+      baselineRef.current = created;
+      setSavedScenarioId(created.id);
     }
 
-    // After saving, update the baseline so the form is considered "clean"
-    initialNameRef.current = name.trim();
-    initialDescriptionRef.current = description.trim();
-    // Also sync the displayed values to trimmed versions
+    // Sync the displayed values to trimmed versions
     setName(name.trim());
     setDescription(description.trim());
 
@@ -181,10 +180,15 @@ export default function CreateScenarioInfo() {
 
     if (isEditMode || savedScenarioId) {
       const idToUpdate = id || savedScenarioId;
+      const base = baselineRef.current;
+      const changed = name.trim() !== (base?.name ?? '')
+        || description.trim() !== (base?.description ?? '');
       updateScenario(idToUpdate, {
         name: name.trim(),
         description: description.trim(),
-        date: `${dd}.${mm}.${yyyy}`,
+        // Only touch the start date when something actually changed — stepping
+        // through «Продолжить» and straight back out used to silently bump it.
+        ...(changed ? { date: `${dd}.${mm}.${yyyy}` } : {}),
       });
     } else {
       const newId = Date.now();
@@ -196,7 +200,7 @@ export default function CreateScenarioInfo() {
         statusLabel: 'Черновик',
         author: 'Вадим Артёменко',
         authorInitials: 'ВА',
-        authorColor: '#82C9A1',
+        authorColor: 'var(--category-emerald)',
         date: `${dd}.${mm}.${yyyy}`,
       });
       scenarioId = newId;
@@ -205,14 +209,27 @@ export default function CreateScenarioInfo() {
 
     // Skip the blocker — this is an intentional save+navigate
     skipBlockerRef.current = true;
-    // Pass original (pre-edit) scenario data so the canvas can revert on discard.
-    // If we already have an original from a previous round-trip (Canvas→Step1→Canvas),
-    // keep forwarding it; otherwise snapshot the current existingScenario.
-    const originalToPass = originalScenarioRef.current
-      ?? (existingScenario ? { ...existingScenario } : null);
+    // Forward the baseline verbatim: a `null` here is meaningful (create flow,
+    // nothing committed yet) and must not be replaced with a fallback.
     navigate(`/scenario/canvas/${scenarioId}`, {
-      state: { originalScenario: originalToPass },
+      state: { originalScenario: baselineRef.current },
     });
+  }
+
+  /** «Выйти без сохранения» — roll the scenario back and leave for Home. */
+  function handleDiscardAndExit() {
+    // Must come first: reset() re-runs the predicate on the navigate below, so
+    // anything else here would let the modal reopen and trap the user in it.
+    skipBlockerRef.current = true;
+    const idToRevert = id || savedScenarioId;
+    if (idToRevert) {
+      // A null baseline means nothing was ever committed — the draft only
+      // exists because «Продолжить» created it, so drop it entirely.
+      if (baselineRef.current) replaceScenario(idToRevert, baselineRef.current);
+      else removeScenario(idToRevert);
+    }
+    blocker.reset();
+    navigate('/', { replace: true });
   }
 
   function handleModalContinue() {
@@ -230,33 +247,28 @@ export default function CreateScenarioInfo() {
     <div className="flow-scenario">
       {/* ---- Sidebar ---- */}
       <aside className="flow-scenario__sidebar">
-        <button
-          type="button"
-          className="flow-scenario__back-btn"
-          onClick={() => {
+        <NavigationBar
+          title={isEditMode ? 'Редактирование сценария' : 'Создание сценария'}
+          /* defaults to true — would add a "Clear" broom button next to Back */
+          hasActionButton={false}
+          backButtonLabel="Назад"
+          onBackClick={() => {
             if (isEditMode) navigate(`/scenario/view/${id}`);
             else if (savedScenarioId) navigate(`/scenario/view/${savedScenarioId}`);
             else navigate('/');
           }}
-          aria-label="Назад"
-        >
-          <ArrowLeftIcon />
-        </button>
-
-        <div className="flow-scenario__sidebar-header">
-          <h1 className="flow-scenario__sidebar-title">
-            {isEditMode ? 'Редактирование сценария' : 'Создание сценария'}
-          </h1>
-        </div>
+        />
       </aside>
 
       {/* ---- Main content ---- */}
       <div className="flow-scenario__main">
         <div className="flow-scenario__form">
           {/* Поле «Название» */}
+          {/* The red required asterisk is drawn by CSS — the DS Input has no
+              required prop and types `label` as a plain string */}
           <Input
-            label="Название *"
-            placeholder="Введи название сценария"
+            label="Название"
+            placeholder="Например, Активация ДМС"
             value={name}
             onChange={(val) => {
               setName(val);
@@ -269,7 +281,7 @@ export default function CreateScenarioInfo() {
           {/* Поле «Описание» */}
           <TextArea
             label="Описание"
-            placeholder="Опиши суть сценария"
+            placeholder="Суть, гипотеза, метрики и ожидаемый результат"
             value={description}
             onChange={setDescription}
             maxLength={MAX_DESCRIPTION_LENGTH}
@@ -309,20 +321,7 @@ export default function CreateScenarioInfo() {
       {/* ---- Unsaved Changes Modal (triggered by useBlocker) ---- */}
       {blocker.state === 'blocked' && (
         <UnsavedChangesModal
-          onExit={() => {
-            // Revert form values back to what they were when the page loaded,
-            // undoing any in-context updates the user may have triggered.
-            const revertName = initialNameRef.current;
-            const revertDesc = initialDescriptionRef.current;
-            const idToRevert = id || savedScenarioId;
-            if (idToRevert) {
-              updateScenario(idToRevert, {
-                name: revertName,
-                description: revertDesc,
-              });
-            }
-            blocker.proceed();
-          }}
+          onExit={handleDiscardAndExit}
           onCancel={() => blocker.reset()}
         />
       )}

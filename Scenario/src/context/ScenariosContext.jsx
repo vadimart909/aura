@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { useState } from 'react';
 import { scenarios as initialScenarios } from '../pages/home/mockData';
-
-const ScenariosContext = createContext(null);
+import { ScenariosContext } from './useScenariosContext';
 
 export function ScenariosProvider({ children }) {
   const [scenarios, setScenarios] = useState(initialScenarios);
@@ -16,21 +15,20 @@ export function ScenariosProvider({ children }) {
     );
   }
 
+  // Full replace, not a merge — used by the discard path, where keys the user
+  // added during the session (e.g. a `canvas` on a scenario that had none)
+  // must disappear, which `updateScenario`'s shallow merge would leave behind.
+  function replaceScenario(id, next) {
+    setScenarios((prev) => prev.map((s) => (String(s.id) === String(id) ? next : s)));
+  }
+
   function removeScenario(id) {
     setScenarios((prev) => prev.filter((s) => String(s.id) !== String(id)));
   }
 
   return (
-    <ScenariosContext.Provider value={{ scenarios, addScenario, updateScenario, removeScenario }}>
+    <ScenariosContext.Provider value={{ scenarios, addScenario, updateScenario, replaceScenario, removeScenario }}>
       {children}
     </ScenariosContext.Provider>
   );
-}
-
-export function useScenariosContext() {
-  const context = useContext(ScenariosContext);
-  if (!context) {
-    throw new Error('useScenariosContext must be used within a ScenariosProvider');
-  }
-  return context;
 }

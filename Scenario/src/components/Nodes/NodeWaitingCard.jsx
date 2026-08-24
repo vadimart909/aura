@@ -3,14 +3,13 @@ import { Ports } from './Ports';
 import NodeActions from './NodeActions';
 
 import iconHourglass from './icons/icon-hourglass.svg';
-import iconWarning from './icons/icon-warning.svg';
 
 /**
  * NodeWaitingCard — карточка ноды «Ожидание».
  *
  * @param {object}  props
  * @param {string}  [props.title='Ожидание']  — заголовок в шапке
- * @param {boolean} [props.showError=true]     — строка «Ошибка»
+ * @param {boolean} [props.showError=true]     — строка «Заполни поля»
  * @param {string}  [props.waitingLabel]       — заполненное значение, напр. «4 часа» / «3 дня»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {function} [props.onClick]
@@ -24,6 +23,7 @@ export default function NodeWaitingCard({
   state = 'default',
   className = '',
   onClick,
+  onDelete,
 }) {
   const stateClass =
     state === 'hover'
@@ -35,7 +35,7 @@ export default function NodeWaitingCard({
   return (
     <div className={`node-waiting ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      {showActions && <NodeActions />}
+      {showActions && <NodeActions onDelete={onDelete} />}
 
       {/* ---- Card ---- */}
       <div className="node-waiting__card">
@@ -65,7 +65,7 @@ export default function NodeWaitingCard({
 
           {showError && (
             <div className="node-waiting__row node-waiting__row--error">
-              <span className="node-waiting__row-text">Ошибка</span>
+              <span className="node-waiting__row-text">Заполни поля</span>
             </div>
           )}
         </div>

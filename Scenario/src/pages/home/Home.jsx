@@ -1,36 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './home.css'
-import { useScenariosContext } from '../../context/ScenariosContext'
+import { useScenariosContext } from '../../context/useScenariosContext'
 import dogDigging from './dog-digging.svg'
 import { Chip } from '@ds/components/Chip'
-import { Button } from '@ds/components/Button'
+import { HeaderButton } from '@ds/components/HeaderButton'
 import { Tag } from '@ds/components/Tag'
-
-function DotsIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="5" cy="12" r="1.5" fill="currentColor" />
-      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-      <circle cx="19" cy="12" r="1.5" fill="currentColor" />
-    </svg>
-  )
-}
-
-function SearchIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
+import { Avatar } from '@ds/components/Avatar'
+import { Magnifier, DotsThreeHorizontal, PlusCircle } from '@ds/icons'
 
 const statusTagClassMap = {
   draft: 'tag--status-grey',
@@ -45,7 +22,9 @@ const CURRENT_USER = 'Вадим Артёменко'
 function Home() {
   const navigate = useNavigate()
   const { scenarios } = useScenariosContext()
-  const [filter, setFilter] = useState('all')
+  // «Мои сценарии» — вкладка по умолчанию: пользователь приходит на главную
+  // за своими сценариями, а не за общим списком.
+  const [filter, setFilter] = useState('my')
   const [searchQuery, setSearchQuery] = useState('')
   const showAuthor = filter === 'all'
 
@@ -85,18 +64,22 @@ function Home() {
                 Все
               </Chip>
             </div>
-            <Button variant="primary" onClick={() => navigate('/scenario/create')}>
+            <HeaderButton
+              variant="primary"
+              icon={<PlusCircle />}
+              onClick={() => navigate('/scenario/create')}
+            >
               Создать сценарий
-            </Button>
+            </HeaderButton>
           </div>
 
           <div className="search-bar">
             <div className="search-bar__field">
-              <span className="search-bar__icon">
-                <SearchIcon />
+              <span className="search-bar__icon ds-icon ds-icon--m">
+                <Magnifier />
               </span>
               <input
-                className="search-bar__input"
+                className="search-bar__input ts-400-m"
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -111,12 +94,12 @@ function Home() {
             <div className="empty-view">
               <img src={dogDigging} alt="" className="empty-view__image" />
               <div className="empty-view__text-block">
-                <p className="empty-view__text">Здесь будут твои сценарии. Пока их нет.</p>
+                <p className="empty-view__text ts-400-m">Здесь будут твои сценарии. Пока их нет.</p>
               </div>
             </div>
           ) : (
             <div className="search-empty-view">
-              <p className="search-empty-view__text">
+              <p className="search-empty-view__text ts-400-m">
                 Ничего не найдено. Попробуй изменить поисковый запрос.
               </p>
             </div>
@@ -126,18 +109,18 @@ function Home() {
             {/* Table Header */}
             <div className="table__header">
               <div className="table__cell table__cell--scenario">
-                <span className="table__header-text">Сценарии</span>
+                <span className="table__header-text ts-500-m">Сценарии</span>
               </div>
               <div className="table__cell table__cell--status">
-                <span className="table__header-text">Статус</span>
+                <span className="table__header-text ts-500-m">Статус</span>
               </div>
               {showAuthor && (
                 <div className="table__cell table__cell--author">
-                  <span className="table__header-text">Автор</span>
+                  <span className="table__header-text ts-500-m">Автор</span>
                 </div>
               )}
               <div className="table__cell table__cell--date">
-                <span className="table__header-text">Дата создания</span>
+                <span className="table__header-text ts-500-m">Дата старта</span>
               </div>
               <div className="table__cell table__cell--actions" />
             </div>
@@ -145,39 +128,46 @@ function Home() {
             {/* Table Body */}
             <div className="table__body">
               {filteredScenarios.map((row) => (
-                <div key={row.id} className="table__row" onClick={() => navigate(`/scenario/view/${row.id}`)} style={{ cursor: 'pointer' }}>
+                <div key={row.id} className="table__row" onClick={() => navigate(`/scenario/view/${row.id}`)}>
                   <div className="table__cell table__cell--scenario">
                     <div className="table__cell-content">
-                      <span className="table__cell-title">{row.name}</span>
+                      <span className="table__cell-title ts-400-m">{row.name}</span>
                       {row.description && (
-                        <span className="table__cell-desc">{row.description}</span>
+                        <span className="table__cell-desc ts-400-s">{row.description}</span>
                       )}
                     </div>
                   </div>
                   <div className="table__cell table__cell--status">
-                    <Tag size="s" className={statusTagClassMap[row.status]}>
+                    <Tag size="m" className={statusTagClassMap[row.status]}>
                       {row.statusLabel}
                     </Tag>
                   </div>
                   {showAuthor && (
                     <div className="table__cell table__cell--author">
                       <div className="table__author">
-                        <div
-                          className="table__author-avatar"
-                          style={{ backgroundColor: row.authorColor }}
-                        >
-                          <span className="table__author-initials">{row.authorInitials}</span>
-                        </div>
-                        <span className="table__cell-title">{row.author}</span>
+                        <Avatar
+                          shape="circle"
+                          size="s"
+                          label={row.authorInitials}
+                          style={{
+                            '--avatar-surface': row.authorColor,
+                            // DS default is --primitive-secondary, which has
+                            // too little contrast on the tinted category fills
+                            '--avatar-color': 'var(--primitive-default)',
+                          }}
+                        />
+                        <span className="table__cell-title ts-400-m">{row.author}</span>
                       </div>
                     </div>
                   )}
                   <div className="table__cell table__cell--date">
-                    <span className="table__cell-title">{row.date}</span>
+                    <span className="table__cell-title ts-400-m">{row.date}</span>
                   </div>
                   <div className="table__cell table__cell--actions">
                     <button type="button" className="table__action-btn">
-                      <DotsIcon />
+                      <span className="ds-icon ds-icon--m">
+                        <DotsThreeHorizontal />
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -186,7 +176,7 @@ function Home() {
 
             {/* Table Footer */}
             <div className="table__footer">
-              <span className="table__footer-text">Показано {filteredScenarios.length} из {baseScenarios.length}</span>
+              <span className="table__footer-text ts-500-m">Показано {filteredScenarios.length} из {baseScenarios.length}</span>
             </div>
           </div>
         )}

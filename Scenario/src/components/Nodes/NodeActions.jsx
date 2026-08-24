@@ -19,7 +19,13 @@ export default function NodeActions({
       <button
         type="button"
         className="node-actions__btn"
-        onClick={onDelete}
+        onClick={(event) => {
+          // Prevent bubbling to the card's own onClick (which opens the
+          // node's drawer) — otherwise deleting a node also re-opens its
+          // (now stale) drawer.
+          event.stopPropagation();
+          onDelete?.(event);
+        }}
         aria-label="Удалить"
       >
         <img src={iconTrash} alt="" width="16" height="16" />

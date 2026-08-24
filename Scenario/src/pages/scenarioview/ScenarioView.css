@@ -17,11 +17,15 @@
   min-height: 0;
 }
 
-/* ---- Edge label ---- */
-.scenario-view__edge-label {
-  font-size: 11px;
-  font-weight: 600;
-  dominant-baseline: text-after-edge;
+/* ReactFlow needs an explicit height on its container */
+.scenario-view__canvas .react-flow {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide default ReactFlow background dots — canvas uses solid background */
+.scenario-view__canvas .react-flow__background {
+  display: none;
 }
 
 /* ================================================================== */
@@ -50,156 +54,48 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-3x) var(--spacing-5x);
-  gap: var(--spacing-2x);
+  padding: 12px 20px;
+  gap: 8px;
 }
 
-/* Button width override */
-.scenario-view__footer-content .button {
+.scenario-view__footer-hint {
+  color: var(--primitive-secondary);
+  text-align: center;
+}
+
+.scenario-view__footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* DS `.button` hardcodes --button-width: 280px plus a matching min-width,
+   so the 320px footer width can only come from an override. */
+.scenario-view__btn {
   width: 320px;
+  min-width: 320px;
 }
 
-/* ================================================================== */
-/*  Flow Node — shared card styles                                     */
-/* ================================================================== */
-
-.flow-node {
-  position: relative;
-}
-
-.flow-node__card {
-  border-radius: 12px;
-  background: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  min-width: 220px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-/* ---- Header variants ---- */
-.flow-node__header {
-  display: flex;
+/* The DS Button has no icon slot — the icon rides along in `children`, inside
+   .button__label, which is a plain full-width span by default. */
+.scenario-view__btn--icon .button__label {
+  display: inline-flex;
   align-items: center;
-  padding: 8px 12px;
-  gap: 6px;
-}
-
-.flow-node__header-title {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 18px;
-  color: #191919;
-}
-
-.flow-node__header--green  { background: #E6F9F0; }
-.flow-node__header--blue   { background: #E6F0FF; }
-.flow-node__header--purple { background: #F0E6FF; }
-.flow-node__header--orange { background: #FFF4E5; }
-
-/* ---- Body ---- */
-.flow-node__body {
-  display: flex;
-  flex-direction: column;
-  padding: 8px 12px;
-  gap: 6px;
-}
-
-/* ---- Row ---- */
-.flow-node__row {
-  display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
-.flow-node__row-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.flow-node__row-overline {
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 14px;
-  color: #8C8C8C;
-}
-
-.flow-node__row-text {
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 18px;
-  color: #191919;
-}
-
-/* ---- Row icon circles ---- */
-.flow-node__row-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  border-radius: 50%;
-}
-
-.flow-node__row-icon--green  { background: #D1F5E3; }
-.flow-node__row-icon--blue   { background: #D1E3FF; }
-.flow-node__row-icon--purple { background: #E5D6FF; }
-.flow-node__row-icon--orange { background: #FFE8C8; }
-
 /* ================================================================== */
-/*  End node                                                           */
+/*  React Flow overrides                                               */
 /* ================================================================== */
-
-.flow-node--end {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.flow-node__end-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #F5F5F5;
-  border: 1px solid #E8E8E8;
-}
-
-.flow-node__end-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: #8C8C8C;
-}
-
-/* ================================================================== */
-/*  React Flow handle overrides                                        */
-/* ================================================================== */
-
-.flow-handle {
-  width: 10px !important;
-  height: 10px !important;
-  border: 2px solid #C8C8C8 !important;
-  background: #FFFFFF !important;
-  border-radius: 50% !important;
-}
-
-.flow-handle--yes {
-  border-color: #00B96B !important;
-}
-
-.flow-handle--no {
-  border-color: #FF4D4F !important;
-}
 
 /* Hide default React Flow attribution */
 .react-flow__attribution {
   display: none !important;
 }
 
-/* Make node wrapper not clip handles */
+/* Make node wrapper not clip the ports that sit on the card border */
 .react-flow__node {
   overflow: visible !important;
 }

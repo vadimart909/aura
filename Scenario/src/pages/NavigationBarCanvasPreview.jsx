@@ -2,9 +2,9 @@ import NavigationBarCanvas from '../components/NavigationBarCanvas/NavigationBar
 
 export default function NavigationBarCanvasPreview() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 40, background: '#f4f4f4', minHeight: '80vh', padding: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 40, background: 'var(--bg-neutral-1)', minHeight: '80vh', padding: 0 }}>
       <div>
-        <h3 style={{ padding: '20px 20px 0', fontSize: 14, color: '#676767' }}>Draft status</h3>
+        <h3 style={{ padding: '20px 20px 0', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Draft status</h3>
         <NavigationBarCanvas
           title="Вход в сервис Витрина"
           status="draft"
@@ -18,7 +18,7 @@ export default function NavigationBarCanvasPreview() {
       </div>
 
       <div>
-        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Published status</h3>
+        <h3 style={{ padding: '0 20px', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Published status</h3>
         <NavigationBarCanvas
           title="Продвижение ДМС"
           status="published"
@@ -32,7 +32,7 @@ export default function NavigationBarCanvasPreview() {
       </div>
 
       <div>
-        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Started status</h3>
+        <h3 style={{ padding: '0 20px', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Started status</h3>
         <NavigationBarCanvas
           title="Тест в неработе"
           status="started"
@@ -44,7 +44,7 @@ export default function NavigationBarCanvasPreview() {
       </div>
 
       <div>
-        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Stopped status</h3>
+        <h3 style={{ padding: '0 20px', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Stopped status</h3>
         <NavigationBarCanvas
           title="Бенну. Переход на вкладку ИИ-ассистента в личном кабинете корпоративного клиента"
           status="stopped"
@@ -55,7 +55,7 @@ export default function NavigationBarCanvasPreview() {
       </div>
 
       <div>
-        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Finishing status (minimal — no right buttons)</h3>
+        <h3 style={{ padding: '0 20px', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Finishing status (minimal — no right buttons)</h3>
         <NavigationBarCanvas
           title="Показ плашки об обновлении страницы в Blink"
           status="finishing"
@@ -65,7 +65,7 @@ export default function NavigationBarCanvasPreview() {
       </div>
 
       <div>
-        <h3 style={{ padding: '0 20px', fontSize: 14, color: '#676767' }}>Edit mode (toolbar)</h3>
+        <h3 style={{ padding: '0 20px', fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Edit mode (toolbar)</h3>
         <NavigationBarCanvas
           mode="edit"
           onBack={() => window.history.back()}

@@ -38,8 +38,8 @@
 
 /* Click/Active: outline + bg AROUND the card */
 .node-condition--active {
-  background: #EFEDF8;
-  border-color: #835DE1;
+  background: var(--bg-brand-1);
+  border-color: var(--primitive-brand);
 }
 
 /* Card stays the same size, just remove shadow */
@@ -53,13 +53,18 @@
   display: flex;
 }
 
-/* NodeActions positioning */
+/* NodeActions: 2px gap from the hovered card */
 .node-condition .node-actions {
-  top: -22px;
+  /* Offsets resolve against the wrapper's PADDING box, so the 2px border sits
+     at -2. Hovered card top = 12px padding - 2px lift = 10;
+     button bottom = 10 - 2 = 8; top = 8 - 32 = -24. */
+  top: -24px;
 }
 
+/* NodeActions: 2px gap from the stroke's outer edge (active) */
 .node-condition--active .node-actions {
-  top: -34px;
+  /* Stroke outer edge = -2; button bottom = -2 - 2 = -4; top = -4 - 32 = -36. */
+  top: -36px;
 }
 
 /* ---------- Header ---------- */
@@ -69,7 +74,7 @@
   align-items: center;
   gap: 10px;
   padding: var(--spacing-2x) var(--spacing-3x);
-  background: #B79FE9;
+  background: var(--category-amethyst);
   border-radius: var(--rounding-2x) var(--rounding-2x) 0 0;
 }
 
@@ -134,7 +139,7 @@
 }
 
 .node-condition__row-avatar--filled {
-  background: #B79FE9;
+  background: var(--category-amethyst);
 }
 
 .node-condition__row-avatar svg {
@@ -181,10 +186,10 @@
 .node-condition__row-overline {
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-regular);
-  font-size: 12px;
-  line-height: 15px;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
   letter-spacing: var(--letter-spacing-tight);
-  color: #676767;
+  color: var(--primitive-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -196,7 +201,7 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
-  color: #191919;
+  color: var(--primitive-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -216,10 +221,10 @@
 .node-condition__show-all-text {
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-medium);
-  font-size: 12px;
-  line-height: 16px;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
   letter-spacing: var(--letter-spacing-tight);
-  color: #835DE1;
+  color: var(--primitive-brand);
   cursor: pointer;
 }
 
@@ -230,12 +235,12 @@
   min-width: 16px;
   height: 16px;
   padding: 0 4px;
-  border-radius: 16px;
-  background: #AEAEAE;
+  border-radius: var(--rounding-4x);
+  background: var(--bg-neutral-4);
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-demibold, 600);
-  font-size: 10px;
-  line-height: 13px;
+  font-size: var(--font-size-xxs);
+  line-height: var(--line-height-xxs);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--primitive-default);
 }

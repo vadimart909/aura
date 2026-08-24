@@ -117,6 +117,28 @@ main {
 }
 
 /* ==========================================================================
+   Running-scenario cables (react-flow)
+   Штрихи бегут от источника к цели, пока сценарий в статусе «Запущен».
+
+   У React Flow есть своё правило для `.animated`, но пунктир нам задаёт
+   инлайновый strokeDasharray из defaultEdgeOptions — а шаг пунктира и сдвиг
+   в кейфрейме обязаны совпадать, иначе цикл дёргается на стыке. Поэтому
+   держим их рядом здесь, а не полагаемся на вендорный style.css.
+
+   Селектор бьёт только по видимой линии: широкий react-flow__edge-interaction
+   лежит в том же <g> и анимировать его незачем.
+   ========================================================================== */
+
+.react-flow__edge.animated .react-flow__edge-path {
+  animation: cable-flow 0.9s linear infinite;
+}
+
+@keyframes cable-flow {
+  from { stroke-dashoffset: 10; } /* = период пунктира, 5 + 5 */
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ==========================================================================
    General page utilities
    ========================================================================== */
 .page {
@@ -127,7 +149,7 @@ main {
 
 .page h1 {
   margin-bottom: 1rem;
-  font-size: 30px;
+  font-size: var(--font-size-3xl);
 }
 
 .page p {
@@ -138,7 +160,7 @@ main {
 .page nav a {
   color: var(--primitive-brand);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .page nav a:hover {
@@ -146,25 +168,48 @@ main {
 }
 
 /* ==========================================================================
-   Status Tag color overrides (DS Tag is neutral by default)
+   Status Tag color overrides (DS Tag is brand-purple by default)
    Shared across Home table rows and ScenarioInfoPopup.
+
+   Two things matter here, and getting either wrong silently paints every
+   badge DS brand-purple:
+
+   1. Override the component's own custom properties, not `background` /
+      `color` — that is the documented way to re-skin a DS component.
+   2. Out-rank the DS rule that sets the same property. Tag.tsx injects
+      tag.css *after* this entry stylesheet, so an equal-specificity
+      declaration loses on source order. Custom properties are no exception:
+      the declaration itself goes through the cascade.
+
+   Hence the doubled/tripled class selectors — the specificity each one has
+   to beat is noted per block.
    ========================================================================== */
-.tag--status-grey {
-  background: var(--bg-neutral-3);
-  color: var(--primitive-secondary);
+
+/* (0,3,0) — must beat `.tag--square.tag--m` / `.tag--square.tag--s` (0,2,0) */
+.tag.tag--square.tag--status-grey,
+.tag.tag--square.tag--status-purple,
+.tag.tag--square.tag--status-yellow,
+.tag.tag--square.tag--status-red {
+  --tag-radius: var(--rounding-1-5x);
 }
 
-.tag--status-purple {
-  background: var(--bg-brand-2);
-  color: var(--primitive-brand);
+/* (0,2,0) — must beat `.tag` (0,1,0) */
+.tag.tag--status-grey {
+  --tag-surface-color: var(--bg-neutral-3);
+  --tag-text-color: var(--primitive-secondary);
 }
 
-.tag--status-yellow {
-  background: var(--bg-warning-2);
-  color: var(--primitive-warning-2);
+.tag.tag--status-purple {
+  --tag-surface-color: var(--bg-brand-2);
+  --tag-text-color: var(--primitive-brand);
 }
 
-.tag--status-red {
-  background: var(--bg-error-2);
-  color: var(--primitive-error);
+.tag.tag--status-yellow {
+  --tag-surface-color: var(--bg-warning-2);
+  --tag-text-color: var(--primitive-warning-2);
+}
+
+.tag.tag--status-red {
+  --tag-surface-color: var(--bg-error-2);
+  --tag-text-color: var(--primitive-error);
 }

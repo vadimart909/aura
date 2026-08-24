@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './DrawerCommunication.css';
 import { TemplateModal } from '../TemplateModal';
 
@@ -75,18 +75,34 @@ function TrashIcon() {
   );
 }
 
+function CheckmarkIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 
 /* ---- Helpers ---- */
 
 /**
- * Parse comma-separated channels string into an array of trimmed names.
- * E.g. "Email, пуш, чат" → ["Email", "пуш", "чат"]
+ * Capitalize first letter of a string.
+ */
+function capitalize(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Parse comma-separated channels string into an array of capitalized names.
+ * E.g. "Email, пуш, чат" → ["Email", "Пуш", "Чат"]
  */
 function parseChannels(subtitle) {
   if (!subtitle) return [];
   return subtitle
     .split(',')
-    .map((ch) => ch.trim())
+    .map((ch) => capitalize(ch.trim()))
     .filter(Boolean);
 }
 
@@ -105,12 +121,6 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
   const [showTemplateModal, setShowTemplateModal] = useState(false);
   const [showChannelsDropdown, setShowChannelsDropdown] = useState(false);
   const channelsRef = useRef(null);
-
-  /* Channels that were removed and can be restored */
-  const removedChannels = useMemo(
-    () => allChannels.filter((ch) => !channels.includes(ch)),
-    [allChannels, channels],
-  );
 
   /* Close dropdown on outside click */
   useEffect(() => {
@@ -152,14 +162,16 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
     setChannels((prev) => prev.filter((ch) => ch !== channelToRemove));
   };
 
-  const handleRestoreChannel = (channel) => {
-    setChannels((prev) => [...prev, channel]);
+  const handleToggleChannelsDropdown = () => {
+    setShowChannelsDropdown((prev) => !prev);
   };
 
-  const handleToggleChannelsDropdown = () => {
-    if (removedChannels.length > 0) {
-      setShowChannelsDropdown((prev) => !prev);
-    }
+  const handleToggleChannel = (channel) => {
+    setChannels((prev) =>
+      prev.includes(channel)
+        ? prev.filter((ch) => ch !== channel)
+        : [...prev, channel],
+    );
   };
 
   /* Validation: channels must not be empty when a template is selected */
@@ -233,92 +245,6 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
                   </button>
                 </div>
 
-                {/* Channels multiselect */}
-                {allChannels.length > 0 && (
-                  <div className="drawer-communication__channels-wrapper" ref={channelsRef}>
-                    <div
-                      className={
-                        'drawer-communication__channels' +
-                        (showChannelsDropdown ? ' drawer-communication__channels--focused' : '') +
-                        (hasChannelsError ? ' drawer-communication__channels--error' : '')
-                      }
-                      onClick={hasChannelsError ? handleToggleChannelsDropdown : undefined}
-                    >
-                      <div className="drawer-communication__channels-row">
-                        <div className="drawer-communication__channels-content">
-                          <span className="drawer-communication__channels-title">
-                            Каналы рассылки
-                          </span>
-                          <div className="drawer-communication__channels-items">
-                            {channels.length > 0 ? (
-                              channels.map((channel) => (
-                                <div
-                                  key={channel}
-                                  className="drawer-communication__channel-chip"
-                                >
-                                  <span className="drawer-communication__channel-chip-label">
-                                    {channel}
-                                  </span>
-                                  <button
-                                    type="button"
-                                    className="drawer-communication__channel-chip-remove"
-                                    onClick={() => handleRemoveChannel(channel)}
-                                    aria-label={`Удалить канал ${channel}`}
-                                  >
-                                    <CrossSmallIcon />
-                                  </button>
-                                </div>
-                              ))
-                            ) : (
-                              <span className="drawer-communication__channels-placeholder">
-                                Выбери из списка
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        {removedChannels.length > 0 && (
-                          <button
-                            type="button"
-                            className="drawer-communication__channels-accessory"
-                            onClick={handleToggleChannelsDropdown}
-                            aria-label="Показать удалённые каналы"
-                          >
-                            <ChevronDownIcon />
-                          </button>
-                        )}
-                      </div>
-
-                      {/* Error section */}
-                      {hasChannelsError && (
-                        <div className="drawer-communication__channels-error">
-                          <div className="drawer-communication__channels-error-divider" />
-                          <span className="drawer-communication__channels-error-text">
-                            Выбери каналы
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Dropdown with removed channels */}
-                    {showChannelsDropdown && removedChannels.length > 0 && (
-                      <div className="drawer-communication__channels-dropdown">
-                        <div className="drawer-communication__channels-dropdown-list">
-                          {removedChannels.map((channel) => (
-                            <button
-                              key={channel}
-                              type="button"
-                              className="drawer-communication__channels-dropdown-item"
-                              onClick={() => handleRestoreChannel(channel)}
-                            >
-                              {channel}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
               </>
             ) : (
               <button
@@ -333,6 +259,98 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
               </button>
             )}
           </div>
+
+          {/* Channels multiselect — sibling of section, gap 32px from content */}
+          {selectedTemplate && allChannels.length > 0 && (
+            <div className="drawer-communication__channels-wrapper" ref={channelsRef}>
+              <div
+                className={
+                  'drawer-communication__channels' +
+                  (showChannelsDropdown ? ' drawer-communication__channels--focused' : '') +
+                  (hasChannelsError ? ' drawer-communication__channels--error' : '')
+                }
+                onClick={hasChannelsError ? handleToggleChannelsDropdown : undefined}
+              >
+                <div className="drawer-communication__channels-row">
+                  <div className="drawer-communication__channels-content">
+                    <span className="drawer-communication__channels-title">
+                      Каналы рассылки
+                    </span>
+                    <div className="drawer-communication__channels-items">
+                      {channels.length > 0 && channels.map((channel) => (
+                        <div
+                          key={channel}
+                          className="drawer-communication__channel-chip"
+                        >
+                          <span className="drawer-communication__channel-chip-label">
+                            {channel}
+                          </span>
+                          <button
+                            type="button"
+                            className="drawer-communication__channel-chip-remove"
+                            onClick={() => handleRemoveChannel(channel)}
+                            aria-label={`Удалить канал ${channel}`}
+                          >
+                            <CrossSmallIcon />
+                          </button>
+                        </div>
+                      ))}
+                      <span
+                        className="drawer-communication__channels-placeholder"
+                        onClick={handleToggleChannelsDropdown}
+                      >
+                        Выбери из списка
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="drawer-communication__channels-accessory"
+                    onClick={handleToggleChannelsDropdown}
+                    aria-label="Выбрать каналы"
+                  >
+                    <ChevronDownIcon />
+                  </button>
+                </div>
+
+                {/* Error section */}
+                {hasChannelsError && (
+                  <div className="drawer-communication__channels-error">
+                    <div className="drawer-communication__channels-error-divider" />
+                    <span className="drawer-communication__channels-error-text">
+                      Выбери каналы
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Dropdown with all channels (toggle checkmarks) */}
+              {showChannelsDropdown && (
+                <div className="drawer-communication__channels-dropdown">
+                  <div className="drawer-communication__channels-dropdown-list">
+                    {allChannels.map((channel) => (
+                      <button
+                        key={channel}
+                        type="button"
+                        className="drawer-communication__channels-dropdown-item"
+                        onClick={() => handleToggleChannel(channel)}
+                      >
+                        <span className="drawer-communication__channels-dropdown-item-label">
+                          {channel}
+                        </span>
+                        {channels.includes(channel) && (
+                          <span className="drawer-communication__channels-dropdown-item-check">
+                            <CheckmarkIcon />
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ---- Footer ---- */}

@@ -17,9 +17,37 @@
 }
 
 /* ---- Edit mode modifier ---- */
+/* Every 40px control sits 8px above the bar's bottom edge, which is what puts
+   the back button 32px from the top (32 + 40 + 8 = the bar's 80px height).
+   The buttons are bottom-anchored rather than centred so that gap is a single
+   number instead of a consequence of the toolbar's height. */
 .nav-bar-canvas--edit {
-  padding: 16px 20px;
+  padding: 8px 20px;
   justify-content: center;
+  align-items: flex-end;
+}
+
+.nav-bar-canvas--edit .nav-bar-canvas__back-btn,
+.nav-bar-canvas--edit .nav-bar-canvas__right {
+  top: auto;
+  bottom: 8px;
+  transform: none;
+}
+
+/* Grow upwards on hover/press so the 8px gap stays exact. Scoped to edit mode:
+   in read mode these buttons are vertically centred, where a centre origin is
+   the right behaviour. */
+.nav-bar-canvas--edit .nav-bar-canvas__back-btn,
+.nav-bar-canvas--edit .nav-bar-canvas__icon-btn {
+  transform-origin: bottom;
+}
+
+.nav-bar-canvas--edit .nav-bar-canvas__back-btn:hover {
+  transform: scale(1.02);
+}
+
+.nav-bar-canvas--edit .nav-bar-canvas__back-btn:active {
+  transform: scale(0.98);
 }
 
 /* --------------------------------------------------------------------------
@@ -37,7 +65,7 @@
   width: 40px;
   height: 40px;
   border: 1px solid rgba(25, 25, 25, 0.45);
-  border-radius: 10px;
+  border-radius: var(--rounding-2-5x);
   background: transparent;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
@@ -95,7 +123,7 @@
   align-items: center;
   justify-content: center;
   padding: 2px 5px;
-  border-radius: 6px;
+  border-radius: var(--rounding-1-5x);
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-xs);
@@ -112,7 +140,10 @@
 
 .nav-bar-canvas__badge--purple {
   background: var(--bg-brand-2);
-  color: var(--primitive-brand-2);
+  /* Not `--primitive-brand-2`: that token does not exist, so the colour fell
+     back to the inherited near-black and this was the one badge whose text
+     wasn't tinted to match its surface. Same pair the Home table's Tag uses. */
+  color: var(--primitive-brand);
 }
 
 .nav-bar-canvas__badge--yellow {
@@ -151,7 +182,7 @@
   height: 40px;
   background: rgba(25, 25, 25, 0.05);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
 }
@@ -231,10 +262,10 @@
   padding: 0 10px;
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-regular, 400);
-  font-size: 10px;
-  line-height: 14px;
-  letter-spacing: 0.01em;
-  color: var(--primitive-secondary, #676767);
+  font-size: var(--font-size-xxs);
+  line-height: var(--line-height-xxs);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary, var(--primitive-secondary));
   text-align: center;
 }
 
@@ -256,9 +287,11 @@
   padding: 0 12px;
   background: transparent;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
+  /* Grow upwards on hover so the 8px bottom gap stays exact */
+  transform-origin: bottom;
 }
 
 .nav-bar-canvas__toolbar-btn:hover {
@@ -283,9 +316,9 @@
 .nav-bar-canvas__toolbar-btn-label {
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-medium, 500);
-  font-size: 14px;
-  line-height: 18px;
-  letter-spacing: 0.01em;
-  color: var(--primitive-primary, #191919);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary, var(--primitive-primary));
   white-space: nowrap;
 }

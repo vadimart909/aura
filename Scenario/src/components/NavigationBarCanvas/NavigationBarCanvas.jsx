@@ -1,5 +1,7 @@
 import './NavigationBarCanvas.css';
 
+import PlayIcon from '../icons/PlayIcon';
+
 import iconNetwork from '../Nodes/icons/icon-network.svg';
 import iconWatch from '../Nodes/icons/icon-watch.svg';
 import iconAirplanePaper from '../Nodes/icons/icon-airplane-paper.svg';
@@ -64,17 +66,6 @@ function DotsIcon() {
       <circle cx="5" cy="12" r="1.5" fill="currentColor" />
       <circle cx="12" cy="12" r="1.5" fill="currentColor" />
       <circle cx="19" cy="12" r="1.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-function PlayIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M6 4L20 12L6 20V4Z"
-        fill="currentColor"
-      />
     </svg>
   );
 }
