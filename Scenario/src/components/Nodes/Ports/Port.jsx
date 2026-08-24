@@ -39,14 +39,14 @@ export default function Port({
   const isOccupied = Boolean(contextNodeId) && connections.length > 0;
   const resolvedState = state ?? (isOccupied ? 'active' : 'default');
 
-  // An output port drives exactly one connection: once it has an edge it stops
-  // being connectable, so a second one can't even be dragged out of it.
-  // Inputs stay open — several branches may converge on the same node.
+  // A port carries exactly one cable: once it has an edge it stops being
+  // connectable, so a second one can neither be dragged out of it nor dropped
+  // onto it. Applies to inputs too — branches can't converge on one port.
   // isConnectable alone would NOT block this: xyflow gates starting/ending a
   // connection on isConnectableStart/isConnectableEnd and only uses
   // isConnectable to drop the .connectionindicator class (which is what its
   // base stylesheet hangs pointer-events on) — so all three have to be set.
-  const canConnect = isConnectable && !(type === 'source' && isOccupied);
+  const canConnect = isConnectable && !isOccupied;
 
   const stateClass = resolvedState === 'active' ? 'port--active' : 'port--default';
   const colorClass = color && color !== 'default' ? `port--${color}` : '';
@@ -66,8 +66,12 @@ export default function Port({
       position={position}
       id={id}
       isConnectable={canConnect}
-      isConnectableStart={canConnect}
-      isConnectableEnd={canConnect}
+      /* Cables only ever run output → input: a drag can start on a right
+         (source) port and can only end on a left (target) one. Dragging
+         backwards out of an input never begins, so there is no way to wire a
+         left port into another block's right port. */
+      isConnectableStart={canConnect && type === 'source'}
+      isConnectableEnd={canConnect && type === 'target'}
       className={classes}
       aria-label={ariaLabel}
     />

@@ -35,6 +35,19 @@
   box-sizing: border-box;
 }
 
+/* Базовый стиль xyflow гасит у хендла pointer-events и возвращает их только
+   по классу .connectionindicator, который вешается на порты, откуда МОЖНО
+   начать соединение. Тянуть из входного (левого) порта нельзя (см. Port.jsx),
+   класса у него нет — а вместе с событиями мыши пропадают и ховер, и `nodrag`,
+   из-за чего клик по порту начинает таскать саму карточку.
+
+   Возвращаем события мыши всем портам: старт соединения всё равно закрыт
+   пропсом isConnectableStart, а невалидный дроп — классом .connectableend,
+   который xyflow проверяет отдельно. */
+.react-flow__handle.port {
+  pointer-events: all;
+}
+
 /* State=Default: заливка светлая, обводка нейтральная 2px */
 :is(.react-flow__handle, .port).port--default {
   background: var(--primitive-default);

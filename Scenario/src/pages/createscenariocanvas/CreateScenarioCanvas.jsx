@@ -169,15 +169,22 @@ function CreateScenarioCanvasInner() {
     [setEdges],
   );
 
-  // A port can only ever drive a single outgoing connection — reject a new
-  // connection attempt if its source handle already has an edge. Also reject
-  // self-connections: a node wired to itself would otherwise satisfy the
-  // "block is connected" publish check.
+  // One port, one cable — in both directions: reject the attempt if either the
+  // source handle already has an outgoing edge or the target handle already has
+  // an incoming one. Also reject self-connections: a node wired to itself would
+  // otherwise satisfy the "block is connected" publish check.
+  //
+  // Direction is deliberately NOT checked here — xyflow hands this callback an
+  // already-normalized connection whose `source` is always the source handle,
+  // so the side the drag started from is unrecoverable. The "output → input
+  // only" rule lives on the handles themselves (see Port.jsx).
   const isValidConnection = useCallback(
     (connection) =>
       connection.source !== connection.target &&
       !edges.some(
-        (edge) => edge.source === connection.source && edge.sourceHandle === connection.sourceHandle,
+        (edge) =>
+          (edge.source === connection.source && edge.sourceHandle === connection.sourceHandle) ||
+          (edge.target === connection.target && edge.targetHandle === connection.targetHandle),
       ),
     [edges],
   );
