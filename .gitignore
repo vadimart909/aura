@@ -1,4 +1,8 @@
-prototype/design-system/node_modules
+# Dependencies are never committed. The old entry named only
+# prototype/design-system/node_modules, so prototype/my-prototype/node_modules
+# slipped through and 2601 of its files ended up tracked — 67 MB of the repo.
+# Restore any of them with `npm install`; the lockfiles are what is tracked.
+node_modules/
 
 # Figma exports are local snapshots of a cloud document — Figma itself is the
 # source of truth (component CSS cites Figma node ids). The 17 MB .fig already
