@@ -1,0 +1,26 @@
+/* Lives in React Flow's EdgeLabelRenderer overlay, not the edge's own SVG —
+   that layer disables pointer-events by default so it doesn't block panning
+   where there's no label, so children have to opt back in explicitly. */
+.flow-edge__delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--page-secondary);
+  color: var(--primitive-error);
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.15s ease;
+}
+
+.flow-edge__delete-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.flow-edge__delete-btn:active {
+  background: var(--state-container-transparent-1-active);
+}

@@ -1,0 +1,143 @@
+/* ================================================================== */
+/*  ConfirmDialog — overrides on top of DS Modal                      */
+/* ================================================================== */
+
+/* Constrain the modal panel width. .modal__panel hardcodes --rounding-6x
+   (24px) even though the DS ships a semantic 12px popup token, which is what
+   the design uses. */
+.confirm-dialog .modal__panel {
+  max-width: 320px;
+  border-radius: var(--popup-rounding-strong);
+}
+
+/* Each section below carries its own padding, matching the design, and the
+   divider has to run edge to edge — so the shared content padding
+   (12px 20px) must not apply here. */
+.confirm-dialog .modal__content-inner {
+  padding: 0;
+}
+
+/* ---- Text section ---- */
+.confirm-dialog__text-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--spacing-5x) var(--spacing-5x) var(--spacing-3x);
+}
+
+.confirm-dialog__message {
+  color: var(--primitive-primary);
+}
+
+/* ---- Content: accented action ---- */
+.confirm-dialog__content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spacing-2x) var(--spacing-2x);
+}
+
+.confirm-dialog__action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3x);
+  padding: var(--spacing-3x);
+  background: transparent;
+  border: none;
+  border-radius: var(--cell-rounding-weak);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+/* No scale on hover: these are full-width rows, where scaling reads as jitter
+   and pushes past the dialog's padding. */
+.confirm-dialog__action-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.confirm-dialog__action-btn:active {
+  background: var(--state-container-transparent-1-active);
+}
+
+/* The tone is the only thing that varies between call sites.
+   Icon sizing comes from the .ds-icon--m class on the same element. */
+.confirm-dialog__action-btn--error .confirm-dialog__action-icon,
+.confirm-dialog__action-btn--error .confirm-dialog__action-label {
+  color: var(--primitive-error);
+}
+
+.confirm-dialog__action-btn--brand .confirm-dialog__action-icon,
+.confirm-dialog__action-btn--brand .confirm-dialog__action-label {
+  color: var(--primitive-brand);
+}
+
+/* ---- Content: option list (multi-choice mode) ---- */
+.confirm-dialog__option-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--spacing-3x);
+  background: transparent;
+  border: none;
+  border-radius: var(--cell-rounding-weak);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.confirm-dialog__option-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.confirm-dialog__option-btn:active {
+  background: var(--state-container-transparent-1-active);
+}
+
+/* Every option here is a destructive-ish choice — no non-error call site
+   exists yet, so the colour isn't parameterized like the single-action tone. */
+.confirm-dialog__option-label {
+  color: var(--primitive-error);
+}
+
+.confirm-dialog__option-description {
+  color: var(--primitive-secondary);
+}
+
+/* ---- Divider ---- */
+.confirm-dialog__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--translucent-primitives-neutral-2);
+}
+
+/* ---- Footer: cancel button ---- */
+.confirm-dialog__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: var(--spacing-2x);
+}
+
+.confirm-dialog__cancel-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3x);
+  padding: var(--spacing-3x);
+  background: transparent;
+  border: none;
+  border-radius: var(--cell-rounding-weak);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.confirm-dialog__cancel-btn:hover {
+  background: var(--container-transparent-1);
+}
+
+.confirm-dialog__cancel-btn:active {
+  background: var(--state-container-transparent-1-active);
+}
+
+.confirm-dialog__cancel-label {
+  color: var(--primitive-neutral-4);
+}

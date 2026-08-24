@@ -1,4 +1,5 @@
 import NodeCommunicationCard from '../NodeCommunicationCard';
+import { useNodeFieldError } from '../../../context/NodeErrorsContext';
 
 /**
  * FlowCommunicationNode — нода «Коммуникация» для React Flow.
@@ -6,17 +7,19 @@ import NodeCommunicationCard from '../NodeCommunicationCard';
  * компонентом <Ports> (позиционированы на границе блока по дизайну).
  * data: { title, showError, showActions, state, onClick }
  */
-export default function FlowCommunicationNode({ data }) {
+export default function FlowCommunicationNode({ id, data }) {
+  const fieldError = useNodeFieldError(id);
   return (
     <div className="flow-node flow-node--communication">
       <NodeCommunicationCard
         title={data.title}
-        showError={data.showError}
+        showError={Boolean(data.showError) || fieldError}
         showActions={data.showActions}
         templateTitle={data.templateTitle}
         templateDescription={data.templateDescription}
         state={data.state}
         onClick={data.onClick}
+        onDelete={data.onDelete}
       />
     </div>
   );

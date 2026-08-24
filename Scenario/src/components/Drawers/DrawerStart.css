@@ -238,8 +238,8 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  background: #C799DF;
+  border-radius: var(--rounding-2x);
+  background: var(--category-orchid);
   color: var(--primitive-default);
 }
 

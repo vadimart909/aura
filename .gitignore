@@ -1,1 +1,7 @@
 prototype/design-system/node_modules
+
+# Figma exports are local snapshots of a cloud document — Figma itself is the
+# source of truth (component CSS cites Figma node ids). The 17 MB .fig already
+# in history was swept in by the broad `git add` in 35d885c, not tracked on
+# purpose; keeping these out stops the repo growing by ~30 MB per re-export.
+*.fig

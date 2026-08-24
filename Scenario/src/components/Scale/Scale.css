@@ -7,7 +7,7 @@
   flex-direction: column;
   align-items: center;
   background: rgba(25, 25, 25, 0.05);
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   overflow: hidden;
 }
 
@@ -20,7 +20,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: #191919;
+  color: var(--primitive-primary);
   transition: background 0.15s ease, transform 0.15s ease;
 }
 

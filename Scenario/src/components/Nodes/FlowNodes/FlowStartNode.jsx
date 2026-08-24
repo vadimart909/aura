@@ -1,4 +1,5 @@
 import NodeStartCard from '../NodeStartCard';
+import { useNodeFieldError } from '../../../context/NodeErrorsContext';
 
 /**
  * FlowStartNode — нода «Старт» для React Flow.
@@ -8,7 +9,8 @@ import NodeStartCard from '../NodeStartCard';
  *         triggerLabel, segmentLabel, scheduleLabel, scheduleOverline, scheduleDescription,
  *         scheduleDaysLabel, scheduleDaysOverline, state, onClick }
  */
-export default function FlowStartNode({ data }) {
+export default function FlowStartNode({ id, data }) {
+  const fieldError = useNodeFieldError(id);
   return (
     <div className="flow-node flow-node--start">
       <NodeStartCard
@@ -17,7 +19,7 @@ export default function FlowStartNode({ data }) {
         showSchedule={data.showSchedule}
         showScheduleDays={data.showScheduleDays}
         showSegment={data.showSegment}
-        showError={data.showError}
+        showError={Boolean(data.showError) || fieldError}
         triggerLabel={data.triggerLabel}
         segmentLabel={data.segmentLabel}
         scheduleLabel={data.scheduleLabel}

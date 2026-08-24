@@ -1,92 +1,59 @@
 /* ==========================================================================
    CreateScenarioInfo — страница «Создание сценария» (Шаг 1 — форма)
+   Figma: «Пустая форма» (21492:308231)
    ========================================================================== */
 
+/* Mirrors the design's structure: a centred column of header / content /
+   footer, with the navigation column overlaid on the left. */
 .flow-scenario {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: calc(100vh - 74px); /* viewport minus header */
   background: var(--page-secondary);
   position: relative;
 }
 
 /* --------------------------------------------------------------------------
-   Sidebar (Navigation Bar)
+   Sidebar (DS NavigationBar) — overlay, so the form stays centred on the
+   full page width the way the design has it
    -------------------------------------------------------------------------- */
 
 .flow-scenario__sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 280px;
-  flex-shrink: 0;
-  padding: 32px 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
 }
 
-.flow-scenario__back-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--translucent-primitives-neutral-3);
-  border-radius: var(--rounding-2-5x);
-  background: transparent;
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
-}
-
-.flow-scenario__back-btn:hover {
-  background: var(--container-transparent-1);
-  transform: scale(1.02);
-}
-
-.flow-scenario__back-btn:active {
-  transform: scale(0.98);
-}
-
-.flow-scenario__back-btn svg {
-  width: 24px;
-  height: 24px;
-  color: var(--primitive-primary);
-}
-
-.flow-scenario__sidebar-header {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.flow-scenario__sidebar-title {
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-demibold);
-  font-size: var(--font-size-2xl);
-  line-height: var(--line-height-2xl);
-  color: var(--primitive-primary);
-  margin: 0;
-}
+/* Padding (32/20), gap (40), the 40×40 back button and the 24/30 title all
+   come from .navigation-bar itself — nothing to restyle here. */
 
 /* --------------------------------------------------------------------------
    Content area (centered form)
    -------------------------------------------------------------------------- */
 
 .flow-scenario__main {
-  position: absolute;
-  left: 50vw;
-  transform: translateX(-50%);
   width: 720px;
-  display: flex;
-  justify-content: center;
-  padding: 32px 0;
-  /* leave room for the sticky footer */
-  padding-bottom: 100px;
+  padding: var(--spacing-8x) var(--spacing-5x); /* 720 - 2×20 → 680px fields */
 }
 
 .flow-scenario__form {
   width: 100%;
-  max-width: 720px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--spacing-4x);
+}
+
+/* Required-field asterisk. The DS Input has no `required` prop and types
+   `label` as a plain string, so the marker is drawn here. Only «Название»
+   uses Input on this page; «Описание» is a TextArea and has none. */
+.flow-scenario__form .input__title::after {
+  content: '*';
+  margin-left: var(--spacing-0-5x);
+  color: var(--primitive-error);
+  font-size: var(--font-size-l);
+  line-height: var(--line-height-l);
 }
 
 /* (Input / TextArea field styles removed — now handled by DS Input & TextArea components) */
@@ -95,28 +62,43 @@
    Footer
    -------------------------------------------------------------------------- */
 
+/* In flow and pushed to the bottom, so no fixed positioning and no magic
+   bottom padding on the content to compensate for it. */
 .flow-scenario__footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  margin-top: auto;
+  width: 100%;
   background: var(--bg-default);
-  z-index: 10;
 }
 
 .flow-scenario__footer-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: var(--spacing-2x);
+  padding: var(--spacing-3x) var(--spacing-5x);
 }
 
 /* --- Buttons --- */
 
-/* Button width override for footer */
+/* DS Button defaults to 280×50 with a 10px radius; the design wants a
+   half-width 48px button with the 12px radius. Specificity (0,2,0) beats
+   .button (0,1,0) regardless of stylesheet order. */
 .flow-scenario__footer-content .button {
-  width: 320px;
+  --button-height: 48px; /* documented override hook */
+  /* .button hardcodes --rounding-2-5x even though the DS ships a semantic
+     12px token for exactly this */
+  border-radius: var(--button-rounding-strong);
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0; /* .button sets min-width: var(--button-width) = 280px */
+  max-width: 320px;
+}
+
+/* The component pins its label to ts-500-l (18/22); the design uses TTN 500/M */
+.flow-scenario__footer-content .button__label {
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 /* (Draft modal now uses DS FlowResultView) */

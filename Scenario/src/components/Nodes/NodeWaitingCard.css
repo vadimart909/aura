@@ -38,8 +38,8 @@
 
 /* Click/Active: outline + bg AROUND the card */
 .node-waiting--active {
-  background: #EFEDF8;
-  border-color: #835DE1;
+  background: var(--bg-brand-1);
+  border-color: var(--primitive-brand);
 }
 
 /* Card stays the same size, just remove shadow */
@@ -53,14 +53,18 @@
   display: flex;
 }
 
-/* NodeActions: 2px gap from card (default/hover) */
+/* NodeActions: 2px gap from the hovered card */
 .node-waiting .node-actions {
-  top: -22px; /* card starts at 12px padding; bottom = 12-2=10; top = 10-32 = -22 */
+  /* Offsets resolve against the wrapper's PADDING box, so the 2px border sits
+     at -2. Hovered card top = 12px padding - 2px lift = 10;
+     button bottom = 10 - 2 = 8; top = 8 - 32 = -24. */
+  top: -24px;
 }
 
-/* NodeActions: 2px gap from stroke (active) */
+/* NodeActions: 2px gap from the stroke's outer edge (active) */
 .node-waiting--active .node-actions {
-  top: -34px; /* stroke at 0; bottom = -2; top = -2-32 = -34 */
+  /* Stroke outer edge = -2; button bottom = -2 - 2 = -4; top = -4 - 32 = -36. */
+  top: -36px;
 }
 
 /* ---------- Header ---------- */
@@ -70,7 +74,7 @@
   align-items: center;
   gap: 10px;
   padding: var(--spacing-2x) var(--spacing-3x);
-  background: #DE9C7E;
+  background: var(--category-sand);
   border-radius: var(--rounding-2x) var(--rounding-2x) 0 0;
 }
 
@@ -130,7 +134,7 @@
 }
 
 .node-waiting__row-avatar--filled {
-  background: #DE9C7E;
+  background: var(--category-sand);
 }
 
 .node-waiting__row-avatar svg {
@@ -160,7 +164,7 @@
 }
 
 .node-waiting__row-text--filled {
-  color: #191919;
+  color: var(--primitive-primary);
 }
 
 .node-waiting__row--error .node-waiting__row-text {

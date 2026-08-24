@@ -1,5 +1,6 @@
-import { Modal, ModalFooter, ModalHeader } from '@ds/components/Modal';
+import { Modal } from '@ds/components/Modal';
 import { Tag } from '@ds/components/Tag';
+import { Button } from '@ds/components/Button';
 import './ScenarioInfoPopup.css';
 
 /* ------------------------------------------------------------------ */
@@ -14,7 +15,14 @@ const popupTagClassMap = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  ScenarioInfoPopup                                                  */
+/*  ScenarioInfoPopup — Figma «Popup» (22116:353003)                   */
+/*                                                                     */
+/*  Header and footer are local markup rather than DS ModalHeader /    */
+/*  ModalFooter: the design uses the "Title Left" header variant — one */
+/*  56px row, left-aligned 18/22 title, badge pushed right, no close   */
+/*  cross — while the DS components implement a different variant      */
+/*  (two rows, a 24/30 centred title and a cross). The DS Modal shell  */
+/*  still provides the overlay, Escape/overlay close and animation.    */
 /* ------------------------------------------------------------------ */
 export default function ScenarioInfoPopup({ name, description, status, statusLabel, onClose }) {
   const tagClass = popupTagClassMap[status] || popupTagClassMap.draft;
@@ -23,22 +31,17 @@ export default function ScenarioInfoPopup({ name, description, status, statusLab
     <Modal
       isOpen
       onClose={onClose}
+      className="scenario-info"
       header={
-        <ModalHeader
-          title={
-            <span className="scenario-info__header-row">
-              <span className="ts-500-m">О сценарии</span>
-              <Tag size="s" className={tagClass}>{statusLabel}</Tag>
-            </span>
-          }
-          onClose={onClose}
-        />
+        <div className="scenario-info__header">
+          <h2 className="scenario-info__title ts-600-l">О сценарии</h2>
+          <Tag size="m" className={tagClass}>{statusLabel}</Tag>
+        </div>
       }
       footer={
-        <ModalFooter
-          layout="1-button"
-          primaryAction={{ label: 'Закрыть', isSelected: true, onClick: onClose }}
-        />
+        <div className="scenario-info__footer">
+          <Button variant="primary" onClick={onClose}>Закрыть</Button>
+        </div>
       }
     >
       <div className="scenario-info__cell">

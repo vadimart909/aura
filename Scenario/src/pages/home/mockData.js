@@ -2,6 +2,9 @@
  * Мок-данные сценариев для таблицы «Все сценарии»
  */
 
+import { startCanvas } from '../createscenariocanvas/canvasSnapshot';
+import { demoCanvas } from './demoCanvas';
+
 export const scenarios = [
   {
     id: 1,
@@ -11,8 +14,9 @@ export const scenarios = [
     statusLabel: 'Черновик',
     author: 'Кирилл Митюшин',
     authorInitials: 'КМ',
-    authorColor: '#95AEE2',
+    authorColor: 'var(--category-indigo)',
     date: '12.08.2025',
+    canvas: startCanvas(),
   },
   {
     id: 2,
@@ -22,8 +26,9 @@ export const scenarios = [
     statusLabel: 'Опубликован',
     author: 'Кирилл Митюшин',
     authorInitials: 'КМ',
-    authorColor: '#95AEE2',
+    authorColor: 'var(--category-indigo)',
     date: '22.10.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 3,
@@ -33,8 +38,9 @@ export const scenarios = [
     statusLabel: 'Запущен',
     author: 'Вадим Артёменко',
     authorInitials: 'ВА',
-    authorColor: '#82C9A1',
+    authorColor: 'var(--category-emerald)',
     date: '02.03.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 4,
@@ -44,8 +50,9 @@ export const scenarios = [
     statusLabel: 'Остановлен',
     author: 'Антон Елькин',
     authorInitials: 'АЕ',
-    authorColor: '#C799DF',
+    authorColor: 'var(--category-orchid)',
     date: '01.10.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 5,
@@ -55,8 +62,9 @@ export const scenarios = [
     statusLabel: 'Завершает работу',
     author: 'Кирилл Митюшин',
     authorInitials: 'КМ',
-    authorColor: '#95AEE2',
+    authorColor: 'var(--category-indigo)',
     date: '12.08.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 6,
@@ -66,8 +74,9 @@ export const scenarios = [
     statusLabel: 'Черновик',
     author: 'Антон Елькин',
     authorInitials: 'АЕ',
-    authorColor: '#C799DF',
+    authorColor: 'var(--category-orchid)',
     date: '22.10.2025',
+    canvas: startCanvas(),
   },
   {
     id: 7,
@@ -77,8 +86,9 @@ export const scenarios = [
     statusLabel: 'Опубликован',
     author: 'Мария Соколова',
     authorInitials: 'МС',
-    authorColor: '#F2A365',
+    authorColor: 'var(--category-sand)',
     date: '05.11.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 8,
@@ -88,8 +98,9 @@ export const scenarios = [
     statusLabel: 'Запущен',
     author: 'Вадим Артёменко',
     authorInitials: 'ВА',
-    authorColor: '#82C9A1',
+    authorColor: 'var(--category-emerald)',
     date: '17.09.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 9,
@@ -99,8 +110,9 @@ export const scenarios = [
     statusLabel: 'Запущен',
     author: 'Дмитрий Волков',
     authorInitials: 'ДВ',
-    authorColor: '#E8959A',
+    authorColor: 'var(--category-coral)',
     date: '30.07.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 10,
@@ -110,8 +122,9 @@ export const scenarios = [
     statusLabel: 'Опубликован',
     author: 'Мария Соколова',
     authorInitials: 'МС',
-    authorColor: '#F2A365',
+    authorColor: 'var(--category-sand)',
     date: '14.06.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 11,
@@ -121,8 +134,9 @@ export const scenarios = [
     statusLabel: 'Черновик',
     author: 'Дмитрий Волков',
     authorInitials: 'ДВ',
-    authorColor: '#E8959A',
+    authorColor: 'var(--category-coral)',
     date: '28.11.2025',
+    canvas: startCanvas(),
   },
   {
     id: 12,
@@ -132,8 +146,9 @@ export const scenarios = [
     statusLabel: 'Остановлен',
     author: 'Антон Елькин',
     authorInitials: 'АЕ',
-    authorColor: '#C799DF',
+    authorColor: 'var(--category-orchid)',
     date: '03.05.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 13,
@@ -143,8 +158,9 @@ export const scenarios = [
     statusLabel: 'Завершает работу',
     author: 'Мария Соколова',
     authorInitials: 'МС',
-    authorColor: '#F2A365',
+    authorColor: 'var(--category-sand)',
     date: '19.04.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 14,
@@ -154,8 +170,9 @@ export const scenarios = [
     statusLabel: 'Опубликован',
     author: 'Вадим Артёменко',
     authorInitials: 'ВА',
-    authorColor: '#82C9A1',
+    authorColor: 'var(--category-emerald)',
     date: '08.12.2025',
+    canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
     id: 15,
@@ -165,7 +182,8 @@ export const scenarios = [
     statusLabel: 'Черновик',
     author: 'Дмитрий Волков',
     authorInitials: 'ДВ',
-    authorColor: '#E8959A',
+    authorColor: 'var(--category-coral)',
     date: '25.01.2026',
+    canvas: startCanvas(),
   },
 ]

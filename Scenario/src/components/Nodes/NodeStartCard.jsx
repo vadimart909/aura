@@ -4,7 +4,6 @@ import iconTrigger from './icons/icon-trigger.svg';
 import iconCalendar from './icons/icon-calendar.svg';
 import iconWatch from './icons/icon-watch.svg';
 import iconPerson from './icons/icon-person.svg';
-import iconWarning from './icons/icon-warning.svg';
 
 /**
  * NodeStartCard — карточка стартовой ноды (событие).
@@ -14,7 +13,7 @@ import iconWarning from './icons/icon-warning.svg';
  * @param {boolean} [props.showTrigger=true]  — строка «Триггер»
  * @param {boolean} [props.showSchedule=true] — строка «Расписание» (combined with time)
  * @param {boolean} [props.showSegment=true]  — строка «Сегмент»
- * @param {boolean} [props.showError=true]    — строка «Ошибка»
+ * @param {boolean} [props.showError=true]    — строка «Заполни поля»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {string}  [props.className]
  * @param {string}  [props.scheduleLabel]     — time value for schedule (e.g. "12:30")
@@ -93,7 +92,7 @@ export default function NodeStartCard({
             )}
             {showError && (
               <div className="node-start__row node-start__row--error">
-                <span className="node-start__row-text">Ошибка</span>
+                <span className="node-start__row-text">Заполни поля</span>
               </div>
             )}
           </div>

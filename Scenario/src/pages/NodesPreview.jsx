@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { ReactFlowProvider } from '@xyflow/react';
 import { NodeStartCard, NodeWaitingCard, NodeCommunicationCard, NodeConditionCard, Port, Ports } from '../components/Nodes';
 
 export default function NodesPreview() {
@@ -32,10 +33,11 @@ export default function NodesPreview() {
   }, [startActive, waitingActive, commActive, condActive]);
 
   return (
-    <div style={{ padding: 40, display: 'flex', gap: 40, flexWrap: 'wrap', background: '#f4f4f4', minHeight: '80vh' }}>
+    <ReactFlowProvider>
+    <div style={{ padding: 40, display: 'flex', gap: 40, flexWrap: 'wrap', background: 'var(--bg-neutral-1)', minHeight: '80vh' }}>
       {/* Interactive: hover on mouseover, active on click, deactivate on click outside */}
       <div ref={startRef}>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>
           Start — Interactive {startActive ? '(active)' : '(hover me / click me)'}
         </h3>
         <NodeStartCard
@@ -47,7 +49,7 @@ export default function NodesPreview() {
 
       {/* Interactive Waiting: hover on mouseover, active on click, deactivate on click outside */}
       <div ref={waitingRef}>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>
           Waiting — Interactive {waitingActive ? '(active)' : '(hover me / click me)'}
         </h3>
         <NodeWaitingCard
@@ -61,7 +63,7 @@ export default function NodesPreview() {
 
       {/* Interactive Communication: hover on mouseover, active on click, deactivate on click outside */}
       <div ref={commRef}>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>
           Communication — Interactive {commActive ? '(active)' : '(hover me / click me)'}
         </h3>
         <NodeCommunicationCard
@@ -75,7 +77,7 @@ export default function NodesPreview() {
 
       {/* Interactive Condition: hover on mouseover, active on click, deactivate on click outside */}
       <div ref={condRef}>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>
           Condition — Interactive {condActive ? '(active)' : '(hover me / click me)'}
         </h3>
         <NodeConditionCard
@@ -87,28 +89,29 @@ export default function NodesPreview() {
 
       {/* --- Standalone Port demos --- */}
       <div>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>Port States</h3>
-        <div style={{ padding: 20, background: '#ddd', borderRadius: 8, display: 'flex', gap: 12, alignItems: 'center' }}>
-          <Port state="default" />
-          <Port state="active" />
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Port States</h3>
+        <div style={{ padding: 20, background: 'var(--primitive-neutral-2)', borderRadius: 'var(--rounding-2x)', display: 'flex', gap: 12, alignItems: 'center' }}>
+          <Port id="demo-0" side="right" state="default" />
+          <Port id="demo-1" side="right" state="active" />
         </div>
       </div>
 
       {/* Ports container demo */}
       <div>
-        <h3 style={{ marginBottom: 12, fontSize: 14, color: '#676767' }}>Ports (1 / 2 / 3)</h3>
+        <h3 style={{ marginBottom: 12, fontSize: 'var(--font-size-s)', color: 'var(--primitive-secondary)' }}>Ports (1 / 2 / 3)</h3>
         <div style={{ display: 'flex', gap: 24 }}>
-          <div style={{ position: 'relative', width: 60, height: 100, background: '#ddd', borderRadius: 8 }}>
+          <div style={{ position: 'relative', width: 60, height: 100, background: 'var(--primitive-neutral-2)', borderRadius: 'var(--rounding-2x)' }}>
             <Ports count={1} side="right" />
           </div>
-          <div style={{ position: 'relative', width: 60, height: 100, background: '#ddd', borderRadius: 8 }}>
+          <div style={{ position: 'relative', width: 60, height: 100, background: 'var(--primitive-neutral-2)', borderRadius: 'var(--rounding-2x)' }}>
             <Ports count={2} side="right" />
           </div>
-          <div style={{ position: 'relative', width: 60, height: 100, background: '#ddd', borderRadius: 8 }}>
+          <div style={{ position: 'relative', width: 60, height: 100, background: 'var(--primitive-neutral-2)', borderRadius: 'var(--rounding-2x)' }}>
             <Ports count={3} side="right" activeIndexes={[1]} />
           </div>
         </div>
       </div>
     </div>
+    </ReactFlowProvider>
   );
 }

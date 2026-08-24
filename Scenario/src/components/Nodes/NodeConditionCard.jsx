@@ -3,7 +3,6 @@ import { Ports } from './Ports';
 import NodeActions from './NodeActions';
 
 import iconCheckmarkCircle from './icons/icon-checkmark-circle.svg';
-import iconWarning from './icons/icon-warning.svg';
 
 /**
  * NodeConditionCard — карточка ноды «Условие».
@@ -14,7 +13,7 @@ import iconWarning from './icons/icon-warning.svg';
  * @param {string[]} [props.conditionLabels=[]]         — названия выбранных условий/сегментов
  * @param {string[]} [props.conditionOverlines=[]]      — overline-текст (категория) для каждого условия
  * @param {boolean} [props.showShowAll=false]            — ссылка «Показать все»
- * @param {boolean} [props.showError=true]               — строка «Ошибка»
+ * @param {boolean} [props.showError=true]               — строка «Заполни поля»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {string}  [props.className]
  */
@@ -29,6 +28,7 @@ export default function NodeConditionCard({
   state = 'default',
   className = '',
   onClick,
+  onDelete,
 }) {
   const stateClass =
     state === 'hover'
@@ -42,7 +42,7 @@ export default function NodeConditionCard({
   return (
     <div className={`node-condition ${stateClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
-      {showActions && <NodeActions />}
+      {showActions && <NodeActions onDelete={onDelete} />}
 
       {/* ---- Card ---- */}
       <div className="node-condition__card">
@@ -81,7 +81,7 @@ export default function NodeConditionCard({
 
             {showError && (
               <div className="node-condition__row node-condition__row--error">
-                <span className="node-condition__row-text">Ошибка</span>
+                <span className="node-condition__row-text">Заполни поля</span>
               </div>
             )}
           </div>

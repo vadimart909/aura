@@ -1,12 +1,41 @@
 /* ================================================================== */
-/*  ScenarioInfoPopup — minimal overrides (layout via DS Modal)        */
+/*  ScenarioInfoPopup — Figma «Popup» (22116:353003)                   */
+/*  Shell comes from the DS Modal; header/footer/spacing are matched   */
+/*  to the design here.                                                */
 /* ================================================================== */
 
-.scenario-info__header-row {
+/* .modal__panel hardcodes --rounding-6x (24px) even though the DS ships
+   a semantic 12px token for popups, which is what the design uses. */
+.scenario-info .modal__panel {
+  border-radius: var(--popup-rounding-strong);
+}
+
+/* Design stacks 12px on the content wrapper and another 12px on the cell */
+.scenario-info .modal__content-inner {
+  padding: var(--spacing-6x) var(--page-horizontal-padding);
+}
+
+/* ---- Header: one 56px row, title left, badge right ---- */
+
+.scenario-info__header {
   display: flex;
   align-items: center;
   gap: var(--spacing-3x);
+  height: 56px;
+  padding: 0 var(--page-horizontal-padding);
 }
+
+.scenario-info__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--primitive-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Body ---- */
 
 .scenario-info__cell {
   display: flex;
@@ -22,4 +51,26 @@
   color: var(--primitive-secondary);
 }
 
-/* (Status tag color classes moved to global.css) */
+/* ---- Footer: full-width brand button ---- */
+
+.scenario-info__footer {
+  padding: var(--spacing-3x) var(--page-horizontal-padding);
+}
+
+/* DS Button is 280×50 with a 10px radius; the design wants a full-width
+   48px button with the 12px radius from --button-rounding-strong. */
+.scenario-info__footer .button {
+  --button-height: 48px;
+  border-radius: var(--button-rounding-strong);
+  width: 100%;
+  min-width: 0;
+}
+
+/* The component pins its label to ts-500-l (18/22); design uses TTN 500/M */
+.scenario-info__footer .button__label {
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* (Status tag color classes live in global.css) */

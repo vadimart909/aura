@@ -4,8 +4,8 @@
 
 .datepicker {
   width: 320px;
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--primitive-default);
+  border-radius: var(--rounding-3x);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   z-index: 10;
@@ -24,11 +24,11 @@
   align-items: center;
   gap: 4px;
   font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: 600;
+  font-weight: var(--font-weight-demibold);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
-  color: #191919;
+  color: var(--primitive-primary);
   cursor: default;
 }
 
@@ -41,8 +41,8 @@
   padding: 0;
   border: none;
   background: transparent;
-  border-radius: 8px;
-  color: #191919;
+  border-radius: var(--rounding-2x);
+  color: var(--primitive-primary);
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -72,11 +72,11 @@
 
 .datepicker__month-title {
   font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: 600;
+  font-weight: var(--font-weight-demibold);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
-  color: #191919;
+  color: var(--primitive-primary);
 }
 
 /* ---- Day names row ---- */
@@ -97,11 +97,11 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #191919;
+  color: var(--primitive-primary);
 }
 
 .datepicker__day-name--holiday {
-  color: #d84d4d;
+  color: var(--primitive-error);
 }
 
 /* ---- Day rows ---- */
@@ -121,13 +121,13 @@
   padding: 0;
   border: none;
   background: transparent;
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
-  color: #191919;
+  color: var(--primitive-primary);
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -142,15 +142,15 @@
 }
 
 .datepicker__cell--holiday {
-  color: #d84d4d;
+  color: var(--primitive-error);
 }
 
 .datepicker__cell--selected {
-  background: #835de1;
-  color: #ffffff;
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
 }
 
 .datepicker__cell--selected:hover {
-  background: #9b7ef1;
+  background: var(--state-bg-brand-active);
 }
 
