@@ -44,7 +44,7 @@ function CheckmarkIcon() {
 function CalendarIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 2C16.5523 2 17 2.44772 17 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H7V3C7 2.44772 7.44772 2 8 2C8.55228 2 9 2.44772 9 3V4H15V3C15 2.44772 15.4477 2 16 2ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4V19ZM5 6C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H17V7C17 7.55228 16.5523 8 16 8C15.4477 8 15 7.55228 15 7V6H9V7C9 7.55228 8.55228 8 8 8C7.44772 8 7 7.55228 7 7V6H5Z" fill="#949494"/>
+      <path d="M16 2C16.5523 2 17 2.44772 17 3V4H19C20.6569 4 22 5.34315 22 7V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V7C2 5.34315 3.34315 4 5 4H7V3C7 2.44772 7.44772 2 8 2C8.55228 2 9 2.44772 9 3V4H15V3C15 2.44772 15.4477 2 16 2ZM4 19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V12H4V19ZM5 6C4.44772 6 4 6.44772 4 7V10H20V7C20 6.44772 19.5523 6 19 6H17V7C17 7.55228 16.5523 8 16 8C15.4477 8 15 7.55228 15 7V6H9V7C9 7.55228 8.55228 8 8 8C7.44772 8 7 7.55228 7 7V6H5Z" style={{ fill: 'var(--primitive-neutral-4)' }} />
     </svg>
   );
 }
@@ -52,8 +52,8 @@ function CalendarIcon() {
 function RadioSelectedIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="12" fill="#835DE1" />
-      <circle cx="12" cy="12" r="6" fill="white" />
+      <circle cx="12" cy="12" r="12" style={{ fill: 'var(--primitive-brand)' }} />
+      <circle cx="12" cy="12" r="6" style={{ fill: 'var(--primitive-default)' }} />
     </svg>
   );
 }
@@ -61,7 +61,7 @@ function RadioSelectedIcon() {
 function RadioUnselectedIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="11.25" stroke="#191919" strokeOpacity="0.25" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="11.25" strokeOpacity="0.25" strokeWidth="1.5" style={{ stroke: 'var(--primitive-primary)' }} />
     </svg>
   );
 }
@@ -83,8 +83,23 @@ const NUMBER_OPERATORS = [
   { value: 'greater_or_equal', label: 'Больше или равно' },
   { value: 'less', label: 'Меньше' },
   { value: 'less_or_equal', label: 'Меньше или равно' },
-  { value: 'range', label: 'Диапазон значений' },
+  { value: 'range', label: 'Диапазон' },
 ];
+
+/* ---- String operator options ---- */
+const STRING_OPERATORS = [
+  { value: 'equal', label: 'Равно' },
+  { value: 'not_equal', label: 'Не равно' },
+  { value: 'contains', label: 'Содержит' },
+  { value: 'not_contains', label: 'Не содержит' },
+  { value: 'filled', label: 'Заполнен' },
+  { value: 'not_filled', label: 'Не заполнен' },
+];
+
+/** Check whether a string operator requires a value input */
+function stringOperatorNeedsValue(op) {
+  return op && op !== 'filled' && op !== 'not_filled';
+}
 
 /** Check whether a parameter type is numeric */
 function isNumericType(type) {
@@ -98,7 +113,7 @@ function isNumericType(type) {
  * @param {Function} props.onClose  — close without selecting
  * @param {Function} props.onSelect — callback({ id, title, category }) when user confirms
  */
-export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, initialDateValue, initialDateFrom, initialDateTo, initialNumberOperator, initialNumberValue, initialNumberFrom, initialNumberTo, excludeParamIds = [] }) {
+export default function ConditionModal({ onClose, onSelect, initialCategory, initialParamId, initialBooleanValue, initialDateOperator, initialDateValue, initialDateFrom, initialDateTo, initialNumberOperator, initialNumberValue, initialNumberFrom, initialNumberTo, initialStringOperator, initialStringValue, excludeParamIds = [] }) {
   /* ---- State ---- */
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -120,11 +135,15 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
   const [numberValue, setNumberValue] = useState(initialNumberValue ?? '');
   const [numberFrom, setNumberFrom] = useState(initialNumberFrom ?? '');
   const [numberTo, setNumberTo] = useState(initialNumberTo ?? '');
+  const [stringOperator, setStringOperator] = useState(initialStringOperator || '');
+  const [isStringOperatorOpen, setIsStringOperatorOpen] = useState(false);
+  const [stringValue, setStringValue] = useState(initialStringValue ?? '');
 
   const categoryRef = useRef(null);
   const paramRef = useRef(null);
   const dateOperatorRef = useRef(null);
   const numberOperatorRef = useRef(null);
+  const stringOperatorRef = useRef(null);
   const searchInputRef = useRef(null);
 
   /* ---- Filtered parameters ---- */
@@ -172,8 +191,11 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
       if (isNumberOperatorOpen && numberOperatorRef.current && !numberOperatorRef.current.contains(e.target)) {
         setIsNumberOperatorOpen(false);
       }
+      if (isStringOperatorOpen && stringOperatorRef.current && !stringOperatorRef.current.contains(e.target)) {
+        setIsStringOperatorOpen(false);
+      }
     },
-    [isCategoryOpen, isParamOpen, isDateOperatorOpen, isNumberOperatorOpen],
+    [isCategoryOpen, isParamOpen, isDateOperatorOpen, isNumberOperatorOpen, isStringOperatorOpen],
   );
 
   useEffect(() => {
@@ -214,6 +236,9 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
     setNumberValue('');
     setNumberFrom('');
     setNumberTo('');
+    setStringOperator('');
+    setIsStringOperatorOpen(false);
+    setStringValue('');
     const param = CONDITION_PARAMETERS.find((p) => p.id === id);
     if (param) {
       setSelectedCategory(param.category);
@@ -252,6 +277,13 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
         result.numberTo = numberTo;
       } else {
         result.numberValue = numberValue;
+      }
+    }
+    if (selectedParam.type === 'string') {
+      result.stringOperator = stringOperator;
+      result.stringOperatorLabel = STRING_OPERATORS.find((o) => o.value === stringOperator)?.label || stringOperator;
+      if (stringOperatorNeedsValue(stringOperator)) {
+        result.stringValue = stringValue;
       }
     }
     onSelect(result);
@@ -441,34 +473,34 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
 
           {/* Number input (range) — two fields */}
           {selectedParam && isNumericType(selectedParam.type) && numberOperator === 'range' && (
-            <div className="condition-modal__number-field">
+            <div className="condition-modal__number-field condition-modal__number-field--range">
               <div className="condition-modal__number-range-content">
-                <span className="condition-modal__number-field-label">Диапазон значений</span>
+                <span className="condition-modal__number-field-label">Диапазон</span>
                 <div className="condition-modal__number-range-row">
-                  <div className="condition-modal__number-range-input-wrapper">
-                    <input
-                      type="number"
-                      className="condition-modal__number-input"
-                      placeholder="От"
-                      value={numberFrom}
-                      onChange={(e) => setNumberFrom(e.target.value)}
-                    />
-                    <div className="condition-modal__number-range-divider" />
-                  </div>
-                  <div className="condition-modal__number-range-input-wrapper">
-                    <input
-                      type="number"
-                      className="condition-modal__number-input"
-                      placeholder="До"
-                      value={numberTo}
-                      onChange={(e) => setNumberTo(e.target.value)}
-                    />
-                    <div className="condition-modal__number-range-divider" />
-                  </div>
+                  <input
+                    type="number"
+                    className="condition-modal__number-input"
+                    placeholder="От"
+                    value={numberFrom}
+                    onChange={(e) => setNumberFrom(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    className="condition-modal__number-input"
+                    placeholder="До"
+                    value={numberTo}
+                    onChange={(e) => setNumberTo(e.target.value)}
+                  />
                 </div>
               </div>
-              <div className="condition-modal__number-range-description">
-                Указанные значения входят в диапазон
+              <div className="condition-modal__number-range-description-block">
+                <div className="condition-modal__number-range-dividers">
+                  <div className="condition-modal__number-range-divider" />
+                  <div className="condition-modal__number-range-divider" />
+                </div>
+                <span className="condition-modal__number-range-description">
+                  Указанные значения входят в диапазон
+                </span>
               </div>
             </div>
           )}
@@ -499,6 +531,79 @@ export default function ConditionModal({ onClose, onSelect, initialCategory, ini
                   </span>
                 </div>
               </button>
+            </div>
+          )}
+
+          {/* String operator dropdown (context-menu style) */}
+          {selectedParam?.type === 'string' && (
+            <div className="condition-modal__context-menu-wrapper" ref={stringOperatorRef}>
+              <div
+                className={`condition-modal__dropdown${isStringOperatorOpen ? ' condition-modal__dropdown--focused' : ''}`}
+                onClick={() => {
+                  setIsStringOperatorOpen((prev) => !prev);
+                  setIsCategoryOpen(false);
+                  setIsParamOpen(false);
+                }}
+              >
+                <div className="condition-modal__dropdown-content">
+                  <div className="condition-modal__dropdown-text">
+                    <span className="condition-modal__dropdown-label">Условие</span>
+                    {stringOperator ? (
+                      <span className="condition-modal__dropdown-value">
+                        {STRING_OPERATORS.find((o) => o.value === stringOperator)?.label}
+                      </span>
+                    ) : (
+                      <span className="condition-modal__dropdown-value condition-modal__dropdown-value--placeholder">
+                        Выбери из списка
+                      </span>
+                    )}
+                  </div>
+                  <div className="condition-modal__dropdown-arrow">
+                    {isStringOperatorOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                  </div>
+                </div>
+              </div>
+
+              {isStringOperatorOpen && (
+                <div className="condition-modal__context-menu">
+                  <div className="condition-modal__context-menu-list">
+                    {STRING_OPERATORS.map((op) => (
+                      <button
+                        key={op.value}
+                        type="button"
+                        className={`condition-modal__context-menu-item${
+                          stringOperator === op.value ? ' condition-modal__context-menu-item--selected' : ''
+                        }`}
+                        onClick={() => {
+                          setStringOperator(op.value);
+                          setIsStringOperatorOpen(false);
+                          if (!stringOperatorNeedsValue(op.value)) {
+                            setStringValue('');
+                          }
+                        }}
+                      >
+                        <span className="condition-modal__context-menu-item-label">{op.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* String value input — for operators that require a value */}
+          {selectedParam?.type === 'string' && stringOperatorNeedsValue(stringOperator) && (
+            <div className="condition-modal__string-field">
+              <div className="condition-modal__string-field-content">
+                <span className="condition-modal__string-field-label">Текст</span>
+                <input
+                  type="text"
+                  className="condition-modal__string-input"
+                  placeholder="Введите значение"
+                  value={stringValue}
+                  onChange={(e) => setStringValue(e.target.value)}
+                />
+              </div>
             </div>
           )}
         </div>

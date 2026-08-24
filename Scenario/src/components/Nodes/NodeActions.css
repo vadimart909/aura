@@ -12,6 +12,12 @@
   justify-content: flex-end;
   align-items: center;
   background: transparent;
+  /* Transparent bridge across the 2px gap the cards open up below the button
+     (see the `top` overrides there). Without it the pointer would cross a strip
+     that belongs to no element on its way to the icon, :hover would drop and
+     the icon would vanish under the cursor. Doesn't move the button: the
+     container grows to 34px, the 32px button stays flush with its top. */
+  padding-bottom: 2px;
 }
 
 /* ---------- Action button ---------- */
@@ -28,6 +34,10 @@
   cursor: pointer;
   border-radius: var(--rounding-2x);
   transition: background 0.15s ease, transform 0.15s ease;
+  /* Pin the bottom edge so the hover/active scale below grows the box away
+     from the card and keeps the 2px gap exact (a centred origin would eat
+     0.32px of it on hover). */
+  transform-origin: bottom;
 }
 
 .node-actions__btn:hover {

@@ -39,8 +39,8 @@
 
 /* Click/Active: purple outline + purple bg AROUND the card */
 .node-start--active {
-  background: #EFEDF8;
-  border-color: #835DE1;
+  background: var(--bg-brand-1);
+  border-color: var(--primitive-brand);
 }
 
 /* Card stays the same size, just remove shadow */
@@ -177,31 +177,31 @@
 
 .node-start__row-overline {
   font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 0.01em;
-  color: #676767;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .node-start__row-text-group .node-start__row-text {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.01em;
-  color: #191919;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
 }
 
 .node-start__row-description {
   font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 0.01em;
-  color: #676767;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

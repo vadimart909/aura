@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   width: 480px;
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   overflow: visible;
   box-shadow: var(--shadow-floating);
   background: var(--bg-default);
@@ -36,7 +36,7 @@
   height: 56px;
   flex-shrink: 0;
   background: var(--bg-default);
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--rounding-3x) var(--rounding-3x) 0 0;
 }
 
 .condition-modal__title {
@@ -88,7 +88,7 @@
   flex-direction: column;
   padding: 0 20px;
   background: rgba(25, 25, 25, 0.05);
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   cursor: pointer;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .condition-modal__dropdown-value--placeholder {
-  color: #949494;
+  color: var(--primitive-neutral-4);
 }
 
 .condition-modal__dropdown-description {
@@ -134,7 +134,7 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #676767;
+  color: var(--primitive-secondary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -158,8 +158,8 @@
   right: 0;
   max-height: 608px;
   overflow-y: auto;
-  background: #FFFFFF;
-  border-radius: 12px;
+  background: var(--primitive-default);
+  border-radius: var(--rounding-3x);
   box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.1);
   z-index: 10;
   padding: 8px;
@@ -177,7 +177,7 @@
   cursor: pointer;
   width: 100%;
   text-align: left;
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   color: var(--primitive-primary);
   transition: background 0.15s ease;
 }
@@ -226,7 +226,7 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #676767;
+  color: var(--primitive-secondary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -249,7 +249,7 @@
 }
 
 .condition-modal__search-input::placeholder {
-  color: #949494;
+  color: var(--primitive-neutral-4);
 }
 
 /* ---- Boolean radio group ---- */
@@ -277,12 +277,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 20px;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--rounding-3x) var(--rounding-3x) 0 0;
   gap: 16px;
 }
 
 .condition-modal__radio-cell--bottom {
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 var(--rounding-3x) var(--rounding-3x);
   gap: 12px;
 }
 
@@ -345,13 +345,13 @@
   padding: 0 20px;
   background: rgba(25, 25, 25, 0.05);
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   cursor: pointer;
   transition: border-color 0.15s ease;
 }
 
 .condition-modal__date-field--focused {
-  border-color: #835de1;
+  border-color: var(--primitive-brand);
 }
 
 .condition-modal__date-field-content {
@@ -387,7 +387,7 @@
 }
 
 .condition-modal__date-field-value--placeholder {
-  color: #949494;
+  color: var(--primitive-neutral-4);
 }
 
 .condition-modal__date-field-icon {
@@ -428,7 +428,7 @@
 
 .condition-modal__date-period-input-wrapper--focused .condition-modal__date-period-divider {
   height: 2px;
-  background: #835de1;
+  background: var(--primitive-brand);
 }
 
 .condition-modal__date-period-description {
@@ -438,7 +438,7 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #676767;
+  color: var(--primitive-secondary);
 }
 
 /* ---- Number input field ---- */
@@ -448,12 +448,12 @@
   padding: 0 20px;
   background: rgba(25, 25, 25, 0.05);
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   transition: border-color 0.15s ease;
 }
 
 .condition-modal__number-field:focus-within {
-  border-color: #835de1;
+  border-color: var(--primitive-brand);
 }
 
 .condition-modal__number-field-content {
@@ -487,7 +487,7 @@
 }
 
 .condition-modal__number-input::placeholder {
-  color: #949494;
+  color: var(--primitive-neutral-4);
 }
 
 /* Hide number input spinners */
@@ -509,14 +509,22 @@
 
 .condition-modal__number-field:focus-within .condition-modal__number-field-divider {
   height: 2px;
-  background: #835de1;
+  background: var(--primitive-brand);
 }
 
 /* ---- Number range fields ---- */
+.condition-modal__number-field--range {
+  border: none;
+}
+
+.condition-modal__number-field--range:focus-within {
+  border-color: transparent;
+}
+
 .condition-modal__number-range-content {
   display: flex;
   flex-direction: column;
-  padding: 12px 0 0;
+  padding: 12px 0;
   gap: 8px;
 }
 
@@ -525,33 +533,159 @@
   gap: 16px;
 }
 
-.condition-modal__number-range-input-wrapper {
-  display: flex;
-  flex-direction: column;
+.condition-modal__number-range-row .condition-modal__number-input {
   flex: 1;
   min-width: 0;
 }
 
+.condition-modal__number-range-description-block {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 12px;
+  gap: 8px;
+}
+
+.condition-modal__number-range-dividers {
+  display: flex;
+  gap: 16px;
+}
+
 .condition-modal__number-range-divider {
+  flex: 1;
+  height: 2px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.condition-modal__number-range-divider::after {
+  content: '';
+  display: block;
+  width: 100%;
   height: 0.5px;
-  margin-top: 8px;
   background: rgba(25, 25, 25, 0.2);
   transition: background 0.15s ease, height 0.15s ease;
 }
 
-.condition-modal__number-range-input-wrapper:focus-within .condition-modal__number-range-divider {
+.condition-modal__number-field--range:focus-within .condition-modal__number-range-divider::after {
   height: 2px;
-  background: #835de1;
+  background: var(--primitive-brand);
 }
 
 .condition-modal__number-range-description {
-  padding: 0 0 12px;
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #676767;
+  color: var(--primitive-secondary);
+}
+
+/* ---- Context Menu (string operator dropdown) ---- */
+.condition-modal__context-menu-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.condition-modal__context-menu-wrapper > .condition-modal__dropdown {
+  border: 2px solid transparent;
+}
+
+.condition-modal__context-menu-wrapper > .condition-modal__dropdown--focused {
+  border-color: var(--primitive-brand);
+}
+
+.condition-modal__context-menu {
+  background: var(--primitive-default);
+  border-radius: var(--rounding-3x);
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.condition-modal__context-menu-list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.condition-modal__context-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px;
+  border: none;
+  background: transparent;
+  border-radius: var(--rounding-2x);
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.condition-modal__context-menu-item:hover {
+  background: rgba(25, 25, 25, 0.05);
+}
+
+.condition-modal__context-menu-item--selected {
+  background: rgba(25, 25, 25, 0.05);
+}
+
+.condition-modal__context-menu-item-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- String value field ---- */
+.condition-modal__string-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  background: rgba(25, 25, 25, 0.05);
+  border-radius: var(--rounding-3x);
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.condition-modal__string-field:focus-within {
+  border-color: var(--primitive-brand);
+}
+
+.condition-modal__string-field-content {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  gap: 8px;
+}
+
+.condition-modal__string-field-label {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+}
+
+.condition-modal__string-input {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  outline: none;
+}
+
+.condition-modal__string-input::placeholder {
+  color: var(--primitive-neutral-4);
 }
 
 /* ---- Footer ---- */
@@ -559,7 +693,7 @@
   flex-shrink: 0;
   padding: 12px 20px;
   background: var(--bg-default);
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 var(--rounding-3x) var(--rounding-3x);
 }
 
 .condition-modal__submit-btn {

@@ -23,15 +23,6 @@ function PlusCircleIcon() {
   );
 }
 
-function CheckmarkCircleIconSmall() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function PencilIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,6 +172,18 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
                           ) : null}
                         </>
                       )}
+                      {condition.type === 'string' && condition.stringOperatorLabel && (
+                        <>
+                          <span className="drawer-condition__condition-date-operator">
+                            {' '}{condition.stringOperatorLabel}
+                          </span>
+                          {condition.stringValue ? (
+                            <span className="drawer-condition__condition-date-value">
+                              {' '}{condition.stringValue}
+                            </span>
+                          ) : null}
+                        </>
+                      )}
                     </span>
                   </div>
                   <div className="drawer-condition__condition-actions">
@@ -235,6 +238,8 @@ export default function DrawerCondition({ onClose, onSave, initialConditions = [
           initialNumberValue={editingCondition?.numberValue}
           initialNumberFrom={editingCondition?.numberFrom}
           initialNumberTo={editingCondition?.numberTo}
+          initialStringOperator={editingCondition?.stringOperator}
+          initialStringValue={editingCondition?.stringValue}
           excludeParamIds={conditions
             .filter((c) => c.id !== editingCondition?.id)
             .map((c) => c.id)

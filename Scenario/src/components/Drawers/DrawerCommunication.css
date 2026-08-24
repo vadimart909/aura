@@ -153,8 +153,8 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  background: #95AEE2;
+  border-radius: var(--rounding-2x);
+  background: var(--category-indigo);
   color: var(--primitive-default);
 }
 
@@ -222,7 +222,7 @@
 .drawer-communication__channels {
   padding: 0 20px;
   background: var(--container-transparent-1);
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   border: 2px solid transparent;
   transition: border-color 0.15s ease;
 }
@@ -265,7 +265,7 @@
   display: flex;
   align-items: stretch;
   height: 32px;
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   overflow: hidden;
   gap: 1px;
 }
@@ -308,7 +308,8 @@
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
-  color: #949494;
+  color: var(--primitive-neutral-4);
+  cursor: pointer;
 }
 
 /* ---- Channels error state ---- */
@@ -326,7 +327,7 @@
 
 .drawer-communication__channels-error-divider {
   height: 2px;
-  background: #D84D4D;
+  background: var(--primitive-error);
 }
 
 .drawer-communication__channels-error-text {
@@ -335,7 +336,7 @@
   font-size: var(--font-size-s);
   line-height: var(--line-height-s);
   letter-spacing: var(--letter-spacing-tight);
-  color: #D84D4D;
+  color: var(--primitive-error);
 }
 
 /* ---- Channels accessory (chevron) ---- */
@@ -363,7 +364,7 @@
   left: 0;
   right: 0;
   background: var(--bg-default);
-  border-radius: 12px;
+  border-radius: var(--rounding-3x);
   box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.1);
   z-index: 10;
   overflow: hidden;
@@ -379,24 +380,40 @@
 .drawer-communication__channels-dropdown-item {
   display: flex;
   align-items: center;
+  gap: 12px;
   padding: 12px 12px;
   border: none;
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--rounding-2x);
   cursor: pointer;
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-m);
-  line-height: var(--line-height-m);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--primitive-primary);
-  text-align: left;
   width: 100%;
   transition: background 0.15s ease;
 }
 
 .drawer-communication__channels-dropdown-item:hover {
   background: var(--container-transparent-1);
+}
+
+.drawer-communication__channels-dropdown-item-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--primitive-primary);
+  text-align: left;
+}
+
+.drawer-communication__channels-dropdown-item-check {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  width: 24px;
+  height: 20px;
+  color: var(--primitive-success);
 }
 
 /* ---- Footer ---- */

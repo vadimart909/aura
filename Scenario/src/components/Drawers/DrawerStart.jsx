@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import './DrawerStart.css';
 import { TriggerModal } from '../TriggerModal';
 import { SegmentModal } from '../SegmentModal';
+import { ConnectionArrowTurnRightUpA, ConnectionArrowsRepeatLeft } from '@ds/icons';
 
 /* ---- Inline SVG icons ---- */
 
@@ -10,24 +11,6 @@ function CrossIcon() {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function TriggerIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2.5 15H10C11.3807 15 12.5 13.8807 12.5 12.5V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9.5 8L12.5 5L15.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function TriggerIconSmall() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2.5 15H10C11.3807 15 12.5 13.8807 12.5 12.5V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9.5 8L12.5 5L15.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -49,17 +32,6 @@ function PlusCircleIcon() {
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M12 8V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function RepeatIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17 1L21 5L17 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M3 11V9C3 7.93913 3.42143 6.92172 4.17157 6.17157C4.92172 5.42143 5.93913 5 7 5H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M7 23L3 19L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M21 13V15C21 16.0609 20.5786 17.0783 19.8284 17.8284C19.0783 18.5786 18.0609 19 17 19H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -306,8 +278,8 @@ export default function DrawerStart({ onClose, onSave, initialTrigger = null, in
                 }`}
                 onClick={() => setConditionType(CONDITION_TRIGGER)}
               >
-                <span className="drawer-start__chip-icon">
-                  <TriggerIcon />
+                <span className="drawer-start__chip-icon ds-icon ds-icon--20">
+                  <ConnectionArrowTurnRightUpA />
                 </span>
                 Триггер
               </button>
@@ -342,7 +314,9 @@ export default function DrawerStart({ onClose, onSave, initialTrigger = null, in
                     onClick={() => setShowTriggerModal(true)}
                   >
                     <span className="drawer-start__action-cell-icon">
-                      <RepeatIcon />
+                      <span className="ds-icon ds-icon--24">
+                        <ConnectionArrowsRepeatLeft />
+                      </span>
                     </span>
                     <span className="drawer-start__action-cell-label">
                       Сменить
@@ -352,7 +326,9 @@ export default function DrawerStart({ onClose, onSave, initialTrigger = null, in
                   {/* Selected trigger card */}
                   <div className="drawer-start__trigger-card">
                     <div className="drawer-start__trigger-avatar">
-                      <TriggerIconSmall />
+                      <span className="ds-icon ds-icon--18">
+                        <ConnectionArrowTurnRightUpA />
+                      </span>
                     </div>
                     <div className="drawer-start__trigger-info">
                       {selectedTrigger.subtitle && (
@@ -581,7 +557,9 @@ export default function DrawerStart({ onClose, onSave, initialTrigger = null, in
                   onClick={() => setShowSegmentModal(true)}
                 >
                   <span className="drawer-start__action-cell-icon">
-                    <RepeatIcon />
+                    <span className="ds-icon ds-icon--24">
+                      <ConnectionArrowsRepeatLeft />
+                    </span>
                   </span>
                   <span className="drawer-start__action-cell-label">
                     Сменить

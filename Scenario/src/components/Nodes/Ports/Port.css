@@ -3,9 +3,30 @@
    Дизайн: Figma .🛠 port
    ========================================================================== */
 
-.port {
+/* Every rule below is written as `:is(.react-flow__handle, .port).port`, which
+   resolves to specificity (0,2,0) and matches both shapes Port renders:
+
+   • inside a node — a real xyflow Handle, whose base rule
+     `.react-flow__handle` (0,1,0) sets the same width/height/background/
+     border/position properties and would otherwise win on source order (see
+     ScenarioView.css `.flow-handle` for the prior-art precedent);
+   • standalone — a plain element in the /nodes preview gallery, where the
+     `react-flow__handle` class is absent and nothing competes.
+
+   `:is()` takes the highest specificity among its arguments, so both halves
+   land at the same weight and neither shape needs its own duplicated block. */
+
+:is(.react-flow__handle, .port).port {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  transform: none;
   width: 10px;
   height: 10px;
+  min-width: 10px;
+  min-height: 10px;
   border-radius: 50%;
   padding: 0;
   cursor: pointer;
@@ -14,41 +35,41 @@
   box-sizing: border-box;
 }
 
-/* State=Default: fill #FFFFFF, stroke #949494 2px */
-.port--default {
-  background: #FFFFFF;
-  border: 2px solid #949494;
+/* State=Default: заливка светлая, обводка нейтральная 2px */
+:is(.react-flow__handle, .port).port--default {
+  background: var(--primitive-default);
+  border: 2px solid var(--primitive-neutral-4);
 }
 
 /* Hover на default → Active/Hover стиль из Figma */
-.port--default:hover {
-  background: #949494;
-  border-color: #FFFFFF;
+:is(.react-flow__handle, .port).port--default:hover {
+  background: var(--primitive-neutral-4);
+  border-color: var(--primitive-default);
 }
 
-/* State=Active: fill #949494, stroke #FFFFFF 2px */
-.port--active {
-  background: #949494;
-  border: 2px solid #FFFFFF;
+/* State=Active: инверсия default */
+:is(.react-flow__handle, .port).port--active {
+  background: var(--primitive-neutral-4);
+  border: 2px solid var(--primitive-default);
 }
 
-/* Color variants */
-.port--green {
-  background: #FFFFFF;
-  border: 2px solid #4CAF50;
+/* Color variants — ветки «да» и «нет» у блока «Условие» */
+:is(.react-flow__handle, .port).port--green {
+  background: var(--primitive-default);
+  border: 2px solid var(--primitive-success);
 }
 
-.port--red {
-  background: #FFFFFF;
-  border: 2px solid #D84D4D;
+:is(.react-flow__handle, .port).port--red {
+  background: var(--primitive-default);
+  border: 2px solid var(--primitive-error);
 }
 
-.port--green:hover {
-  background: #4CAF50;
-  border-color: #FFFFFF;
+:is(.react-flow__handle, .port).port--green:hover {
+  background: var(--primitive-success);
+  border-color: var(--primitive-default);
 }
 
-.port--red:hover {
-  background: #D84D4D;
-  border-color: #FFFFFF;
+:is(.react-flow__handle, .port).port--red:hover {
+  background: var(--primitive-error);
+  border-color: var(--primitive-default);
 }
