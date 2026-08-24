@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Multi-root workspace files are per-developer editor state
+*.code-workspace
