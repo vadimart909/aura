@@ -84,8 +84,16 @@
   flex-direction: column;
   align-items: flex-end;
   background: var(--primitive-default);
-  border-radius: 0 0 var(--rounding-2x) var(--rounding-2x);
   overflow: hidden;
+}
+
+/* Bottom rounding follows whichever strip ends the card. Without this the
+   content's rounded corners would cut two notches out of the red row below it
+   — `.node-start__card` has no background of its own, so the canvas would show
+   through. Same idiom as `.node-communication__row:last-child`. */
+.node-start__content-wrapper:last-child .node-start__content,
+.node-start__row--error:last-child {
+  border-radius: 0 0 var(--rounding-2x) var(--rounding-2x);
 }
 
 /* ---------- Row (generic info row) ---------- */

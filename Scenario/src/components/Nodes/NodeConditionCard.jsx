@@ -13,6 +13,7 @@ import iconCheckmarkCircle from './icons/icon-checkmark-circle.svg';
  * @param {string[]} [props.conditionLabels=[]]         — названия выбранных условий/сегментов
  * @param {string[]} [props.conditionOverlines=[]]      — overline-текст (категория) для каждого условия
  * @param {boolean} [props.showShowAll=false]            — ссылка «Показать все»
+ * @param {Function} [props.onShowAll]                    — клик по «Показать все»; передан → ссылка кликабельна
  * @param {boolean} [props.showError=true]               — строка «Заполни поля»
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {string}  [props.className]
@@ -23,6 +24,7 @@ export default function NodeConditionCard({
   conditionLabels = [],
   conditionOverlines = [],
   showShowAll = false,
+  onShowAll,
   showError = true,
   showActions = true,
   state = 'default',
@@ -39,8 +41,13 @@ export default function NodeConditionCard({
 
   const conditionCount = Math.max(1, Math.min(3, conditions));
 
+  // Drives the right-port gap: the filled rows are taller, so the two ports
+  // spread from 6px to 16px. `conditionLabels` is the reliable signal — the
+  // canvas writes it as [] whenever nothing has been saved yet.
+  const filledClass = conditionLabels.length > 0 ? 'node-condition--filled' : '';
+
   return (
-    <div className={`node-condition ${stateClass} ${className}`.trim()} onClick={onClick}>
+    <div className={`node-condition ${stateClass} ${filledClass} ${className}`.trim()} onClick={onClick}>
       {/* Actions (visible on hover) */}
       {showActions && <NodeActions onDelete={onDelete} />}
 
@@ -74,22 +81,35 @@ export default function NodeConditionCard({
             {/* «Показать все» link + badge */}
             {showShowAll && (
               <div className="node-condition__show-all">
-                <span className="node-condition__show-all-text">Показать все</span>
-                <span className="node-condition__show-all-badge">{conditions}</span>
-              </div>
-            )}
-
-            {showError && (
-              <div className="node-condition__row node-condition__row--error">
-                <span className="node-condition__row-text">Заполни поля</span>
+                {onShowAll ? (
+                  <button
+                    type="button"
+                    className="node-condition__show-all-text"
+                    // The card root owns an onClick that opens the drawer in the
+                    // editor — don't let the link trigger it too.
+                    onClick={(e) => { e.stopPropagation(); onShowAll(); }}
+                  >
+                    Показать все
+                  </button>
+                ) : (
+                  <span className="node-condition__show-all-text">Показать все</span>
+                )}
               </div>
             )}
           </div>
 
-          {/* Ports — center vertically across the full content-wrapper */}
+          {/* Ports — centered on the wrapper, i.e. on the condition rows alone.
+              The error row is deliberately a sibling of the wrapper below, so it
+              stays out of that base and never nudges the ports down. */}
           <Ports count={1} side="left" />
           <Ports count={2} side="right" colors={['green', 'red']} />
         </div>
+
+        {showError && (
+          <div className="node-condition__row node-condition__row--error">
+            <span className="node-condition__row-text">Заполни поля</span>
+          </div>
+        )}
       </div>
 
     </div>

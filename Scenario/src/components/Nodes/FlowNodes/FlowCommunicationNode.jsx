@@ -5,7 +5,7 @@ import { useNodeFieldError } from '../../../context/NodeErrorsContext';
  * FlowCommunicationNode — нода «Коммуникация» для React Flow.
  * Рендерит NodeCommunicationCard. Порты отрисовываются внутри карточки
  * компонентом <Ports> (позиционированы на границе блока по дизайну).
- * data: { title, showError, showActions, state, onClick }
+ * data: { title, showActions, state, onClick }
  */
 export default function FlowCommunicationNode({ id, data }) {
   const fieldError = useNodeFieldError(id);
@@ -13,7 +13,7 @@ export default function FlowCommunicationNode({ id, data }) {
     <div className="flow-node flow-node--communication">
       <NodeCommunicationCard
         title={data.title}
-        showError={Boolean(data.showError) || fieldError}
+        showError={fieldError}
         showActions={data.showActions}
         templateTitle={data.templateTitle}
         templateDescription={data.templateDescription}

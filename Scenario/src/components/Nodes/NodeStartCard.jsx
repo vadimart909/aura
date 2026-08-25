@@ -90,16 +90,19 @@ export default function NodeStartCard({
                 filled
               />
             )}
-            {showError && (
-              <div className="node-start__row node-start__row--error">
-                <span className="node-start__row-text">Заполни поля</span>
-              </div>
-            )}
           </div>
 
-          {/* ---- Port ---- */}
+          {/* Port — centered on the wrapper, i.e. on the content rows alone.
+              The error row is deliberately a sibling of the wrapper below, so it
+              stays out of that base and never nudges the port down. */}
           <Ports count={1} side="right" />
         </div>
+
+        {showError && (
+          <div className="node-start__row node-start__row--error">
+            <span className="node-start__row-text">Заполни поля</span>
+          </div>
+        )}
       </div>
     </div>
   );

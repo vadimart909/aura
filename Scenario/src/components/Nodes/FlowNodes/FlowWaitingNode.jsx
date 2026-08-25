@@ -5,7 +5,7 @@ import { useNodeFieldError } from '../../../context/NodeErrorsContext';
  * FlowWaitingNode — нода «Ожидание» для React Flow.
  * Рендерит NodeWaitingCard. Порты отрисовываются внутри карточки
  * компонентом <Ports> (позиционированы на границе блока по дизайну).
- * data: { title, showError, showActions, waitingLabel, state, onClick }
+ * data: { title, showActions, waitingLabel, state, onClick }
  */
 export default function FlowWaitingNode({ id, data }) {
   const fieldError = useNodeFieldError(id);
@@ -13,7 +13,7 @@ export default function FlowWaitingNode({ id, data }) {
     <div className="flow-node flow-node--waiting">
       <NodeWaitingCard
         title={data.title}
-        showError={Boolean(data.showError) || fieldError}
+        showError={fieldError}
         showActions={data.showActions}
         waitingLabel={data.waitingLabel}
         state={data.state}

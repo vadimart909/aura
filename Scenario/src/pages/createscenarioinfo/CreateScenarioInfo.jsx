@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation, useBlocker } from 'react-router-do
 import { useScenariosContext } from '../../context/useScenariosContext';
 import { canvasFingerprint, baselineCanvasFingerprint } from '../createscenariocanvas/canvasSnapshot';
 import UnsavedChangesModal from '../../components/UnsavedChangesModal';
+import ScenarioLinkIcon from '../../components/icons/ScenarioLinkIcon';
 import { Input } from '@ds/components/Input';
 import { TextArea } from '@ds/components/TextArea';
 import { Button } from '@ds/components/Button';
@@ -133,9 +134,14 @@ export default function CreateScenarioInfo() {
     // here rather than reading it back.
     if (isEditMode || savedScenarioId) {
       const idToUpdate = id || savedScenarioId;
+      // Unconditionally back to draft — this button means "save as draft"
+      // regardless of what the scenario's status was before this edit session
+      // (published, stopped, already draft).
       const patch = {
         name: name.trim(),
         description: description.trim(),
+        status: 'draft',
+        statusLabel: 'Черновик',
         date: `${dd}.${mm}.${yyyy}`,
       };
       // `existingScenario` is null when there is no `id` and only a
@@ -313,6 +319,7 @@ export default function CreateScenarioInfo() {
         items={[
           {
             title: 'Продолжить заполнение',
+            icon: <ScenarioLinkIcon />,
             onClick: handleModalContinue,
           },
         ]}

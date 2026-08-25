@@ -66,12 +66,17 @@ export default function Port({
       position={position}
       id={id}
       isConnectable={canConnect}
-      /* Cables only ever run output → input: a drag can start on a right
-         (source) port and can only end on a left (target) one. Dragging
-         backwards out of an input never begins, so there is no way to wire a
-         left port into another block's right port. */
-      isConnectableStart={canConnect && type === 'source'}
-      isConnectableEnd={canConnect && type === 'target'}
+      /* A drag may start on either side — pulling out of an input to find its
+         producer is just as natural as pulling out of an output.
+         Output → input is still the only edge that can come out of it, and it
+         is xyflow that guarantees that, not these props:
+         • `connectionMode` is left at its default `Strict`, where a candidate
+           end handle must satisfy `fromHandle.type !== type` — so an input can
+           only ever land on an output, and vice versa;
+         • a backwards drag gets normalized on drop, so the edge always reads
+           `source` = the output's node, `target` = the input's node. */
+      isConnectableStart={canConnect}
+      isConnectableEnd={canConnect}
       className={classes}
       aria-label={ariaLabel}
     />

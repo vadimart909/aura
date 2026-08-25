@@ -195,12 +195,11 @@
   border: none;
   cursor: pointer;
   width: 100%;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
 .drawer-start__action-cell:hover {
-  background: var(--state-container-transparent-1-active);
-  transform: scale(1.02);
+  opacity: 0.5;
 }
 
 .drawer-start__action-cell:active {
@@ -233,6 +232,11 @@
 
 .drawer-start__trigger-avatar {
   flex-shrink: 0;
+  /* Pinned to the top of the cell, level with the overline — the card itself
+     stays `align-items: center` so the trash icon keeps sitting centred against
+     the whole text block (Figma «Universal Cell»: avatar y=0, trash y=17 of 58).
+     Shared by the Триггер and Сегмент cells. */
+  align-self: flex-start;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,7 +293,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--primitive-primary);
+  color: var(--primitive-secondary);
   cursor: pointer;
   border-radius: var(--rounding-1x);
   transition: color 0.15s ease;

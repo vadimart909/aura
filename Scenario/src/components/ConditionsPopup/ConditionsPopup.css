@@ -1,0 +1,72 @@
+/* ================================================================== */
+/*  ConditionsPopup — Figma «Условия» (23868:132286)                   */
+/*  Shell comes from the DS Modal (480px panel, overlay, «Popout»      */
+/*  shadow); header and cell spacing are matched to the design here.   */
+/* ================================================================== */
+
+/* .modal__panel hardcodes --rounding-6x (24px) even though the DS ships
+   a semantic 12px token for popups, which is what the design uses. */
+.conditions-popup .modal__panel {
+  border-radius: var(--popup-rounding-strong);
+}
+
+/* Design nests 12px on the content wrapper, 8px on the group and another
+   12px on each cell — so the wrapper carries 12px/8px and the cell the
+   rest, putting the text 20px from the panel edge. */
+.conditions-popup .modal__content-inner {
+  padding: var(--spacing-3x) var(--spacing-2x);
+}
+
+/* ---- Header: one 56px row, centred title, close cross right ---- */
+
+.conditions-popup__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 var(--page-horizontal-padding);
+}
+
+.conditions-popup__title {
+  margin: 0;
+  color: var(--primitive-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Absolute so the title stays centred on the panel, not on the space left
+   over beside the cross. */
+.conditions-popup__close {
+  position: absolute;
+  top: 50%;
+  right: var(--page-horizontal-padding);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primitive-primary);
+  cursor: pointer;
+}
+
+/* ---- Cells: grey parameter name over the dark value ---- */
+
+.conditions-popup__cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5x);
+  padding: var(--spacing-3x);
+  border-radius: var(--cell-rounding-strong);
+}
+
+.conditions-popup__overline {
+  color: var(--primitive-secondary);
+}
+
+.conditions-popup__value {
+  color: var(--primitive-primary);
+}

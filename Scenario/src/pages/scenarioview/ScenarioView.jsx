@@ -6,6 +6,7 @@ import '@xyflow/react/dist/style.css';
 import { useScenariosContext } from '../../context/useScenariosContext';
 import NavigationBarCanvas from '../../components/NavigationBarCanvas/NavigationBarCanvas';
 import ScenarioInfoPopup from '../../components/ScenarioInfoPopup';
+import ConditionsPopup from '../../components/ConditionsPopup';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { nodeTypes, defaultEdgeOptions, runningEdges } from '../../components/Nodes/FlowNodes/flowConfig';
 import { startCanvas } from '../createscenariocanvas/canvasSnapshot';
@@ -29,6 +30,11 @@ function ScenarioViewInner() {
   const reactFlowInstance = useReactFlow();
   const scenario = scenarios.find((s) => String(s.id) === id);
   const [showInfo, setShowInfo] = useState(false);
+  // Items of the «Все условия» popup, or null when it's closed. Owned by the
+  // page rather than the card: the DS Modal is `position: fixed` and does not
+  // portal, so rendered from inside a node it would inherit the React Flow
+  // viewport transform and move with the canvas zoom.
+  const [conditionsPopupItems, setConditionsPopupItems] = useState(null);
   const [showRunConfirm, setShowRunConfirm] = useState(false);
   const [showRunSuccess, setShowRunSuccess] = useState(false);
   const [showStopChoice, setShowStopChoice] = useState(false);
@@ -54,6 +60,27 @@ function ScenarioViewInner() {
   // Flowing dashes on the cables while the scenario is live, per the
   // reactflow.dev animated-edge look.
   const displayEdges = useMemo(() => runningEdges(edges, status), [edges, status]);
+
+  // «Показать все» opens the full list here instead of being decorative — this
+  // is the only page that wires it up. `conditionLabels` / `conditionOverlines`
+  // are the untruncated arrays (only the *rendered* rows are capped at three),
+  // so everything the popup needs is already on the node.
+  const displayNodes = useMemo(
+    () => nodes.map((node) => {
+      if (node.type !== 'condition') return node;
+      const { conditionLabels = [], conditionOverlines = [] } = node.data ?? {};
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          onShowAll: () => setConditionsPopupItems(
+            conditionLabels.map((label, i) => ({ label, overline: conditionOverlines[i] ?? '' })),
+          ),
+        },
+      };
+    }),
+    [nodes],
+  );
 
   // A hand-typed id that isn't in the store: every read below falls back, so the
   // page would render a blank scenario titled «Сценарий» with a live
@@ -110,7 +137,7 @@ function ScenarioViewInner() {
       {/* ---- Canvas (read-only) ---- */}
       <div className="scenario-view__canvas">
         <ReactFlow
-          nodes={nodes}
+          nodes={displayNodes}
           edges={displayEdges}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
@@ -196,6 +223,14 @@ function ScenarioViewInner() {
           status={scenario?.status ?? 'draft'}
           statusLabel={scenario?.statusLabel ?? ''}
           onClose={() => setShowInfo(false)}
+        />
+      )}
+
+      {/* ---- All conditions of a «Условие» block ---- */}
+      {conditionsPopupItems && (
+        <ConditionsPopup
+          items={conditionsPopupItems}
+          onClose={() => setConditionsPopupItems(null)}
         />
       )}
 

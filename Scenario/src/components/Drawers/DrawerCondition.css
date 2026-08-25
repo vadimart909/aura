@@ -95,12 +95,11 @@
   border: none;
   cursor: pointer;
   width: 100%;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
 .drawer-condition__action-cell:hover {
-  background: var(--state-container-transparent-1-active);
-  transform: scale(1.02);
+  opacity: 0.5;
 }
 
 .drawer-condition__action-cell:active {

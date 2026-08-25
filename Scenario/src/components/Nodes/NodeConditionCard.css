@@ -90,10 +90,24 @@
   text-overflow: ellipsis;
 }
 
-/* ---------- Content wrapper (ports center relative to this) ---------- */
+/* ---------- Content wrapper (ports center relative to this) ----------
+   Wraps the condition rows and nothing else — the error row is a sibling of
+   this element, so it stays out of the ports' centering base. */
 
 .node-condition__content-wrapper {
   position: relative;
+}
+
+/* Right ports: 6px apart while the block is empty, 16px once conditions fill
+   in — the filled rows are taller, so the pair spreads with them. Both rules
+   outweigh the neutral 14px default in Ports.css, and `--filled` sits second
+   so it wins over the empty-state gap at equal specificity. */
+.node-condition .ports--count-2 {
+  gap: var(--spacing-1-5x);
+}
+
+.node-condition--filled .ports--count-2 {
+  gap: var(--spacing-4x);
 }
 
 /* ---------- Content ---------- */
@@ -103,8 +117,16 @@
   flex-direction: column;
   align-items: flex-end;
   background: var(--primitive-default);
-  border-radius: 0 0 var(--rounding-2x) var(--rounding-2x);
   overflow: hidden;
+}
+
+/* Bottom rounding follows whichever strip ends the card. Without this the
+   content's rounded corners would cut two notches out of the red row below it
+   — `.node-condition__card` has no background of its own, so the canvas would
+   show through. Same idiom as `.node-communication__row:last-child`. */
+.node-condition__content-wrapper:last-child .node-condition__content,
+.node-condition__row--error:last-child {
+  border-radius: 0 0 var(--rounding-2x) var(--rounding-2x);
 }
 
 /* ---------- Row (generic info row) ---------- */
@@ -218,7 +240,14 @@
   background: var(--primitive-default);
 }
 
+/* Rendered as a <button> on the read-only view, where it opens the full list,
+   and as a <span> in the editor — the button defaults are reset here so both
+   look identical. */
 .node-condition__show-all-text {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
   font-family: var(--font-family-tt-norms-tochka-extended);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-xs);
@@ -228,19 +257,12 @@
   cursor: pointer;
 }
 
-.node-condition__show-all-badge {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: var(--rounding-4x);
-  background: var(--bg-neutral-4);
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-demibold, 600);
-  font-size: var(--font-size-xxs);
-  line-height: var(--line-height-xxs);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--primitive-default);
+/* React Flow drops `pointer-events` to none on a node that is neither selectable
+   nor draggable — which is exactly the read-only view — so a real mouse click
+   would never reach the link. A descendant set back to `auto` stays an event
+   target even when an ancestor is `none`, so the button claims them back.
+   Keyed on the tag on purpose: the <button> only renders when `onShowAll` is
+   passed, i.e. precisely in the interactive mode; the editor gets a <span>. */
+button.node-condition__show-all-text {
+  pointer-events: auto;
 }

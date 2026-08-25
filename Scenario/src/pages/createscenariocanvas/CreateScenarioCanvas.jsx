@@ -18,17 +18,19 @@ import ConfirmDialog from '../../components/ConfirmDialog';
 import { DrawerStart, DrawerCommunication, DrawerWaiting, DrawerCondition } from '../../components/Drawers';
 import { nodeTypes, edgeTypes, defaultEdgeOptions, connectionLineStyle } from '../../components/Nodes/FlowNodes/flowConfig';
 import Scale from '../../components/Scale';
+import ScenarioLinkIcon from '../../components/icons/ScenarioLinkIcon';
 import { Button } from '@ds/components/Button';
 import { Alert } from '@ds/components/Alert';
 import { FlowResultView } from '@ds/components/FlowResultView/FlowResultView';
 import { Trash } from '@ds/icons';
-import { NodeErrorsContext } from '../../context/NodeErrorsContext';
+import { NodeErrorsContext, EMPTY_SET } from '../../context/NodeErrorsContext';
 import {
   PUBLISH_ALERTS,
   formatWaitingLabel,
   getPublishBlocker,
   getUnfilledNodeIds,
 } from './publishValidation';
+import { wouldCreateCycle } from './connectionRules';
 import {
   serializeCanvas,
   hydrateEditorNodes,
@@ -174,9 +176,19 @@ function CreateScenarioCanvasInner() {
   // an incoming one. Also reject self-connections: a node wired to itself would
   // otherwise satisfy the "block is connected" publish check.
   //
-  // Direction is deliberately NOT checked here — xyflow hands this callback an
-  // already-normalized connection whose `source` is always the source handle,
-  // so the side the drag started from is unrecoverable. The "output → input
+  // No loops either. The port rules above don't catch them: in a two-block
+  // cycle each block has only one of its two ports taken, so the back edge
+  // lands on a free pair. wouldCreateCycle walks the graph instead, which
+  // covers loops of any length. It goes last — the cheap checks reject almost
+  // everything before the walk, and this runs on every hover over a candidate
+  // port during a drag.
+  //
+  // Direction is deliberately NOT checked here — a drag may start on either
+  // side of a block, and xyflow normalizes the connection before calling this,
+  // so `source` is always the output handle and the side the drag started from
+  // is unrecoverable. That normalization is what lets the checks above stay
+  // direction-agnostic: both the port-occupancy tests and wouldCreateCycle read
+  // an already correctly-oriented source/target either way. The "output → input
   // only" rule lives on the handles themselves (see Port.jsx).
   const isValidConnection = useCallback(
     (connection) =>
@@ -185,7 +197,8 @@ function CreateScenarioCanvasInner() {
         (edge) =>
           (edge.source === connection.source && edge.sourceHandle === connection.sourceHandle) ||
           (edge.target === connection.target && edge.targetHandle === connection.targetHandle),
-      ),
+      ) &&
+      !wouldCreateCycle(edges, connection.source, connection.target),
     [edges],
   );
 
@@ -274,22 +287,32 @@ function CreateScenarioCanvasInner() {
     [unfilledKey],
   );
 
-  // Red rows appear only after a publish attempt, then track fixes live.
-  const [showFieldErrors, setShowFieldErrors] = useState(false);
+  // Ids the last failed publish attempt flagged as unfilled. Deliberately a
+  // frozen snapshot rather than a live flag over `unfilledSet`: blocks dropped
+  // *after* that attempt are not in it, so they stay clean until the user
+  // presses Опубликовать again.
+  const [flaggedNodeIds, setFlaggedNodeIds] = useState(EMPTY_SET);
   // { key, message } — the key bump remounts the DS Alert so its spring-in
   // animation and 5s auto-hide timer replay on every failed attempt.
   const [publishAlert, setPublishAlert] = useState(null);
 
-  // Leave validation mode once everything is filled in, so a freshly dropped
-  // (and therefore empty) block doesn't turn red before it's even opened.
-  useEffect(() => {
-    if (showFieldErrors && unfilledSet.size === 0) setShowFieldErrors(false);
-  }, [showFieldErrors, unfilledSet]);
-
-  const nodeErrors = useMemo(
-    () => ({ showFieldErrors, unfilledNodeIds: unfilledSet }),
-    [showFieldErrors, unfilledSet],
+  // A flagged block keeps its red row only while it is still unfilled, so
+  // filling one in clears its error live. Ids of deleted nodes drop out for
+  // free — `unfilledSet` is derived from the current `nodes`.
+  const fieldErrorNodeIds = useMemo(
+    () => (flaggedNodeIds.size === 0
+      ? EMPTY_SET
+      : new Set([...flaggedNodeIds].filter((nodeId) => unfilledSet.has(nodeId)))),
+    [flaggedNodeIds, unfilledSet],
   );
+
+  // Once every flagged block is filled, drop the snapshot — otherwise emptying
+  // one of them again would resurrect the red row with no new publish attempt.
+  useEffect(() => {
+    if (flaggedNodeIds.size > 0 && fieldErrorNodeIds.size === 0) setFlaggedNodeIds(EMPTY_SET);
+  }, [flaggedNodeIds, fieldErrorNodeIds]);
+
+  const nodeErrors = useMemo(() => ({ fieldErrorNodeIds }), [fieldErrorNodeIds]);
 
   // Keep Start node data in sync with DrawerStart state
   useEffect(() => {
@@ -380,7 +403,6 @@ function CreateScenarioCanvasInner() {
             ...node.data,
             state: isActive ? 'active' : 'default',
             waitingLabel: label,
-            showError: Boolean(saved) && !label,
             onClick: () => {
               setShowDrawerStart(false);
               setShowDrawerCommunication(false);
@@ -439,7 +461,6 @@ function CreateScenarioCanvasInner() {
               return c.categoryLabel || '';
             }) : [],
             showShowAll: hasConditions && saved.length > 3,
-            showError: hasSaved && !hasConditions,
             onClick: () => {
               setShowDrawerStart(false);
               setShowDrawerCommunication(false);
@@ -644,7 +665,16 @@ function CreateScenarioCanvasInner() {
     // An explicit save is a new commit point: re-arm the baseline so the flow
     // reads clean again. The store update is async, so build the merged object
     // from this render's `scenario` rather than reading it back.
-    const patch = { date: `${dd}.${mm}.${yyyy}`, canvas: canvasSnapshot() };
+    //
+    // Unconditionally back to draft — this button means "save as draft"
+    // regardless of what the scenario's status was before this edit session
+    // (published, stopped, already draft).
+    const patch = {
+      status: 'draft',
+      statusLabel: 'Черновик',
+      date: `${dd}.${mm}.${yyyy}`,
+      canvas: canvasSnapshot(),
+    };
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };
     setShowDraftModal(true);
@@ -677,13 +707,15 @@ function CreateScenarioCanvasInner() {
     // Коммуникация block. Only the first check marks individual nodes.
     const blocker = getPublishBlocker({ nodes, edges, unfilledNodeIds });
     if (blocker) {
-      if (blocker === PUBLISH_ALERTS.fields) setShowFieldErrors(true);
+      // Snapshot the very same value the alert was derived from, so the text
+      // and the red rows can never disagree.
+      if (blocker === PUBLISH_ALERTS.fields) setFlaggedNodeIds(new Set(unfilledNodeIds));
       setPublishAlert((prev) => ({ key: (prev?.key ?? 0) + 1, message: blocker }));
       return;
     }
 
     setPublishAlert(null);
-    setShowFieldErrors(false);
+    setFlaggedNodeIds(EMPTY_SET);
 
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -901,7 +933,7 @@ function CreateScenarioCanvasInner() {
         title="Черновик сохранён"
         text="Можешь продолжить заполнять сценарий сейчас или вернуться позже"
         items={[
-          { title: 'Продолжить заполнение', onClick: handleModalContinue },
+          { title: 'Продолжить заполнение', icon: <ScenarioLinkIcon />, onClick: handleModalContinue },
         ]}
       />
 
@@ -913,7 +945,7 @@ function CreateScenarioCanvasInner() {
         title="Сценарий опубликован"
         text="Скоро повелители рассылок возьмут его в работу"
         items={[
-          { title: 'Перейти в сценарий', onClick: handlePublishGoToScenario },
+          { title: 'Перейти в сценарий', icon: <ScenarioLinkIcon />, onClick: handlePublishGoToScenario },
         ]}
       />
 
