@@ -136,11 +136,18 @@
 
 .node-communication__row-avatar--filled {
   background: var(--category-indigo);
+  /* Иконка баннера приходит из DS и красится currentColor, тогда как у
+     локального icon-document-list.svg цвет зашит в fill="white". Токен
+     --primitive-default-fixed в этом приложении не подключён, а var() без
+     фолбэка обнуляет объявление целиком — поэтому берём --primitive-default,
+     тот же, которым Home.jsx красит инициалы на цветной аватарке. */
+  color: var(--primitive-default);
 }
 
 .node-communication__row-avatar svg {
   width: 10px;
   height: 10px;
+  fill: currentColor;
 }
 
 .node-communication__row-avatar--plain svg {

@@ -15,6 +15,7 @@ export default function FlowCommunicationNode({ id, data }) {
         title={data.title}
         showError={fieldError}
         showActions={data.showActions}
+        type={data.communicationType}
         templateTitle={data.templateTitle}
         templateDescription={data.templateDescription}
         state={data.state}

@@ -62,8 +62,15 @@ function isStartFilled({ startConditionType, startTrigger, startSegment, startSc
   return Boolean(startTrigger);
 }
 
+/**
+ * У баннера появилось содержимое, поэтому пустой баннер — такой же
+ * незаполненный блок, как пустой шаблон. Конфиг без `type` — это шаблон
+ * (так пишут моки).
+ */
 const isCommunicationFilled = (saved) =>
-  Boolean(saved?.template) && (saved.channels?.length ?? 0) > 0;
+  saved?.type === 'banner'
+    ? Boolean(saved.banner)
+    : Boolean(saved?.template) && (saved.channels?.length ?? 0) > 0;
 
 const isWaitingFilled = (saved) => formatWaitingLabel(saved?.unit, saved?.amount) !== '';
 

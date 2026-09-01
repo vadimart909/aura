@@ -1,14 +1,26 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate, useParams, useLocation, useBlocker } from 'react-router-dom';
+import { useNavigate, useParams, useLocation, useBlocker, Link } from 'react-router-dom';
 import { useScenariosContext } from '../../context/useScenariosContext';
-import { canvasFingerprint, baselineCanvasFingerprint } from '../createscenariocanvas/canvasSnapshot';
+import {
+  canvasFingerprint,
+  baselineCanvasFingerprint,
+  startCanvas,
+} from '../createscenariocanvas/canvasSnapshot';
+import {
+  PUBLISH_ALERTS,
+  getPublishBlocker,
+  getUnfilledNodeIds,
+} from '../createscenariocanvas/publishValidation';
 import UnsavedChangesModal from '../../components/UnsavedChangesModal';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import ScenarioLinkIcon from '../../components/icons/ScenarioLinkIcon';
+import PlayIcon from '../../components/icons/PlayIcon';
 import { Input } from '@ds/components/Input';
 import { TextArea } from '@ds/components/TextArea';
 import { Button } from '@ds/components/Button';
 import { NavigationBar } from '@ds/components/NavigationBar';
 import { FlowResultView } from '@ds/components/FlowResultView/FlowResultView';
+import { PlayCircle } from '@ds/icons';
 import './CreateScenarioInfo.css';
 
 const MAX_DESCRIPTION_LENGTH = 500;
@@ -17,18 +29,38 @@ export default function CreateScenarioInfo() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
-  const { scenarios, addScenario, updateScenario, replaceScenario, removeScenario } = useScenariosContext();
+  const { scenarios, updateScenario, replaceScenario, removeScenario } = useScenariosContext();
 
-  const isEditMode = Boolean(id);
-  const existingScenario = isEditMode
-    ? scenarios.find((s) => String(s.id) === id)
-    : null;
+  // 'create' | 'edit' — задаётся точкой входа (Home / ScenarioView) и приезжает
+  // сюда с шага 1. Снимается один раз при монтировании: `handleSave`
+  // перевзводит базовую линию, так что вывести режим из неё нельзя — заголовок
+  // перескакивал бы на «Редактирование» после сохранения черновика.
+  const flowMode = useRef(location.state?.flowMode ?? 'edit').current;
+  // В редактировании вторичная кнопка футера — «Сохранить изменения», а не
+  // «Сохранить как черновик»: сценарий уже существует, и сохранение правок не
+  // должно менять его статус.
+  const isEditFlow = flowMode === 'edit';
 
-  const [name, setName] = useState(existingScenario?.name ?? '');
-  const [description, setDescription] = useState(existingScenario?.description ?? '');
+  // Сценарий существует с самого входа в поток (его создаёт Home), поэтому
+  // читаем его из стора живьём — отдельный слепок «existing» больше не нужен.
+  const scenario = scenarios.find((s) => String(s.id) === id);
+
+  // Статус на момент входа, а не живой: «Опубликовать» переводит сценарий в
+  // 'published', и живое чтение перерисовало бы футер в «Запустить» прямо под
+  // открытой модалкой успеха.
+  const entryStatus = useRef(scenario?.status ?? 'draft').current;
+  // Черновик публикуют, всё остальное — запускают. Та же развилка, что в футере
+  // ScenarioView: у 'draft' одна широкая кнопка, у опубликованного и
+  // остановленного — пара с «Запустить».
+  const isPublishFlow = entryStatus === 'draft';
+
+  const [name, setName] = useState(scenario?.name ?? '');
+  const [description, setDescription] = useState(scenario?.description ?? '');
   const [nameError, setNameError] = useState(location.state?.showNameError ?? false);
-  const [showDraftModal, setShowDraftModal] = useState(false);
-  const [savedScenarioId, setSavedScenarioId] = useState(id ?? null);
+  const [showSavedModal, setShowSavedModal] = useState(false);
+  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [showRunConfirm, setShowRunConfirm] = useState(false);
+  const [showRunSuccess, setShowRunSuccess] = useState(false);
 
   // The whole scenario as of the last commit point — entering the editing flow,
   // or the last explicit save. Everything is diffed against this, and «Выйти без
@@ -36,32 +68,30 @@ export default function CreateScenarioInfo() {
   //
   // `'originalScenario' in state` rather than `?? fallback`: the create flow
   // forwards a deliberate `null` meaning "no committed version exists yet, so
-  // discard = delete", and `null ?? {...existingScenario}` would silently
-  // promote that to "revert to the half-finished draft".
+  // discard = delete", and `null ?? {...scenario}` would silently promote that
+  // to "revert to the half-finished draft".
   const baselineRef = useRef(
     location.state && 'originalScenario' in location.state
       ? location.state.originalScenario
-      : (existingScenario ? { ...existingScenario } : null),
+      : (scenario ? { ...scenario } : null),
   );
 
-  // Canvas edits made earlier in this session are already in the store by now
-  // (the canvas persists on unmount), so leaving from step 1 has to account for
-  // them too — otherwise a graph change followed by a back-press exits silently.
-  const currentScenario = scenarios.find((s) => String(s.id) === String(id ?? savedScenarioId));
+  // Граф рисуют на шаге 1, и он уже лежит в сторе к этому моменту, так что
+  // диффать его надо и здесь — иначе правка канваса с последующим выходом с
+  // формы прошла бы молча.
   const hasUnsavedChanges = (() => {
     const base = baselineRef.current;
-    // Only diff the canvas once the scenario exists in the store. In create mode
-    // it doesn't, and `canvasFingerprint(undefined)` is '' — which never equals
-    // the pristine baseline, so a blank form read dirty from frame one and the
-    // exit guard trapped the user behind «Данные не сохранятся».
-    if (currentScenario && canvasFingerprint(currentScenario.canvas) !== baselineCanvasFingerprint(base)) return true;
+    if (scenario && canvasFingerprint(scenario.canvas) !== baselineCanvasFingerprint(base)) return true;
     return base
       ? name !== (base.name ?? '') || description !== (base.description ?? '')
-      : Boolean(name.trim() || description.trim());
+      // Базовой линии нет — значит сценарий в сторе ещё не закоммичен, и любой
+      // выход из потока обязан его удалить. Такой выход всегда идёт через
+      // модалку, даже если пользователь ничего не успел напечатать.
+      : true;
   })();
 
   // Ref to temporarily skip the blocker for intentional navigations
-  // (e.g. "Продолжить" saves & navigates, "Готово" in draft modal)
+  // (e.g. «Опубликовать» saves & navigates, «Готово» in draft modal)
   const skipBlockerRef = useRef(false);
 
   // Reset skipBlockerRef when this component mounts (user navigated back to form)
@@ -69,18 +99,18 @@ export default function CreateScenarioInfo() {
     skipBlockerRef.current = false;
   }, []);
 
-  const canvasPath = `/scenario/canvas/${id ?? savedScenarioId}`;
+  const canvasPath = `/scenario/canvas/${id}`;
 
   // Block client-side navigation (back arrow, Header NavLinks, browser back)
-  // ONLY when the user has made changes in the form since it was opened
+  // ONLY when the user has made changes in the flow since it was opened
   const shouldBlock = useCallback(
     ({ currentLocation, nextLocation }) =>
       !skipBlockerRef.current &&
       hasUnsavedChanges &&
       currentLocation.pathname !== nextLocation.pathname &&
-      // The canvas is the other half of this flow, not an exit from it. Matching
-      // on the path (not just skipBlockerRef) is what keeps browser
-      // back/forward between the two steps quiet.
+      // Канвас — это шаг 1 того же потока, а не выход из него. Сравнение именно
+      // по пути (а не только по skipBlockerRef) — то, что оставляет браузерные
+      // back/forward между шагами тихими.
       nextLocation.pathname !== canvasPath,
     [hasUnsavedChanges, canvasPath],
   );
@@ -96,130 +126,150 @@ export default function CreateScenarioInfo() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [hasUnsavedChanges]);
 
-  // Use primitive values as deps to avoid re-firing when object reference changes
-  const existingName = existingScenario?.name;
-  const existingDescription = existingScenario?.description;
-
-  // Sync form fields when navigating to edit mode or switching between scenarios.
-  // The dirty baseline is `baselineRef`, captured once at mount — it must NOT be
-  // re-armed here, or a canvas round trip would launder the user's edits into
-  // the baseline and the exit guard would read clean.
-  useEffect(() => {
-    if (existingName !== undefined) {
-      setName(existingName ?? '');
-      setDescription(existingDescription ?? '');
-    } else if (!id) {
-      setName('');
-      setDescription('');
-    }
-  }, [id, existingName, existingDescription]);
-
   const descriptionCount = description.length;
   const isDescriptionError = descriptionCount >= MAX_DESCRIPTION_LENGTH;
 
-  /** Save as draft */
-  function handleSaveDraft() {
+  /** Сегодняшняя дата в формате «Дата старта». */
+  function today() {
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    return `${dd}.${mm}.${now.getFullYear()}`;
+  }
+
+  /** Возврат на шаг 1. Базовую линию и режим надо пробросить обратно: `null`
+   *  там осмысленный, и потерять его — значит превратить «отмена = удалить» в
+   *  «откатиться к недоделанному черновику». */
+  function handleBackToCanvas() {
+    navigate(canvasPath, {
+      state: { originalScenario: baselineRef.current, flowMode },
+    });
+  }
+
+  /** «Сохранить как черновик» (создание) / «Сохранить изменения» (редактирование). */
+  function handleSave() {
     if (!name.trim()) {
       setNameError(true);
       return;
     }
 
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-
     // An explicit save is a new commit point: re-arm the baseline so the flow
     // reads clean again. The store update is async, so build the merged object
     // here rather than reading it back.
-    if (isEditMode || savedScenarioId) {
-      const idToUpdate = id || savedScenarioId;
-      // Unconditionally back to draft — this button means "save as draft"
-      // regardless of what the scenario's status was before this edit session
-      // (published, stopped, already draft).
-      const patch = {
-        name: name.trim(),
-        description: description.trim(),
-        status: 'draft',
-        statusLabel: 'Черновик',
-        date: `${dd}.${mm}.${yyyy}`,
-      };
-      // `existingScenario` is null when there is no `id` and only a
-      // `savedScenarioId`, so read the live object out of the array instead.
-      const current = scenarios.find((s) => String(s.id) === String(idToUpdate));
-      updateScenario(idToUpdate, patch);
-      baselineRef.current = { ...current, ...patch };
-    } else {
-      const created = {
-        id: Date.now(),
-        name: name.trim(),
-        description: description.trim(),
-        status: 'draft',
-        statusLabel: 'Черновик',
-        author: 'Вадим Артёменко',
-        authorInitials: 'ВА',
-        authorColor: 'var(--category-emerald)',
-        date: `${dd}.${mm}.${yyyy}`,
-      };
-      addScenario(created);
-      // No longer null: a committed version now exists, so a later discard
-      // reverts to this draft instead of deleting it.
-      baselineRef.current = created;
-      setSavedScenarioId(created.id);
+    //
+    // Редактирование сохраняет только сами правки: статус и «Дату старта»
+    // оставляем как есть, иначе «Сохранить изменения» на опубликованном
+    // сценарии уводило бы его обратно в черновики и сбивало дату. В создании же
+    // это именно «Сохранить как черновик» — статус и дата выставляются здесь.
+    const patch = {
+      name: name.trim(),
+      description: description.trim(),
+    };
+    if (!isEditFlow) {
+      patch.status = 'draft';
+      patch.statusLabel = 'Черновик';
+      patch.date = today();
     }
+    updateScenario(id, patch);
+    baselineRef.current = { ...scenario, ...patch };
 
     // Sync the displayed values to trimmed versions
     setName(name.trim());
     setDescription(description.trim());
 
-    setShowDraftModal(true);
+    setShowSavedModal(true);
   }
 
-  /** "Продолжить" → save and go to canvas page (never blocked) */
-  function handleContinue() {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-
-    let scenarioId = id || savedScenarioId;
-
-    if (isEditMode || savedScenarioId) {
-      const idToUpdate = id || savedScenarioId;
-      const base = baselineRef.current;
-      const changed = name.trim() !== (base?.name ?? '')
-        || description.trim() !== (base?.description ?? '');
-      updateScenario(idToUpdate, {
-        name: name.trim(),
-        description: description.trim(),
-        // Only touch the start date when something actually changed — stepping
-        // through «Продолжить» and straight back out used to silently bump it.
-        ...(changed ? { date: `${dd}.${mm}.${yyyy}` } : {}),
-      });
-    } else {
-      const newId = Date.now();
-      addScenario({
-        id: newId,
-        name: name.trim(),
-        description: description.trim(),
-        status: 'draft',
-        statusLabel: 'Черновик',
-        author: 'Вадим Артёменко',
-        authorInitials: 'ВА',
-        authorColor: 'var(--category-emerald)',
-        date: `${dd}.${mm}.${yyyy}`,
-      });
-      scenarioId = newId;
-      setSavedScenarioId(newId);
-    }
-
-    // Skip the blocker — this is an intentional save+navigate
-    skipBlockerRef.current = true;
-    // Forward the baseline verbatim: a `null` here is meaningful (create flow,
-    // nothing committed yet) and must not be replaced with a fallback.
-    navigate(`/scenario/canvas/${scenarioId}`, {
-      state: { originalScenario: baselineRef.current },
+  /**
+   * Проверяет граф из стора. Если он не готов — сохраняет правки, уводит на
+   * шаг 1 с алертом и подсветкой блоков и возвращает true.
+   *
+   * Общая для «Опубликовать» и «Запустить»: запускать сломанный сценарий не
+   * лучше, чем публиковать, а в редактировании граф могли поломать.
+   */
+  function bounceOnInvalidCanvas() {
+    // Граф уже в сторе: шаг 1 пишет его и на unmount, и явно в «Продолжить».
+    // `startCanvas()` — фолбэк для старого черновика, который канваса ни разу
+    // не видел: его пустой Старт честно провалит первую же проверку.
+    const canvas = scenario?.canvas ?? startCanvas();
+    const unfilledNodeIds = getUnfilledNodeIds(canvas.nodes, canvas.config);
+    const blockedBy = getPublishBlocker({
+      nodes: canvas.nodes,
+      edges: canvas.edges,
+      unfilledNodeIds,
     });
+    if (!blockedBy) return false;
+
+    // Чинить нечего кроме графа, поэтому уводим на шаг 1 — там и алерт, и
+    // красные строки в блоках. Название с описанием сохраняем до перехода,
+    // иначе круг через канвас их потеряет.
+    updateScenario(id, { name: name.trim(), description: description.trim() });
+    skipBlockerRef.current = true;
+    navigate(canvasPath, {
+      state: {
+        originalScenario: baselineRef.current,
+        flowMode,
+        publishBlocker: blockedBy,
+        // Красные строки — только для «Заполни обязательные поля»: два
+        // остальных блокера про граф в целом, а не про конкретные блоки.
+        ...(blockedBy === PUBLISH_ALERTS.fields ? { flaggedNodeIds: unfilledNodeIds } : {}),
+      },
+    });
+    return true;
+  }
+
+  /** «Опубликовать» — финальное действие потока для черновика. */
+  function handlePublish() {
+    if (!name.trim()) {
+      setNameError(true);
+      return;
+    }
+    if (bounceOnInvalidCanvas()) return;
+
+    const patch = {
+      name: name.trim(),
+      description: description.trim(),
+      status: 'published',
+      statusLabel: 'Опубликован',
+      date: today(),
+    };
+    updateScenario(id, patch);
+    baselineRef.current = { ...scenario, ...patch };
+
+    setName(name.trim());
+    setDescription(description.trim());
+
+    setShowPublishModal(true);
+  }
+
+  /** «Запустить» — финальное действие для уже опубликованного сценария. */
+  function handleRun() {
+    if (!name.trim()) {
+      setNameError(true);
+      return;
+    }
+    if (bounceOnInvalidCanvas()) return;
+    // Рассылка уходит сразу, поэтому тот же переспрос, что на странице просмотра.
+    setShowRunConfirm(true);
+  }
+
+  function handleRunConfirm() {
+    // Дату старта не трогаем — как и `handleRunConfirm` в ScenarioView: она у
+    // сценария уже своя, и запуск её не переписывает.
+    const patch = {
+      name: name.trim(),
+      description: description.trim(),
+      status: 'started',
+      statusLabel: 'Запущен',
+    };
+    updateScenario(id, patch);
+    baselineRef.current = { ...scenario, ...patch };
+
+    setName(name.trim());
+    setDescription(description.trim());
+
+    setShowRunConfirm(false);
+    setShowRunSuccess(true);
   }
 
   /** «Выйти без сохранения» — roll the scenario back and leave for Home. */
@@ -227,26 +277,62 @@ export default function CreateScenarioInfo() {
     // Must come first: reset() re-runs the predicate on the navigate below, so
     // anything else here would let the modal reopen and trap the user in it.
     skipBlockerRef.current = true;
-    const idToRevert = id || savedScenarioId;
-    if (idToRevert) {
-      // A null baseline means nothing was ever committed — the draft only
-      // exists because «Продолжить» created it, so drop it entirely.
-      if (baselineRef.current) replaceScenario(idToRevert, baselineRef.current);
-      else removeScenario(idToRevert);
-    }
+    // A null baseline means nothing was ever committed — the scenario only
+    // exists because the flow was started, so drop it entirely.
+    if (baselineRef.current) replaceScenario(id, baselineRef.current);
+    else removeScenario(id);
     blocker.reset();
     navigate('/', { replace: true });
   }
 
   function handleModalContinue() {
-    setShowDraftModal(false);
+    setShowSavedModal(false);
   }
 
   function handleModalDone() {
-    setShowDraftModal(false);
+    setShowSavedModal(false);
     // Skip the blocker — data was just saved as draft
     skipBlockerRef.current = true;
     navigate('/');
+  }
+
+  function handlePublishGoToScenario() {
+    setShowPublishModal(false);
+    skipBlockerRef.current = true;
+    navigate(`/scenario/view/${id}`);
+  }
+
+  function handlePublishDone() {
+    setShowPublishModal(false);
+    skipBlockerRef.current = true;
+    navigate('/');
+  }
+
+  function handleRunGoToScenario() {
+    setShowRunSuccess(false);
+    skipBlockerRef.current = true;
+    navigate(`/scenario/view/${id}`);
+  }
+
+  function handleRunDone() {
+    setShowRunSuccess(false);
+    skipBlockerRef.current = true;
+    navigate('/');
+  }
+
+  // A hand-typed id that isn't in the store: «Опубликовать» would write into
+  // nothing and still report success. Say so instead. Placed after the hooks so
+  // their order never changes.
+  if (!scenario) {
+    return (
+      <div className="page">
+        <h1>Сценарий не найден</h1>
+        <p>Сценария с таким адресом нет — возможно, его удалили.</p>
+        <nav>
+          <Link to="/">К списку сценариев</Link>
+        </nav>
+      </div>
+    );
   }
 
   return (
@@ -254,15 +340,11 @@ export default function CreateScenarioInfo() {
       {/* ---- Sidebar ---- */}
       <aside className="flow-scenario__sidebar">
         <NavigationBar
-          title={isEditMode ? 'Редактирование сценария' : 'Создание сценария'}
+          title={flowMode === 'create' ? 'Создание сценария' : 'Редактирование сценария'}
           /* defaults to true — would add a "Clear" broom button next to Back */
           hasActionButton={false}
           backButtonLabel="Назад"
-          onBackClick={() => {
-            if (isEditMode) navigate(`/scenario/view/${id}`);
-            else if (savedScenarioId) navigate(`/scenario/view/${savedScenarioId}`);
-            else navigate('/');
-          }}
+          onBackClick={handleBackToCanvas}
         />
       </aside>
 
@@ -300,27 +382,85 @@ export default function CreateScenarioInfo() {
       {/* ---- Footer ---- */}
       <footer className="flow-scenario__footer">
         <div className="flow-scenario__footer-content">
-          <Button variant="secondary" onClick={handleSaveDraft}>
-            Сохранить как черновик
-          </Button>
-          <Button variant="primary" onClick={handleContinue}>
-            Продолжить
-          </Button>
+          {/* Подсказка — только про публикацию: в макете запуска её нет. */}
+          {isPublishFlow && (
+            <span className="flow-scenario__footer-hint ts-400-s">
+              Опубликовать можно только с заполненным блоком «Коммуникация»
+            </span>
+          )}
+          <div className="flow-scenario__footer-buttons">
+            <Button variant="secondary" onClick={handleSave}>
+              {isEditFlow ? 'Сохранить изменения' : 'Сохранить как черновик'}
+            </Button>
+            {isPublishFlow ? (
+              <Button variant="primary" onClick={handlePublish}>
+                Опубликовать
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleRun} className="flow-scenario__btn--icon">
+                <PlayIcon />
+                Запустить
+              </Button>
+            )}
+          </div>
         </div>
       </footer>
 
-      {/* ---- Draft Saved Modal ---- */}
+      {/* ---- Saved Modal (черновик / изменения) ---- */}
       <FlowResultView
-        isOpen={showDraftModal}
+        isOpen={showSavedModal}
         onDone={handleModalDone}
         state="success"
-        title="Черновик сохранён"
+        title={isEditFlow ? 'Изменения сохранены' : 'Черновик сохранён'}
         text="Можешь продолжить заполнять сценарий сейчас или вернуться позже"
         items={[
           {
             title: 'Продолжить заполнение',
             icon: <ScenarioLinkIcon />,
             onClick: handleModalContinue,
+          },
+        ]}
+      />
+
+      {/* ---- Published Modal ---- */}
+      <FlowResultView
+        isOpen={showPublishModal}
+        onDone={handlePublishDone}
+        state="success"
+        title="Сценарий опубликован"
+        text="Скоро повелители рассылок возьмут его в работу"
+        items={[
+          {
+            title: 'Перейти в сценарий',
+            icon: <ScenarioLinkIcon />,
+            onClick: handlePublishGoToScenario,
+          },
+        ]}
+      />
+
+      {/* ---- Run confirmation ---- */}
+      {showRunConfirm && (
+        <ConfirmDialog
+          message="Запустить сценарий? Рассылка начнётся сразу после запуска."
+          confirmLabel="Запустить"
+          confirmIcon={<PlayCircle />}
+          onConfirm={handleRunConfirm}
+          onCancel={() => setShowRunConfirm(false)}
+        />
+      )}
+
+      {/* ---- Run success ---- */}
+      <FlowResultView
+        isOpen={showRunSuccess}
+        onDone={handleRunDone}
+        state="success"
+        title="Сценарий запущен"
+        text="Рассылка по нему началась"
+        items={[
+          {
+            title: 'Перейти в сценарий',
+            icon: <ScenarioLinkIcon />,
+            onClick: handleRunGoToScenario,
           },
         ]}
       />

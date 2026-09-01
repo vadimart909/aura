@@ -99,7 +99,8 @@ function ScenarioViewInner() {
   }
 
   function handleEdit() {
-    navigate(`/scenario/edit/${id}`);
+    // Редактирование начинается с канваса — это шаг 1 потока.
+    navigate(`/scenario/canvas/${id}`, { state: { flowMode: 'edit' } });
   }
 
   function handleRunConfirm() {

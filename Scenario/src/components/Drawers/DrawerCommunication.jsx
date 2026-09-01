@@ -1,7 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import './DrawerCommunication.css';
 import { TemplateModal } from '../TemplateModal';
-import { ConnectionArrowsRepeatLeft } from '@ds/icons';
+import ConfirmDialog from '../ConfirmDialog';
+import {
+  ArrowsRotationRight,
+  ConnectionArrowsRepeatLeft,
+  DocumentListBulleted,
+  DocumentReport,
+  Pencil,
+} from '@ds/icons';
 
 /* ---- Inline SVG icons ---- */
 
@@ -74,6 +81,13 @@ function CheckmarkIcon() {
 }
 
 
+/* ---- Communication types ---- */
+const TYPE_TEMPLATE = 'template';
+const TYPE_BANNER = 'banner';
+
+/** Редактора баннеров нет — «Создать» прикрепляет ту запись, что стоит в макете. */
+const PLACEHOLDER_BANNER = { id: 'Test scenario_ID', title: 'Заголовок. Подзаголовок' };
+
 /* ---- Helpers ---- */
 
 /**
@@ -101,10 +115,22 @@ function parseChannels(subtitle) {
  *
  * @param {Object}   props
  * @param {Function} props.onClose           — close without saving
- * @param {Function} props.onSave            — save handler, receives { template, channels }
+ * @param {Function} props.onSave            — save handler, receives { type, template, channels, banner }
  * @param {Object}   [props.initialTemplate] — previously selected template (or null)
+ * @param {'template'|'banner'} [props.initialType] — previously chosen communication type
+ * @param {Object}   [props.initialBanner]   — previously attached banner (or null)
  */
-export default function DrawerCommunication({ onClose, onSave, initialTemplate = null }) {
+export default function DrawerCommunication({
+  onClose,
+  onSave,
+  initialTemplate = null,
+  initialType = TYPE_TEMPLATE,
+  initialBanner = null,
+}) {
+  const [type, setType] = useState(initialType);
+  const [banner, setBanner] = useState(initialBanner);
+  // Тип, на который хотят уйти, пока пользователь отвечает на модалку.
+  const [pendingType, setPendingType] = useState(null);
   const [selectedTemplate, setSelectedTemplate] = useState(initialTemplate);
   const [allChannels, setAllChannels] = useState(() => parseChannels(initialTemplate?.subtitle));
   const [channels, setChannels] = useState(() => parseChannels(initialTemplate?.subtitle));
@@ -132,11 +158,36 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
     setShowTemplateModal(true);
   };
 
-  const handleDeleteTemplate = () => {
+  /** Сброс вкладки «Шаблон» — общий для корзины и для переключения типа. */
+  const clearTemplate = () => {
     setSelectedTemplate(null);
     setAllChannels([]);
     setChannels([]);
     setShowChannelsDropdown(false);
+  };
+
+  const handleDeleteTemplate = clearTemplate;
+
+  /* ---- Переключение типа ------------------------------------------------
+     Уходить с заполненного чипа молча нельзя: содержимое не сохранится, —
+     поэтому сначала спрашиваем. */
+  const hasContent = type === TYPE_TEMPLATE ? selectedTemplate !== null : banner !== null;
+
+  const handleTypeClick = (next) => {
+    if (next === type) return;
+    if (hasContent) {
+      setPendingType(next);
+      return;
+    }
+    setType(next);
+  };
+
+  const handleConfirmSwitch = () => {
+    // «Переключиться» — содержимое покидаемого чипа удаляется.
+    if (type === TYPE_TEMPLATE) clearTemplate();
+    else setBanner(null);
+    setType(pendingType);
+    setPendingType(null);
   };
 
   const handleTemplateSelect = (template) => {
@@ -164,15 +215,19 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
     );
   };
 
-  /* Validation: channels must not be empty when a template is selected */
-  const hasChannelsError = selectedTemplate !== null && channels.length === 0;
+  /* Validation: channels must not be empty when a template is selected. Scoped
+     to the template tab — a leftover template with emptied channels must not
+     block saving a banner communication. */
+  const hasChannelsError =
+    type === TYPE_TEMPLATE && selectedTemplate !== null && channels.length === 0;
 
   const handleSave = () => {
     if (hasChannelsError) return;
-    onSave({ template: selectedTemplate, channels });
+    onSave({ type, template: selectedTemplate, channels, banner });
   };
 
   return (
+    <>
     <div className="drawer-communication-overlay" onClick={onClose}>
       <div className="drawer-communication" onClick={(e) => e.stopPropagation()}>
         {/* ---- Header ---- */}
@@ -190,7 +245,85 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
 
         {/* ---- Content ---- */}
         <div className="drawer-communication__content">
+          {/* Section: Тип коммуникации */}
+          <div className="drawer-communication__section">
+            <span className="drawer-communication__section-title">Тип коммуникации</span>
+            <div className="drawer-communication__chips">
+              <button
+                type="button"
+                className={`drawer-communication__chip ${
+                  type === TYPE_TEMPLATE
+                    ? 'drawer-communication__chip--active'
+                    : 'drawer-communication__chip--inactive'
+                }`}
+                onClick={() => handleTypeClick(TYPE_TEMPLATE)}
+              >
+                <span className="drawer-communication__chip-icon ds-icon ds-icon--20">
+                  <DocumentListBulleted />
+                </span>
+                Шаблон
+              </button>
+              <button
+                type="button"
+                className={`drawer-communication__chip ${
+                  type === TYPE_BANNER
+                    ? 'drawer-communication__chip--active'
+                    : 'drawer-communication__chip--inactive'
+                }`}
+                onClick={() => handleTypeClick(TYPE_BANNER)}
+              >
+                <span className="drawer-communication__chip-icon ds-icon ds-icon--20">
+                  <DocumentReport />
+                </span>
+                Баннер
+              </button>
+            </div>
+          </div>
+
+          {/* Section: Баннер */}
+          {type === TYPE_BANNER && (
+            <div className="drawer-communication__section">
+              <span className="drawer-communication__section-title">Баннер</span>
+
+              {banner ? (
+                <div className="drawer-communication__template-card">
+                  <div className="drawer-communication__template-avatar">
+                    {/* .ds-icon даёт и размер, и fill: currentColor. Без обёртки
+                        DS-иконка растянулась бы на всю аватарку, а правило `fill`
+                        на самой аватарке залило бы глиф шаблона — тот рисуется
+                        stroke'ом поверх fill="none". */}
+                    <span className="ds-icon ds-icon--18">
+                      <DocumentReport />
+                    </span>
+                  </div>
+                  <div className="drawer-communication__template-info">
+                    <span className="drawer-communication__template-overline">{banner.id}</span>
+                    <span className="drawer-communication__template-title">{banner.title}</span>
+                  </div>
+                  {/* Не кнопка: редактора баннеров нет, обработчика намеренно тоже. */}
+                  <span className="drawer-communication__banner-edit">
+                    <span className="ds-icon ds-icon--m">
+                      <Pencil />
+                    </span>
+                  </span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="drawer-communication__action-cell"
+                  onClick={() => setBanner(PLACEHOLDER_BANNER)}
+                >
+                  <span className="drawer-communication__action-cell-icon">
+                    <PlusCircleIcon />
+                  </span>
+                  <span className="drawer-communication__action-cell-label">Создать</span>
+                </button>
+              )}
+            </div>
+          )}
+
           {/* Section: Шаблон */}
+          {type === TYPE_TEMPLATE && (
           <div className="drawer-communication__section">
             <span className="drawer-communication__section-title">Шаблон</span>
 
@@ -251,9 +384,10 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
               </button>
             )}
           </div>
+          )}
 
           {/* Channels multiselect — sibling of section, gap 16px from content */}
-          {selectedTemplate && allChannels.length > 0 && (
+          {type === TYPE_TEMPLATE && selectedTemplate && allChannels.length > 0 && (
             <div className="drawer-communication__channels-wrapper" ref={channelsRef}>
               <div
                 className={
@@ -366,6 +500,22 @@ export default function DrawerCommunication({ onClose, onSave, initialTemplate =
         />
       )}
     </div>
+
+    {/* ---- Подтверждение смены типа ----
+        Сиблингом оверлея, а не внутри: у оверлея onClick={onClose}, а DS Modal
+        нигде не глушит всплытие — внутри любой клик по модалке закрывал бы весь
+        дровер. Оба position: fixed с z-index 1000, дровер объявлен раньше — так
+        модалка красится поверх. */}
+    {pendingType && (
+      <ConfirmDialog
+        message="При переключении на другой тип коммуникации, прикреплённый шаблон или баннер не сохранятся. Переключиться?"
+        confirmLabel="Переключиться"
+        confirmIcon={<ArrowsRotationRight />}
+        onConfirm={handleConfirmSwitch}
+        onCancel={() => setPendingType(null)}
+      />
+    )}
+    </>
   );
 }
 

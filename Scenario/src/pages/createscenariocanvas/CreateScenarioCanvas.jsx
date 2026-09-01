@@ -24,12 +24,7 @@ import { Alert } from '@ds/components/Alert';
 import { FlowResultView } from '@ds/components/FlowResultView/FlowResultView';
 import { Trash } from '@ds/icons';
 import { NodeErrorsContext, EMPTY_SET } from '../../context/NodeErrorsContext';
-import {
-  PUBLISH_ALERTS,
-  formatWaitingLabel,
-  getPublishBlocker,
-  getUnfilledNodeIds,
-} from './publishValidation';
+import { formatWaitingLabel, getUnfilledNodeIds } from './publishValidation';
 import { wouldCreateCycle } from './connectionRules';
 import {
   serializeCanvas,
@@ -48,6 +43,14 @@ import './CreateScenarioCanvas.css';
    -------------------------------------------------------------------------- */
 let dndNodeId = 0;
 const getNodeId = () => `dndnode_${dndNodeId++}`;
+
+/** Сегодняшняя дата в формате колонки «Дата старта». */
+const formatToday = () => {
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, '0');
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  return `${dd}.${mm}.${now.getFullYear()}`;
+};
 
 const DAYS_MAP = {
   mon: 'Пн', tue: 'Вт', wed: 'Ср', thu: 'Чт', fri: 'Пт', sat: 'Сб', sun: 'Вс',
@@ -75,6 +78,16 @@ function CreateScenarioCanvasInner() {
   const { scenarios, updateScenario, replaceScenario, removeScenario, addScenario } = useScenariosContext();
   const reactFlowInstance = useReactFlow();
   const scenarioExists = scenarios.some((s) => String(s.id) === id);
+
+  // 'create' | 'edit' — задаётся точкой входа (Home / ScenarioView) и
+  // пробрасывается дальше по потоку. Снимается один раз при монтировании: от
+  // него зависит, куда уводит «Назад», а базовая линия для этого не годится —
+  // `handleSave` её перевзводит.
+  const flowMode = useRef(location.state?.flowMode ?? 'edit').current;
+  // В редактировании вторичная кнопка футера — «Сохранить изменения», а не
+  // «Сохранить как черновик»: сценарий уже существует, и сохранение правок не
+  // должно менять его статус.
+  const isEditFlow = flowMode === 'edit';
 
   // If the scenario doesn't exist (e.g. direct navigation by URL),
   // create a temporary draft so the canvas always renders without errors.
@@ -115,8 +128,7 @@ function CreateScenarioCanvasInner() {
   const savedCanvas = bootRef.current;
   const savedConfig = savedCanvas?.config;
 
-  const [showDraftModal, setShowDraftModal] = useState(false);
-  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [showSavedModal, setShowSavedModal] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   // Auto-open DrawerStart only for a genuinely empty Start block (a brand-new
   // scenario). Once any field has data — even a partially filled tab — the
@@ -287,10 +299,11 @@ function CreateScenarioCanvasInner() {
     [unfilledKey],
   );
 
-  // Ids the last failed publish attempt flagged as unfilled. Deliberately a
-  // frozen snapshot rather than a live flag over `unfilledSet`: blocks dropped
-  // *after* that attempt are not in it, so they stay clean until the user
-  // presses Опубликовать again.
+  // Ids the last failed publish attempt flagged as unfilled. «Опубликовать»
+  // живёт на шаге 2, поэтому и ids, и текст алерта приезжают оттуда в router
+  // state — см. эффект ниже. Deliberately a frozen snapshot rather than a live
+  // flag over `unfilledSet`: blocks dropped *after* that attempt are not in it,
+  // so they stay clean until the user presses Опубликовать again.
   const [flaggedNodeIds, setFlaggedNodeIds] = useState(EMPTY_SET);
   // { key, message } — the key bump remounts the DS Alert so its spring-in
   // animation and 5s auto-hide timer replay on every failed attempt.
@@ -311,6 +324,25 @@ function CreateScenarioCanvasInner() {
   useEffect(() => {
     if (flaggedNodeIds.size > 0 && fieldErrorNodeIds.size === 0) setFlaggedNodeIds(EMPTY_SET);
   }, [flaggedNodeIds, fieldErrorNodeIds]);
+
+  // «Опубликовать» нажимают на шаге 2, а чинить нечего кроме графа — поэтому
+  // шаг 2 отправляет пользователя сюда вместе с текстом алерта и списком
+  // незаполненных блоков. Читаем ровно один раз при монтировании и гасим
+  // state, чтобы forward/back не проиграли тот же алерт снова.
+  //
+  // `replace` с тем же pathname безопасен: shouldBlock требует смены pathname,
+  // а AnimatedOutlet кейится на нём же и страницу не перемонтирует.
+  useEffect(() => {
+    const incoming = location.state;
+    if (!incoming?.publishBlocker) return;
+    setPublishAlert({ key: 1, message: incoming.publishBlocker });
+    if (incoming.flaggedNodeIds?.length) setFlaggedNodeIds(new Set(incoming.flaggedNodeIds));
+    navigate(location.pathname, {
+      replace: true,
+      state: { originalScenario: incoming.originalScenario, flowMode: incoming.flowMode },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const nodeErrors = useMemo(() => ({ fieldErrorNodeIds }), [fieldErrorNodeIds]);
 
@@ -368,6 +400,8 @@ function CreateScenarioCanvasInner() {
           data: {
             ...node.data,
             state: isActive ? 'active' : 'default',
+            // Моковые сценарии хранят конфиг без `type` — для них это шаблон.
+            communicationType: saved?.type ?? 'template',
             templateTitle: hasTemplate ? saved.template.title : '',
             templateDescription: hasTemplate ? saved.channels.join(', ') : '',
             onClick: () => {
@@ -572,9 +606,9 @@ function CreateScenarioCanvasInner() {
   );
 
   // Persist on unmount, not just in handleBackToForm. AnimatedOutlet remounts
-  // the page on any pathname change, so browser Back to step 1 — which we let
-  // through unblocked, being intra-flow — would otherwise drop the whole graph
-  // on the floor. Also covers the empty-name early returns below.
+  // the page on any pathname change, so browser Back/Forward to step 2 — which
+  // we let through unblocked, being intra-flow — would otherwise drop the whole
+  // graph on the floor. Also covers the empty-name early return below.
   const latestSnapshotRef = useRef(null);
   latestSnapshotRef.current = canvasSnapshot;
   useEffect(
@@ -590,8 +624,8 @@ function CreateScenarioCanvasInner() {
   const isDirty = useMemo(() => {
     const base = baselineRef.current;
     if (canvasFingerprint(canvasSnapshot()) !== baselineCanvasFingerprint(base)) return true;
-    // Name and description are edited on step 1 but already live in the store
-    // by the time we get here, so they are diffed from the scenario object.
+    // Name and description are edited on step 2, but the scenario object exists
+    // from the moment the flow starts, so they are diffed straight off it.
     return base
       ? scenario?.name !== base.name || scenario?.description !== base.description
       : Boolean(scenario?.name?.trim() || scenario?.description?.trim());
@@ -600,18 +634,18 @@ function CreateScenarioCanvasInner() {
   // Set before every intentional exit so the blocker lets it through.
   const skipBlockerRef = useRef(false);
 
-  const stepOnePath = `/scenario/edit/${id}`;
+  const stepTwoPath = `/scenario/info/${id}`;
   const shouldBlock = useCallback(
     ({ currentLocation, nextLocation }) =>
       !skipBlockerRef.current &&
       isDirty &&
       currentLocation.pathname !== nextLocation.pathname &&
-      // Step 1 is the other half of this flow, not an exit from it. Matching on
+      // Step 2 is the other half of this flow, not an exit from it. Matching on
       // the path (not just skipBlockerRef) is what keeps browser back/forward
       // between the two steps quiet. The router strips `basename` first, so
       // this compares against /scenario/..., without /aura.
-      nextLocation.pathname !== stepOnePath,
-    [isDirty, stepOnePath],
+      nextLocation.pathname !== stepTwoPath,
+    [isDirty, stepTwoPath],
   );
   const navBlocker = useBlocker(shouldBlock);
 
@@ -634,114 +668,74 @@ function CreateScenarioCanvasInner() {
     navigate('/', { replace: true });
   }
 
-  function handleBackToForm() {
-    // Step 1 → «Продолжить» remounts this page; without saving here the round
-    // trip would wipe the canvas.
+  /** «Назад» — выход из потока, а не переход на другой шаг. */
+  function handleExit() {
+    // Сценарий создаётся на входе в поток, поэтому чистый выход из создания
+    // обязан убрать за собой пустышку — иначе в списке останется безымянная
+    // строка. Грязный поток идёт мимо: его перехватит useBlocker, а
+    // «Выйти без сохранения» удалит тот же стаб (базовая линия там null).
+    if (flowMode === 'create' && !isDirty) {
+      discardedRef.current = true;
+      removeScenario(id);
+      navigate('/', { replace: true });
+      return;
+    }
+    navigate(flowMode === 'create' ? '/' : `/scenario/view/${id}`);
+  }
+
+  /** «Продолжить» → шаг 2, «Название и описание». Ничего не валидирует. */
+  function handleContinue() {
+    // Шаг 2 → «Назад» перемонтирует эту страницу; без сохранения здесь круг
+    // стёр бы канвас.
     skipBlockerRef.current = true;
     updateScenario(id, { canvas: canvasSnapshot() });
-    navigate(`/scenario/edit/${id}`, {
-      state: { originalScenario: baselineRef.current },
+    navigate(`/scenario/info/${id}`, {
+      state: { originalScenario: baselineRef.current, flowMode },
     });
   }
 
-  function handleSaveDraft() {
-    // If name is empty, redirect to Step 1 and show the name error
+  /** «Сохранить как черновик» (создание) / «Сохранить изменения» (редактирование). */
+  function handleSave() {
+    // Название обязательно и для черновика, и для правок, а живёт оно на
+    // шаге 2 — уводим туда с уже подсвеченной ошибкой.
     if (!scenario?.name?.trim()) {
       skipBlockerRef.current = true;
-      navigate(`/scenario/edit/${id}`, {
+      updateScenario(id, { canvas: canvasSnapshot() });
+      navigate(`/scenario/info/${id}`, {
         state: {
           originalScenario: baselineRef.current,
+          flowMode,
           showNameError: true,
         },
       });
       return;
     }
-
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
 
     // An explicit save is a new commit point: re-arm the baseline so the flow
     // reads clean again. The store update is async, so build the merged object
     // from this render's `scenario` rather than reading it back.
     //
-    // Unconditionally back to draft — this button means "save as draft"
-    // regardless of what the scenario's status was before this edit session
-    // (published, stopped, already draft).
-    const patch = {
-      status: 'draft',
-      statusLabel: 'Черновик',
-      date: `${dd}.${mm}.${yyyy}`,
-      canvas: canvasSnapshot(),
-    };
+    // Редактирование трогает только граф: статус и «Дату старта» оставляем как
+    // есть, иначе «Сохранить изменения» на опубликованном сценарии уводило бы
+    // его обратно в черновики и сбивало дату. В создании же это именно
+    // «Сохранить как черновик» — статус и дата выставляются здесь.
+    const patch = { canvas: canvasSnapshot() };
+    if (!isEditFlow) {
+      patch.status = 'draft';
+      patch.statusLabel = 'Черновик';
+      patch.date = formatToday();
+    }
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };
-    setShowDraftModal(true);
+    setShowSavedModal(true);
   }
 
   function handleModalContinue() {
-    setShowDraftModal(false);
+    setShowSavedModal(false);
   }
 
   function handleModalDone() {
-    setShowDraftModal(false);
-    skipBlockerRef.current = true;
-    navigate('/');
-  }
-
-  function handlePublish() {
-    // If name is empty, redirect to Step 1 and show the name error
-    if (!scenario?.name?.trim()) {
-      skipBlockerRef.current = true;
-      navigate(`/scenario/edit/${id}`, {
-        state: {
-          originalScenario: baselineRef.current,
-          showNameError: true,
-        },
-      });
-      return;
-    }
-
-    // Canvas checks, in order: filled fields → connected blocks → has a
-    // Коммуникация block. Only the first check marks individual nodes.
-    const blocker = getPublishBlocker({ nodes, edges, unfilledNodeIds });
-    if (blocker) {
-      // Snapshot the very same value the alert was derived from, so the text
-      // and the red rows can never disagree.
-      if (blocker === PUBLISH_ALERTS.fields) setFlaggedNodeIds(new Set(unfilledNodeIds));
-      setPublishAlert((prev) => ({ key: (prev?.key ?? 0) + 1, message: blocker }));
-      return;
-    }
-
-    setPublishAlert(null);
-    setFlaggedNodeIds(EMPTY_SET);
-
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-
-    const patch = {
-      status: 'published',
-      statusLabel: 'Опубликован',
-      date: `${dd}.${mm}.${yyyy}`,
-      canvas: canvasSnapshot(),
-    };
-    updateScenario(id, patch);
-    baselineRef.current = { ...scenario, ...patch };
-
-    setShowPublishModal(true);
-  }
-
-  function handlePublishGoToScenario() {
-    setShowPublishModal(false);
-    skipBlockerRef.current = true;
-    navigate(`/scenario/view/${id}`);
-  }
-
-  function handlePublishDone() {
-    setShowPublishModal(false);
+    setShowSavedModal(false);
     skipBlockerRef.current = true;
     navigate('/');
   }
@@ -751,8 +745,10 @@ function CreateScenarioCanvasInner() {
       {/* ---- Navigation Bar Canvas (Edit mode) ---- */}
       <NavigationBarCanvas
         mode="edit"
-        onBack={handleBackToForm}
-        onInfo={() => setShowInfo(true)}
+        onBack={handleExit}
+        /* На шаге 1 создания названия и описания ещё нет — попап был бы пустым,
+           а NavigationBarCanvas рисует кнопку только при truthy onInfo. */
+        onInfo={scenario?.name?.trim() ? () => setShowInfo(true) : undefined}
       />
 
       {/* ---- Publish validation alert ---- */}
@@ -802,15 +798,12 @@ function CreateScenarioCanvasInner() {
       {/* ---- Footer ---- */}
       <footer className="flow-scenario-canvas__footer">
         <div className="flow-scenario-canvas__footer-content">
-          <span className="flow-scenario-canvas__footer-hint ts-400-s">
-            Опубликовать можно только с заполненным блоком «Коммуникация»
-          </span>
           <div className="flow-scenario-canvas__footer-buttons">
-            <Button variant="secondary" onClick={handleSaveDraft} className="flow-scenario-canvas__btn-width">
-              Сохранить как черновик
+            <Button variant="secondary" onClick={handleSave} className="flow-scenario-canvas__btn-width">
+              {isEditFlow ? 'Сохранить изменения' : 'Сохранить как черновик'}
             </Button>
-            <Button variant="primary" onClick={handlePublish} className="flow-scenario-canvas__btn-width">
-              Опубликовать
+            <Button variant="primary" onClick={handleContinue} className="flow-scenario-canvas__btn-width">
+              Продолжить
             </Button>
           </div>
         </div>
@@ -841,11 +834,19 @@ function CreateScenarioCanvasInner() {
             setShowDrawerCommunication(false);
             setActiveCommunicationNodeId(null);
           }}
-          onSave={({ template, channels }) => {
+          onSave={({ type, template, channels, banner }) => {
             if (activeCommunicationNodeId) {
               setCommunicationTemplates((prev) => ({
                 ...prev,
-                [activeCommunicationNodeId]: { template, channels },
+                // `type` пишем только для баннера: моковые сценарии хранят
+                // { template, channels } без него, и безусловное поле меняло бы
+                // им отпечаток канваса — открыть дровер и нажать «Сохранить»
+                // без правок читалось бы как «есть несохранённые изменения».
+                [activeCommunicationNodeId]: {
+                  template,
+                  channels,
+                  ...(type === 'banner' ? { type, banner } : {}),
+                },
               }));
             }
             setShowDrawerCommunication(false);
@@ -854,6 +855,16 @@ function CreateScenarioCanvasInner() {
           initialTemplate={
             activeCommunicationNodeId
               ? communicationTemplates[activeCommunicationNodeId]?.template || null
+              : null
+          }
+          initialType={
+            activeCommunicationNodeId
+              ? communicationTemplates[activeCommunicationNodeId]?.type ?? 'template'
+              : 'template'
+          }
+          initialBanner={
+            activeCommunicationNodeId
+              ? communicationTemplates[activeCommunicationNodeId]?.banner ?? null
               : null
           }
         />
@@ -925,27 +936,15 @@ function CreateScenarioCanvasInner() {
         />
       )}
 
-      {/* ---- Draft Saved Modal ---- */}
+      {/* ---- Saved Modal (черновик / изменения) ---- */}
       <FlowResultView
-        isOpen={showDraftModal}
+        isOpen={showSavedModal}
         onDone={handleModalDone}
         state="success"
-        title="Черновик сохранён"
+        title={isEditFlow ? 'Изменения сохранены' : 'Черновик сохранён'}
         text="Можешь продолжить заполнять сценарий сейчас или вернуться позже"
         items={[
           { title: 'Продолжить заполнение', icon: <ScenarioLinkIcon />, onClick: handleModalContinue },
-        ]}
-      />
-
-      {/* ---- Published Modal ---- */}
-      <FlowResultView
-        isOpen={showPublishModal}
-        onDone={handlePublishDone}
-        state="success"
-        title="Сценарий опубликован"
-        text="Скоро повелители рассылок возьмут его в работу"
-        items={[
-          { title: 'Перейти в сценарий', icon: <ScenarioLinkIcon />, onClick: handlePublishGoToScenario },
         ]}
       />
 

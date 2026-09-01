@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CreateScenarioInfo — страница «Создание сценария» (Шаг 1 — форма)
+   CreateScenarioInfo — страница «Создание сценария» (Шаг 2 — форма)
    Figma: «Пустая форма» (21492:308231)
    ========================================================================== */
 
@@ -70,12 +70,26 @@
   background: var(--bg-default);
 }
 
+/* Колонка: подсказка про «Коммуникацию» над рядом кнопок — как в футере
+   канваса (CreateScenarioCanvas.css). */
 .flow-scenario__footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-1x);
+  padding: var(--spacing-3x) var(--spacing-5x);
+}
+
+.flow-scenario__footer-hint {
+  color: var(--primitive-secondary);
+  text-align: center;
+}
+
+.flow-scenario__footer-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-2x);
-  padding: var(--spacing-3x) var(--spacing-5x);
+  gap: var(--spacing-1x);
 }
 
 /* --- Buttons --- */
@@ -83,7 +97,7 @@
 /* DS Button defaults to 280×50 with a 10px radius; the design wants a
    half-width 48px button with the 12px radius. Specificity (0,2,0) beats
    .button (0,1,0) regardless of stylesheet order. */
-.flow-scenario__footer-content .button {
+.flow-scenario__footer-buttons .button {
   --button-height: 48px; /* documented override hook */
   /* .button hardcodes --rounding-2-5x even though the DS ships a semantic
      12px token for exactly this */
@@ -94,8 +108,18 @@
   max-width: 320px;
 }
 
+/* У DS Button нет слота под иконку — она едет в children внутри .button__label,
+   который по умолчанию обычный span на всю ширину. Тот же приём, что в
+   ScenarioView.css для кнопок «Запустить» / «Остановить». */
+.flow-scenario__btn--icon .button__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1x);
+}
+
 /* The component pins its label to ts-500-l (18/22); the design uses TTN 500/M */
-.flow-scenario__footer-content .button__label {
+.flow-scenario__footer-buttons .button__label {
   font-size: var(--font-size-m);
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);

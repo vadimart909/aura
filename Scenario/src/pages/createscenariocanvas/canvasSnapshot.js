@@ -162,7 +162,8 @@ export function canvasFingerprint(canvas) {
  *
  * Needed because `canvasFingerprint(undefined)` is `''`, which a live graph
  * never collapses to — so a baseline with no `canvas` key would read dirty from
- * frame one. Scenarios created through step 1 genuinely have no `canvas` key.
+ * frame one. A scenario minted on entering the flow genuinely has no `canvas`
+ * key until step 1 saves one.
  */
 export const PRISTINE_CANVAS_FINGERPRINT = canvasFingerprint({
   nodes: [createStartNode()],
@@ -177,8 +178,8 @@ export function baselineCanvasFingerprint(baseline) {
 
 /**
  * A canvas with one unfilled, view-ready Start block — for scenarios that
- * were saved as a draft on step 1 and never visited the canvas, so they have
- * no `canvas` key at all. Deliberately NOT `createStartNode()`: that shape
+ * were saved as a draft without ever reaching the canvas, so they have no
+ * `canvas` key at all. Deliberately NOT `createStartNode()`: that shape
  * is editor-oriented (`state: 'active'`, no `show*` flags) and relies on the
  * editor's sync effects to fill in the rest on mount. The view page has no
  * such effect, so it needs every flag set explicitly up front.

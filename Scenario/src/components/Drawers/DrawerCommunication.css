@@ -98,7 +98,55 @@
   color: var(--primitive-primary);
 }
 
-/* ---- Action cell (Добавить / Сменить шаблон) ---- */
+/* ---- Type chips (Шаблон / Баннер) ----
+   Те же размеры и токены, что у чипов «Триггер» / «Расписание» в
+   DrawerStart.css — это один и тот же элемент дизайн-системы. */
+.drawer-communication__chips {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-communication__chip {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  gap: 8px;
+  border: none;
+  border-radius: var(--chip-rounding-strong);
+  cursor: pointer;
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.drawer-communication__chip--active {
+  background: var(--primitive-brand);
+  color: var(--primitive-default);
+}
+
+.drawer-communication__chip--inactive {
+  background: var(--container-transparent-1);
+  color: var(--primitive-primary);
+}
+
+.drawer-communication__chip--inactive:hover {
+  background: var(--state-container-transparent-1-active);
+}
+
+.drawer-communication__chip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* ---- Action cell (Добавить / Сменить шаблон / Создать) ---- */
 .drawer-communication__action-cell {
   display: flex;
   align-items: center;
@@ -215,6 +263,18 @@
 
 .drawer-communication__template-delete:hover {
   color: var(--primitive-brand);
+}
+
+/* Карандаш у прикреплённого баннера — та же коробка, что у корзины шаблона,
+   но без cursor/hover: это не кнопка, редактора баннеров нет. */
+.drawer-communication__banner-edit {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--primitive-secondary);
 }
 
 /* ---- Channels multiselect (Каналы рассылки) ---- */
@@ -442,12 +502,12 @@
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .drawer-communication__save-btn:hover {
-  background: var(--state-bg-brand-active);
-  transform: scale(1.02);
+  /* Ховер кнопки футера дровера — прозрачность, как у .hoverOpacity в DS. */
+  opacity: 0.5;
 }
 
 .drawer-communication__save-btn:active {

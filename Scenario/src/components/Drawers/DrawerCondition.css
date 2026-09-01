@@ -238,12 +238,12 @@
   line-height: var(--line-height-m);
   letter-spacing: var(--letter-spacing-tight);
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .drawer-condition__save-btn:hover {
-  background: var(--state-bg-brand-active);
-  transform: scale(1.02);
+  /* Ховер кнопки футера дровера — прозрачность, как у .hoverOpacity в DS. */
+  opacity: 0.5;
 }
 
 .drawer-condition__save-btn:active {

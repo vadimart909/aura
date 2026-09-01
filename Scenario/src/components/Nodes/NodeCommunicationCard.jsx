@@ -2,6 +2,8 @@ import './NodeCommunicationCard.css';
 import { Ports } from './Ports';
 import NodeActions from './NodeActions';
 
+import { DocumentReport } from '@ds/icons';
+
 import iconDocumentList from './icons/icon-document-list.svg';
 
 /**
@@ -10,6 +12,7 @@ import iconDocumentList from './icons/icon-document-list.svg';
  * @param {object}  props
  * @param {string}  [props.title='Коммуникация']  — заголовок в шапке
  * @param {boolean} [props.showError=true]          — строка «Заполни поля»
+ * @param {'template'|'banner'} [props.type='template'] — тип коммуникации
  * @param {string}  [props.templateTitle]           — название выбранного шаблона
  * @param {string}  [props.templateDescription]     — каналы (например «Email, Пуш, Чат»)
  * @param {'default'|'hover'|'active'} [props.state='default']
@@ -20,6 +23,7 @@ export default function NodeCommunicationCard({
   title = 'Коммуникация',
   showError = true,
   showActions = true,
+  type = 'template',
   templateTitle = '',
   templateDescription = '',
   state = 'default',
@@ -48,12 +52,20 @@ export default function NodeCommunicationCard({
 
         {/* Content */}
         <div className="node-communication__content">
-          {/* Строка «Шаблон» */}
+          {/* Строка «Шаблон» / «Баннер» */}
           <div className="node-communication__row">
             <span className="node-communication__row-avatar node-communication__row-avatar--filled">
-              <img src={iconDocumentList} alt="" width="10" height="10" />
+              {type === 'banner' ? (
+                <DocumentReport />
+              ) : (
+                <img src={iconDocumentList} alt="" width="10" height="10" />
+              )}
             </span>
-            {templateTitle ? (
+            {/* У баннера значения нет — флоу его создания ещё не спроектирован,
+                поэтому строка всегда читается как подпись типа. */}
+            {type === 'banner' ? (
+              <span className="node-communication__row-text">Баннер</span>
+            ) : templateTitle ? (
               <span className="node-communication__row-text-group">
                 <span className="node-communication__row-text">{templateTitle}</span>
                 {templateDescription && (

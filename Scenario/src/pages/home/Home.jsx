@@ -21,7 +21,7 @@ const CURRENT_USER = 'Вадим Артёменко'
 
 function Home() {
   const navigate = useNavigate()
-  const { scenarios } = useScenariosContext()
+  const { scenarios, addScenario } = useScenariosContext()
   // «Мои сценарии» — вкладка по умолчанию: пользователь приходит на главную
   // за своими сценариями, а не за общим списком.
   const [filter, setFilter] = useState('my')
@@ -41,6 +41,33 @@ function Home() {
       (showAuthor && row.author.toLowerCase().includes(query))
     )
   })
+
+  // Сценарий рождается ДО входа в поток: шаг 1 — канвас, а ему нужен id, чтобы
+  // писать граф в стор. Пустышку убирает шаг 1 при чистом выходе «Назад»
+  // (handleExit) или «Выйти без сохранения» — базовая линия там null.
+  function handleCreate() {
+    const today = new Date()
+    const dd = String(today.getDate()).padStart(2, '0')
+    const mm = String(today.getMonth() + 1).padStart(2, '0')
+    const yyyy = today.getFullYear()
+
+    const newId = Date.now()
+    addScenario({
+      id: newId,
+      name: '',
+      description: '',
+      status: 'draft',
+      statusLabel: 'Черновик',
+      author: CURRENT_USER,
+      authorInitials: 'ВА',
+      authorColor: 'var(--category-emerald)',
+      date: `${dd}.${mm}.${yyyy}`,
+    })
+    navigate(`/scenario/canvas/${newId}`, {
+      // `null` здесь осмысленно: закоммиченной версии ещё нет, значит отмена = удалить.
+      state: { originalScenario: null, flowMode: 'create' },
+    })
+  }
 
   return (
     <div className="scenarios">
@@ -67,7 +94,7 @@ function Home() {
             <HeaderButton
               variant="primary"
               icon={<PlusCircle />}
-              onClick={() => navigate('/scenario/create')}
+              onClick={handleCreate}
             >
               Создать сценарий
             </HeaderButton>

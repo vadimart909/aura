@@ -42,9 +42,9 @@ const router = createBrowserRouter(
         { path: '/', element: <Home /> },
         { path: '/about', element: <About /> },
         { path: '/nodes', element: <NodesPreview /> },
-        { path: '/scenario/create', element: <CreateScenarioInfo /> },
-        { path: '/scenario/edit/:id', element: <CreateScenarioInfo /> },
+        // Поток создания/редактирования: шаг 1 — канвас, шаг 2 — «Название и описание».
         { path: '/scenario/canvas/:id', element: <CreateScenarioCanvas /> },
+        { path: '/scenario/info/:id', element: <CreateScenarioInfo /> },
         { path: '/scenario/view/:id', element: <ScenarioView /> },
         { path: '/nav-bar-canvas', element: <NavigationBarCanvasPreview /> },
         { path: '*', element: <NotFound /> },
