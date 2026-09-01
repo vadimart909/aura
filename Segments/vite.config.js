@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -5,7 +6,16 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/segments/',
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@shared': path.resolve(import.meta.dirname, '../shared'),
+    },
+  },
   server: {
+    fs: {
+      // Общий список атрибутов лежит выше корня приложения — в ../shared
+      allow: [path.resolve(import.meta.dirname, '..')],
+    },
     proxy: {
       // Proxy cross-MFE navigation to Scenario dev-server
       '/aura': {

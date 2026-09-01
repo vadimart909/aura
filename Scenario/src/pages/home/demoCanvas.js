@@ -119,7 +119,9 @@ export function demoCanvas({ trigger = '', segment = '' } = {}) {
   const offerTemplate = MOCK_TEMPLATES[3]; // Акция на зарплатные продукты
   const reminderTemplate = MOCK_TEMPLATES[2]; // Напоминание об оплате
 
-  const sellerParam = CONDITION_PARAMETERS.find((p) => p.id === 'cond_5');
+  const sellerParam = CONDITION_PARAMETERS.find(
+    (p) => p.category === 'industry' && p.title === 'Является актуальным селлером',
+  );
   const sellerCategory = CONDITION_CATEGORIES.find((c) => c.value === sellerParam.category);
 
   const config = {

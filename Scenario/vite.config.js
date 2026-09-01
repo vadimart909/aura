@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@ds': path.join(designSystemRoot, 'src'),
+      '@shared': path.resolve(__dirname, '../shared'),
     },
     dedupe: ['react', 'react-dom'],
   },
