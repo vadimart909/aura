@@ -88,3 +88,26 @@
   background: var(--primitive-error);
   border-color: var(--primitive-default);
 }
+
+/* State=Active у цветных веток «Условия»: занятый порт залит цветом ветки, обводка белая.
+   Значения из макета, где порт экспортируется как SVG и не оставляет места для догадок:
+   `circle r=4 fill=<цвет ветки> stroke=white stroke-width=2` — обводка в SVG центрована
+   на контуре, поэтому это ровно наши 10px + border 2px + border-box.
+
+   Двух классов в селекторе мало, нужны три: `:is()` берёт максимум среди аргументов, то
+   есть вес одного класса, — значит `port--green` весит столько же, сколько `port--active`,
+   и, лежа ниже в файле, забирал победу. Занятая ветка из-за этого рисовалась как свободная,
+   а `port--active` для цветных портов был мёртв.
+
+   Переопределяем только `border-color`: ширину и стиль обводки даёт `port--green` /
+   `port--red` — тот же приём, что в правилах ховера выше. Ховеру отдельных правил не нужно,
+   он по макету выглядит так же, как занятый порт, и даёт те же значения. */
+:is(.react-flow__handle, .port).port--active.port--green {
+  background: var(--primitive-success);
+  border-color: var(--primitive-default);
+}
+
+:is(.react-flow__handle, .port).port--active.port--red {
+  background: var(--primitive-error);
+  border-color: var(--primitive-default);
+}
