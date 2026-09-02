@@ -1,5 +1,9 @@
 /**
  * Мок-данные сценариев для таблицы «Все сценарии»
+ *
+ * `date` — «Дата старта», то есть дата нажатия «Запустить». Она заполнена только
+ * у сценариев, которые запускали (`started` / `stopped` / `finishing`);
+ * у `draft` и `published` она пустая.
  */
 
 import { startCanvas } from '../createscenariocanvas/canvasSnapshot';
@@ -15,7 +19,7 @@ export const scenarios = [
     author: 'Кирилл Митюшин',
     authorInitials: 'КМ',
     authorColor: 'var(--category-indigo)',
-    date: '12.08.2025',
+    date: '',
     canvas: startCanvas(),
   },
   {
@@ -27,7 +31,7 @@ export const scenarios = [
     author: 'Кирилл Митюшин',
     authorInitials: 'КМ',
     authorColor: 'var(--category-indigo)',
-    date: '22.10.2025',
+    date: '',
     canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
@@ -75,7 +79,7 @@ export const scenarios = [
     author: 'Антон Елькин',
     authorInitials: 'АЕ',
     authorColor: 'var(--category-orchid)',
-    date: '22.10.2025',
+    date: '',
     canvas: startCanvas(),
   },
   {
@@ -87,7 +91,7 @@ export const scenarios = [
     author: 'Мария Соколова',
     authorInitials: 'МС',
     authorColor: 'var(--category-sand)',
-    date: '05.11.2025',
+    date: '',
     canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
@@ -123,7 +127,7 @@ export const scenarios = [
     author: 'Мария Соколова',
     authorInitials: 'МС',
     authorColor: 'var(--category-sand)',
-    date: '14.06.2025',
+    date: '',
     canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
@@ -135,7 +139,7 @@ export const scenarios = [
     author: 'Дмитрий Волков',
     authorInitials: 'ДВ',
     authorColor: 'var(--category-coral)',
-    date: '28.11.2025',
+    date: '',
     canvas: startCanvas(),
   },
   {
@@ -171,7 +175,7 @@ export const scenarios = [
     author: 'Вадим Артёменко',
     authorInitials: 'ВА',
     authorColor: 'var(--category-emerald)',
-    date: '08.12.2025',
+    date: '',
     canvas: demoCanvas({ trigger: 'Добавил клиента', segment: 'Самые прибыльные клиенты' }),
   },
   {
@@ -183,7 +187,7 @@ export const scenarios = [
     author: 'Дмитрий Волков',
     authorInitials: 'ДВ',
     authorColor: 'var(--category-coral)',
-    date: '25.01.2026',
+    date: '',
     canvas: startCanvas(),
   },
 ]

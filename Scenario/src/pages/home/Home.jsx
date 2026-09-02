@@ -46,11 +46,6 @@ function Home() {
   // писать граф в стор. Пустышку убирает шаг 1 при чистом выходе «Назад»
   // (handleExit) или «Выйти без сохранения» — базовая линия там null.
   function handleCreate() {
-    const today = new Date()
-    const dd = String(today.getDate()).padStart(2, '0')
-    const mm = String(today.getMonth() + 1).padStart(2, '0')
-    const yyyy = today.getFullYear()
-
     const newId = Date.now()
     addScenario({
       id: newId,
@@ -61,7 +56,9 @@ function Home() {
       author: CURRENT_USER,
       authorInitials: 'ВА',
       authorColor: 'var(--category-emerald)',
-      date: `${dd}.${mm}.${yyyy}`,
+      // «Дата старта» = дата нажатия «Запустить», поэтому у нового сценария
+      // ячейка пустая до самого запуска.
+      date: '',
     })
     navigate(`/scenario/canvas/${newId}`, {
       // `null` здесь осмысленно: закоммиченной версии ещё нет, значит отмена = удалить.

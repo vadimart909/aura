@@ -11,6 +11,7 @@ import {
   getPublishBlocker,
   getUnfilledNodeIds,
 } from '../createscenariocanvas/publishValidation';
+import { formatLaunchDate } from '../home/launchDate';
 import UnsavedChangesModal from '../../components/UnsavedChangesModal';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import ScenarioLinkIcon from '../../components/icons/ScenarioLinkIcon';
@@ -129,14 +130,6 @@ export default function CreateScenarioInfo() {
   const descriptionCount = description.length;
   const isDescriptionError = descriptionCount >= MAX_DESCRIPTION_LENGTH;
 
-  /** Сегодняшняя дата в формате «Дата старта». */
-  function today() {
-    const now = new Date();
-    const dd = String(now.getDate()).padStart(2, '0');
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    return `${dd}.${mm}.${now.getFullYear()}`;
-  }
-
   /** Возврат на шаг 1. Базовую линию и режим надо пробросить обратно: `null`
    *  там осмысленный, и потерять его — значит превратить «отмена = удалить» в
    *  «откатиться к недоделанному черновику». */
@@ -157,10 +150,11 @@ export default function CreateScenarioInfo() {
     // reads clean again. The store update is async, so build the merged object
     // here rather than reading it back.
     //
-    // Редактирование сохраняет только сами правки: статус и «Дату старта»
-    // оставляем как есть, иначе «Сохранить изменения» на опубликованном
-    // сценарии уводило бы его обратно в черновики и сбивало дату. В создании же
-    // это именно «Сохранить как черновик» — статус и дата выставляются здесь.
+    // Редактирование сохраняет только сами правки: статус оставляем как есть,
+    // иначе «Сохранить изменения» на опубликованном сценарии уводило бы его
+    // обратно в черновики. В создании же это именно «Сохранить как черновик» —
+    // статус выставляется здесь. «Дату старта» не пишет ни одна из веток: она
+    // появляется только при запуске.
     const patch = {
       name: name.trim(),
       description: description.trim(),
@@ -168,7 +162,6 @@ export default function CreateScenarioInfo() {
     if (!isEditFlow) {
       patch.status = 'draft';
       patch.statusLabel = 'Черновик';
-      patch.date = today();
     }
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };
@@ -226,12 +219,13 @@ export default function CreateScenarioInfo() {
     }
     if (bounceOnInvalidCanvas()) return;
 
+    // «Дату старта» публикация не ставит: опубликованный сценарий ещё не
+    // работает, и до «Запустить» ячейка на главной остаётся пустой.
     const patch = {
       name: name.trim(),
       description: description.trim(),
       status: 'published',
       statusLabel: 'Опубликован',
-      date: today(),
     };
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };
@@ -254,13 +248,16 @@ export default function CreateScenarioInfo() {
   }
 
   function handleRunConfirm() {
-    // Дату старта не трогаем — как и `handleRunConfirm` в ScenarioView: она у
-    // сценария уже своя, и запуск её не переписывает.
+    // «Дата старта» = дата нажатия «Запустить» — та же запись, что в
+    // `handleRunConfirm` на странице просмотра. Дату кладём в общий `patch`, а
+    // не отдельным `updateScenario`: строкой ниже с него снимается базовая
+    // линия, и мимо неё дата протухла бы при откате «Выйти без сохранения».
     const patch = {
       name: name.trim(),
       description: description.trim(),
       status: 'started',
       statusLabel: 'Запущен',
+      date: formatLaunchDate(),
     };
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };

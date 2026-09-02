@@ -44,14 +44,6 @@ import './CreateScenarioCanvas.css';
 let dndNodeId = 0;
 const getNodeId = () => `dndnode_${dndNodeId++}`;
 
-/** Сегодняшняя дата в формате колонки «Дата старта». */
-const formatToday = () => {
-  const now = new Date();
-  const dd = String(now.getDate()).padStart(2, '0');
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
-  return `${dd}.${mm}.${now.getFullYear()}`;
-};
-
 const DAYS_MAP = {
   mon: 'Пн', tue: 'Вт', wed: 'Ср', thu: 'Чт', fri: 'Пт', sat: 'Сб', sun: 'Вс',
 };
@@ -108,7 +100,8 @@ function CreateScenarioCanvasInner() {
         author: '',
         authorInitials: '',
         authorColor: 'var(--category-indigo)',
-        date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+        // Пустая до запуска: «Дата старта» ставится только в «Запустить».
+        date: '',
       });
     }
   }, [id, scenarioExists, addScenario]);
@@ -715,15 +708,15 @@ function CreateScenarioCanvasInner() {
     // reads clean again. The store update is async, so build the merged object
     // from this render's `scenario` rather than reading it back.
     //
-    // Редактирование трогает только граф: статус и «Дату старта» оставляем как
-    // есть, иначе «Сохранить изменения» на опубликованном сценарии уводило бы
-    // его обратно в черновики и сбивало дату. В создании же это именно
-    // «Сохранить как черновик» — статус и дата выставляются здесь.
+    // Редактирование трогает только граф: статус оставляем как есть, иначе
+    // «Сохранить изменения» на опубликованном сценарии уводило бы его обратно в
+    // черновики. В создании же это именно «Сохранить как черновик» — статус
+    // выставляется здесь. «Дату старта» не пишет ни одна из веток: она
+    // появляется только при запуске.
     const patch = { canvas: canvasSnapshot() };
     if (!isEditFlow) {
       patch.status = 'draft';
       patch.statusLabel = 'Черновик';
-      patch.date = formatToday();
     }
     updateScenario(id, patch);
     baselineRef.current = { ...scenario, ...patch };

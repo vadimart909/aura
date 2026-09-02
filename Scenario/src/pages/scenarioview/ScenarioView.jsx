@@ -10,6 +10,7 @@ import ConditionsPopup from '../../components/ConditionsPopup';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { nodeTypes, defaultEdgeOptions, runningEdges } from '../../components/Nodes/FlowNodes/flowConfig';
 import { startCanvas } from '../createscenariocanvas/canvasSnapshot';
+import { formatLaunchDate } from '../home/launchDate';
 import PlayIcon from '../../components/icons/PlayIcon';
 import StopIcon from '../../components/icons/StopIcon';
 import ScenarioLinkIcon from '../../components/icons/ScenarioLinkIcon';
@@ -106,7 +107,15 @@ function ScenarioViewInner() {
   function handleRunConfirm() {
     // Flip the status right away rather than on close, so «Перейти в сценарий»
     // drops the user onto a view that already reads «Запущен».
-    updateScenario(id, { status: 'started', statusLabel: 'Запущен' });
+    //
+    // «Дата старта» пишется здесь и только здесь — это дата нажатия
+    // «Запустить». Повторный запуск остановленного сценария её перезаписывает,
+    // а «Остановить» ниже не трогает.
+    updateScenario(id, {
+      status: 'started',
+      statusLabel: 'Запущен',
+      date: formatLaunchDate(),
+    });
     setShowRunConfirm(false);
     setShowRunSuccess(true);
   }
