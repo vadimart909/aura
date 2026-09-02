@@ -7,96 +7,20 @@
    держит сценарии в обычном useState, и нарисованное исчезает на первой же
    перезагрузке страницы.
 
-   Формат — ровно тот, что отдаёт serializeCanvas: node.data с готовыми
-   лейблами и приколоченными state/showActions/showError, ребро только с
-   id/source/target/handles.
-
-   Важно: `data` здесь ВЫВОДИТСЯ из `config`, а не пишется руками рядом.
-   Просмотр читает data напрямую (у него нет sync-эффектов), а редактор
-   пересобирает data из config на маунте — и «Опубликован»/«Остановлен»
-   открываются в редакторе по кнопке «Редактировать». Разъедься эти две
-   половины, и один и тот же сценарий показывал бы разные подписи.
+   Сборщики узлов и рёбер (и правило «data выводится из config») переехали в
+   ./mockNodes — здесь остались только сам граф и его конфиг.
    ========================================================================== */
 
 import { MOCK_TEMPLATES } from '../../data/mockTemplates';
-import { CONDITION_CATEGORIES, CONDITION_PARAMETERS } from '../../data/mockConditions';
 import { START_NODE_ID, startCanvas } from '../createscenariocanvas/canvasSnapshot';
-import { formatWaitingLabel } from '../createscenariocanvas/publishValidation';
-
-/* ---- Узлы ---------------------------------------------------------------- */
-
-/** Нейтральная поза, в которую serializeCanvas приколачивает каждый узел. */
-const VIEW_FLAGS = { state: 'default', showActions: false, showError: false };
-
-/** То же, что делает DrawerCommunication при выборе шаблона: каналы из subtitle. */
-function channelsOf(template) {
-  return template.subtitle
-    .split(',')
-    .map((channel) => channel.trim())
-    .filter(Boolean)
-    .map((channel) => channel.charAt(0).toUpperCase() + channel.slice(1));
-}
-
-function communicationNode(id, position, config) {
-  const saved = config.communicationTemplates[id];
-  return {
-    id,
-    type: 'communication',
-    position,
-    data: {
-      ...VIEW_FLAGS,
-      title: 'Коммуникация',
-      templateTitle: saved.template.title,
-      templateDescription: saved.channels.join(', '),
-    },
-  };
-}
-
-function waitingNode(id, position, config) {
-  const saved = config.waitingConfigs[id];
-  return {
-    id,
-    type: 'waiting',
-    position,
-    data: {
-      ...VIEW_FLAGS,
-      title: 'Ожидание',
-      waitingLabel: formatWaitingLabel(saved.unit, saved.amount),
-    },
-  };
-}
-
-function conditionNode(id, position, config) {
-  const saved = config.conditionConfigs[id];
-  return {
-    id,
-    type: 'condition',
-    position,
-    data: {
-      ...VIEW_FLAGS,
-      title: 'Условие',
-      conditions: saved.length,
-      // Демо-граф собран на одном boolean-параметре, поэтому здесь только
-      // его ветка вывода из редактора: значение в строку, название в оверлайн.
-      conditionLabels: saved.map((c) => (c.booleanValue ? 'Да' : 'Нет')),
-      conditionOverlines: saved.map((c) => c.title),
-      showShowAll: saved.length > 3,
-    },
-  };
-}
-
-/* ---- Рёбра --------------------------------------------------------------- */
-
-/** Ребро в том же виде, в каком его создал бы addEdge на живом канвасе. */
-const edge = (source, sourceHandle, target, targetHandle) => ({
-  id: `xy-edge__${source}${sourceHandle}-${target}${targetHandle}`,
-  source,
-  target,
-  sourceHandle,
-  targetHandle,
-});
-
-/* ---- Граф ---------------------------------------------------------------- */
+import {
+  channelsOf,
+  communicationNode,
+  conditionNode,
+  conditionParam,
+  edge,
+  waitingNode,
+} from './mockNodes';
 
 /*
  * Старт → Коммуникация → Ожидание → Условие → 2× Коммуникация.
@@ -119,11 +43,6 @@ export function demoCanvas({ trigger = '', segment = '' } = {}) {
   const offerTemplate = MOCK_TEMPLATES[3]; // Акция на зарплатные продукты
   const reminderTemplate = MOCK_TEMPLATES[2]; // Напоминание об оплате
 
-  const sellerParam = CONDITION_PARAMETERS.find(
-    (p) => p.category === 'industry' && p.title === 'Является актуальным селлером',
-  );
-  const sellerCategory = CONDITION_CATEGORIES.find((c) => c.value === sellerParam.category);
-
   const config = {
     startConditionType: 'trigger',
     startTrigger: trigger ? { title: trigger } : null,
@@ -141,12 +60,7 @@ export function demoCanvas({ trigger = '', segment = '' } = {}) {
       // Ровно та форма, которую пишет ConditionModal для boolean-параметра.
       [BRANCH]: [
         {
-          id: sellerParam.id,
-          title: sellerParam.title,
-          description: sellerParam.description,
-          category: sellerParam.category,
-          categoryLabel: sellerCategory.label,
-          type: 'boolean',
+          ...conditionParam('industry', 'Является актуальным селлером'),
           booleanValue: true,
         },
       ],

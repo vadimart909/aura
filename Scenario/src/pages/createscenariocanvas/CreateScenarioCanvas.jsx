@@ -25,6 +25,7 @@ import { FlowResultView } from '@ds/components/FlowResultView/FlowResultView';
 import { Trash } from '@ds/icons';
 import { NodeErrorsContext, EMPTY_SET } from '../../context/NodeErrorsContext';
 import { formatWaitingLabel, getUnfilledNodeIds } from './publishValidation';
+import { conditionCardData, communicationCardData } from './nodeLabels';
 import { wouldCreateCycle } from './connectionRules';
 import {
   serializeCanvas,
@@ -387,16 +388,12 @@ function CreateScenarioCanvasInner() {
         if (node.type !== 'communication') return node;
         const isActive = showDrawerCommunication && activeCommunicationNodeId === node.id;
         const saved = communicationTemplates[node.id];
-        const hasTemplate = Boolean(saved?.template);
         return {
           ...node,
           data: {
             ...node.data,
             state: isActive ? 'active' : 'default',
-            // Моковые сценарии хранят конфиг без `type` — для них это шаблон.
-            communicationType: saved?.type ?? 'template',
-            templateTitle: hasTemplate ? saved.template.title : '',
-            templateDescription: hasTemplate ? saved.channels.join(', ') : '',
+            ...communicationCardData(saved),
             onClick: () => {
               setShowDrawerStart(false);
               setShowDrawerWaiting(false);
@@ -453,41 +450,12 @@ function CreateScenarioCanvasInner() {
         if (node.type !== 'condition') return node;
         const isActive = showDrawerCondition && activeConditionNodeId === node.id;
         const saved = conditionConfigs[node.id];
-        const hasSaved = Boolean(saved);
-        const hasConditions = hasSaved && saved.length > 0;
         return {
           ...node,
           data: {
             ...node.data,
             state: isActive ? 'active' : 'default',
-            conditions: hasConditions ? saved.length : 1,
-            conditionLabels: hasConditions ? saved.map((c) => {
-              if (c.type === 'boolean') return c.booleanValue ? 'Да' : 'Нет';
-              if (c.type === 'date' && c.dateOperatorLabel) {
-                if (c.dateOperator === 'period' && c.dateFrom && c.dateTo) {
-                  return `${c.dateOperatorLabel} ${c.dateFrom} – ${c.dateTo}`;
-                }
-                if (c.dateValue) return `${c.dateOperatorLabel} ${c.dateValue}`;
-                return c.dateOperatorLabel;
-              }
-              if ((c.type === 'integer' || c.type === 'number') && c.numberOperatorLabel) {
-                if (c.numberOperator === 'range' && c.numberFrom !== '' && c.numberTo !== '') {
-                  return `${c.numberOperatorLabel} ${c.numberFrom} – ${c.numberTo}`;
-                }
-                if (c.numberValue !== undefined && c.numberValue !== '') {
-                  return `${c.numberOperatorLabel} ${c.numberValue}`;
-                }
-                return c.numberOperatorLabel;
-              }
-              return c.title;
-            }) : [],
-            conditionOverlines: hasConditions ? saved.map((c) => {
-              if (c.type === 'boolean') return c.title;
-              if (c.type === 'date' && c.dateOperatorLabel) return c.title;
-              if ((c.type === 'integer' || c.type === 'number') && c.numberOperatorLabel) return c.title;
-              return c.categoryLabel || '';
-            }) : [],
-            showShowAll: hasConditions && saved.length > 3,
+            ...conditionCardData(saved),
             onClick: () => {
               setShowDrawerStart(false);
               setShowDrawerCommunication(false);

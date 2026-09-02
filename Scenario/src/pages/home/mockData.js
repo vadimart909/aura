@@ -8,6 +8,7 @@
 
 import { startCanvas } from '../createscenariocanvas/canvasSnapshot';
 import { demoCanvas } from './demoCanvas';
+import { onboardingCanvas } from './onboardingCanvas';
 
 export const scenarios = [
   {
@@ -189,5 +190,17 @@ export const scenarios = [
     authorColor: 'var(--category-coral)',
     date: '',
     canvas: startCanvas(),
+  },
+  {
+    id: 16,
+    name: 'Онбординг новых клиентов после открытия ОРС',
+    description: 'Дожим регистрации через 3 часа после открытия счёта, через 7 дней — сегментация по сумме поступлений и виду деятельности с предложением нового тарифа, зарплатного проекта, ДМС или кэшбэка и добивкой баннером',
+    status: 'published',
+    statusLabel: 'Опубликован',
+    author: 'Даниил Агапов',
+    authorInitials: 'ДА',
+    authorColor: 'var(--category-sky)',
+    date: '',
+    canvas: onboardingCanvas({ trigger: 'Открыл ОРС', segment: 'Новые клиенты до 30 дней' }),
   },
 ]
