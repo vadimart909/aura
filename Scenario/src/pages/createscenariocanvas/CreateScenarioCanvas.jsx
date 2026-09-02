@@ -759,6 +759,11 @@ function CreateScenarioCanvasInner() {
       {/* ---- Footer ---- */}
       <footer className="flow-scenario-canvas__footer">
         <div className="flow-scenario-canvas__footer-content">
+          {/* Условие публикации проговариваем заранее и всегда — красный Alert
+              ниже приходит уже по факту неудачной попытки. */}
+          <p className="flow-scenario-canvas__footer-hint">
+            Опубликовать можно только с заполненным блоком «Коммуникация»
+          </p>
           <div className="flow-scenario-canvas__footer-buttons">
             <Button variant="secondary" onClick={handleSave} className="flow-scenario-canvas__btn-width">
               {isEditFlow ? 'Сохранить изменения' : 'Сохранить как черновик'}

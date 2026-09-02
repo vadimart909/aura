@@ -56,8 +56,15 @@
 }
 
 .flow-scenario-canvas__footer-hint {
+  font-family: var(--font-family-tt-norms-tochka-extended);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-s);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--primitive-secondary);
   text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .flow-scenario-canvas__footer-buttons {

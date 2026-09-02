@@ -61,14 +61,20 @@ export function conditionCardData(saved) {
 
 /**
  * Производные поля карточки «Коммуникация» из communicationTemplates[nodeId].
- * Конфиг без `type` — это шаблон (так пишут моки). У баннера значения нет:
- * карточка сама рисует строку «Баннер».
+ * Конфиг без `type` — это шаблон (так пишут моки).
+ *
+ * У шаблона и баннера строки идут в разном порядке — так в макете: у шаблона
+ * сверху название, снизу каналы; у баннера сверху id, снизу заголовок. Поэтому
+ * это разные пары полей, а не одна переиспользованная.
  */
 export function communicationCardData(saved) {
+  const isBanner = saved?.type === 'banner';
   const hasTemplate = Boolean(saved?.template);
   return {
-    communicationType: saved?.type ?? 'template',
+    communicationType: isBanner ? 'banner' : 'template',
     templateTitle: hasTemplate ? saved.template.title : '',
     templateDescription: hasTemplate ? saved.channels.join(', ') : '',
+    bannerId: isBanner ? saved.banner?.id ?? '' : '',
+    bannerTitle: isBanner ? saved.banner?.title ?? '' : '',
   };
 }

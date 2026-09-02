@@ -18,6 +18,8 @@ export default function FlowCommunicationNode({ id, data }) {
         type={data.communicationType}
         templateTitle={data.templateTitle}
         templateDescription={data.templateDescription}
+        bannerId={data.bannerId}
+        bannerTitle={data.bannerTitle}
         state={data.state}
         onClick={data.onClick}
         onDelete={data.onDelete}

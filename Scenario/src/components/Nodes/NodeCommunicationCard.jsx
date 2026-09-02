@@ -15,6 +15,8 @@ import iconDocumentList from './icons/icon-document-list.svg';
  * @param {'template'|'banner'} [props.type='template'] — тип коммуникации
  * @param {string}  [props.templateTitle]           — название выбранного шаблона
  * @param {string}  [props.templateDescription]     — каналы (например «Email, Пуш, Чат»)
+ * @param {string}  [props.bannerId]                — id баннера, идёт надстрочником
+ * @param {string}  [props.bannerTitle]             — заголовок баннера
  * @param {'default'|'hover'|'active'} [props.state='default']
  * @param {function} [props.onClick]
  * @param {string}  [props.className]
@@ -26,6 +28,8 @@ export default function NodeCommunicationCard({
   type = 'template',
   templateTitle = '',
   templateDescription = '',
+  bannerId = '',
+  bannerTitle = '',
   state = 'default',
   className = '',
   onClick,
@@ -61,10 +65,19 @@ export default function NodeCommunicationCard({
                 <img src={iconDocumentList} alt="" width="10" height="10" />
               )}
             </span>
-            {/* У баннера значения нет — флоу его создания ещё не спроектирован,
-                поэтому строка всегда читается как подпись типа. */}
+            {/* Незаполненный блок читается как подпись типа — «Баннер» или
+                «Шаблон», смотря какой чип выбран в дровере. */}
             {type === 'banner' ? (
-              <span className="node-communication__row-text">Баннер</span>
+              bannerTitle ? (
+                /* У баннера id идёт надстрочником над заголовком — обратный
+                   порядок относительно шаблона, так в макете. */
+                <span className="node-communication__row-text-group">
+                  <span className="node-communication__row-overline">{bannerId}</span>
+                  <span className="node-communication__row-text">{bannerTitle}</span>
+                </span>
+              ) : (
+                <span className="node-communication__row-text">Баннер</span>
+              )
             ) : templateTitle ? (
               <span className="node-communication__row-text-group">
                 <span className="node-communication__row-text">{templateTitle}</span>
