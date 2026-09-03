@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom'
-import Header from './components/Header'
+import { AuraHeader } from '@shared/ui/AuraHeader'
 import Home from './pages/home/Home'
 import About from './pages/About'
 import NodesPreview from './pages/NodesPreview'
@@ -26,7 +26,7 @@ function AnimatedOutlet() {
 function Layout() {
   return (
     <ScenariosProvider>
-      <Header />
+      <AuraHeader service="scenarios" />
       <main>
         <AnimatedOutlet />
       </main>

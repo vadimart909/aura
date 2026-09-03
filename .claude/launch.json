@@ -2,18 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "scenario",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "Scenario", "run", "dev"],
-      "port": 5173,
-      "autoPort": true
-    },
-    {
-      "name": "segments",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "Segments", "run", "dev"],
-      "port": 5174,
-      "autoPort": true
+      "name": "aura",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "dev-server.mjs"
+      ],
+      "port": 5173
     }
   ]
 }

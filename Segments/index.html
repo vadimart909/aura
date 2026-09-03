@@ -5,6 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>segments</title>
+    <script>
+      // Корневой 404.html на GitHub Pages кладёт сюда исходный глубокий путь
+      // перед редиректом на /aura/segments/ (см. .github/workflows/deploy.yml).
+      // Восстанавливаем его ДО старта роутера: createBrowserRouter вызывается
+      // на верхнем уровне модуля и снимает location сразу.
+      //
+      // Обязательно классический инлайн-скрипт в <head>, а не код в main.jsx:
+      // импорты поднимаются выше любых инструкций модуля, поэтому там было бы
+      // уже поздно. В деве и при работающем вложенном 404.html — no-op.
+      (function () {
+        var p = sessionStorage.getItem('aura:spa-path')
+        if (p) {
+          sessionStorage.removeItem('aura:spa-path')
+          history.replaceState(null, '', p)
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

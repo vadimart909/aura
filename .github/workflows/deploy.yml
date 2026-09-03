@@ -24,29 +24,67 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: Scenario/package-lock.json
+          # Оба лок-файла в ключе кэша: иначе бамп зависимости Сегментов
+          # не сбросил бы кэш, собранный по одному Scenario.
+          cache-dependency-path: |
+            Scenario/package-lock.json
+            Segments/package-lock.json
 
-      - name: Install dependencies
+      - name: Install Scenario dependencies
         working-directory: Scenario
         run: npm install --no-audit --no-fund
 
-      - name: Build
+      - name: Install Segments dependencies
+        working-directory: Segments
+        run: npm install --no-audit --no-fund
+
+      - name: Build Scenario
         working-directory: Scenario
         run: npx vite build
 
+      - name: Build Segments
+        working-directory: Segments
+        run: npx vite build
+
+      # Аура — одна среда: оба приложения отдаются с одного origin, иначе
+      # ссылки в общей шапке никуда не ведут.
+      #
+      # Корень артефакта — это и есть корень сайта проекта,
+      # https://<user>.github.io/aura/. Поэтому Scenario (base '/aura/') ложится
+      # в корень _site, а Segments (base '/aura/segments/') — в _site/segments/.
+      # Коллизий нет: ассеты Сегментов уезжают в segments/assets/.
+      - name: Assemble site
+        run: |
+          rm -rf _site
+          mkdir -p _site/segments
+          cp -R Scenario/dist/. _site/
+          cp -R Segments/dist/. _site/segments/
+
       # GitHub Pages serves static files and has no SPA rewrite, so any deep
-      # link (/aura/scenario/view/3, a shared URL, a browser reload) hit its own
-      # 404 instead of the app. Pages falls back to 404.html for unmatched
-      # paths, so shipping index.html under that name hands the URL to the
-      # router, which already knows every route including its own NotFound.
-      - name: SPA fallback for GitHub Pages
-        working-directory: Scenario
-        run: cp dist/index.html dist/404.html
+      # link (/aura/scenario/view/3, a shared URL, a browser reload) hits its own
+      # 404 instead of the app. Pages falls back to 404.html for unmatched paths,
+      # so shipping index.html under that name hands the URL to the router.
+      #
+      # Но гарантирован только КОРНЕВОЙ 404.html — про вложенные документация
+      # молчит. Поэтому глубокие ссылки Сегментов закрыты тремя способами разом:
+      #   1. вложенный segments/404.html — сработает, если Pages его уважает;
+      #   2. статические маршруты материализованы как настоящие 200 — им
+      #      редирект не нужен вовсе;
+      #   3. корневой 404.html — шелл Сценариев с диспетчером, который уводит
+      #      всё под /aura/segments/ в шелл Сегментов, сохранив путь
+      #      (Segments/index.html восстанавливает его до старта роутера).
+      - name: SPA fallback
+        run: |
+          cp _site/segments/index.html _site/segments/404.html
+          mkdir -p _site/segments/segment/create
+          cp _site/segments/index.html _site/segments/segment/create/index.html
+          DISPATCH='<script>(function(){var p=location.pathname;if(p.indexOf("/aura/segments/")===0){sessionStorage.setItem("aura:spa-path",p+location.search+location.hash);location.replace("/aura/segments/")}})();</script>'
+          sed "s#<head>#<head>${DISPATCH}#" _site/index.html > _site/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: Scenario/dist
+          path: _site
 
   deploy:
     environment:

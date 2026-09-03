@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
-import Header from './components/Header'
+import { AuraHeader } from '@shared/ui/AuraHeader'
 import Home from './pages/home/Home'
 import NotFound from './pages/NotFound'
 import CreateSegmentTree from './pages/createsegment/CreateSegmentTree'
@@ -8,7 +8,7 @@ import { SegmentsProvider } from './context/SegmentsContext'
 function Layout() {
   return (
     <SegmentsProvider>
-      <Header />
+      <AuraHeader service="segments" />
       <main>
         <Outlet />
       </main>
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/segments',
+    basename: '/aura/segments',
   }
 )
 

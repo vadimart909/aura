@@ -14,6 +14,13 @@ export default defineConfig({
     alias: {
       '@ds': path.join(designSystemRoot, 'src'),
       '@shared': path.resolve(__dirname, '../shared'),
+      // Общая шапка лежит в ../shared, а node_modules там нет: корневого
+      // package.json в репозитории тоже нет, зависимости стоят внутри каждого
+      // приложения. Дев-сервер такие голые импорты дотягивает от корня
+      // приложения, а прод-сборка (rolldown) — нет, поэтому адресуем явно.
+      react: path.resolve(__dirname, 'node_modules/react'),
+      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
+      'react-router-dom': path.resolve(__dirname, 'node_modules/react-router-dom'),
     },
     dedupe: ['react', 'react-dom'],
   },
@@ -22,7 +29,9 @@ export default defineConfig({
     fs: {
       allow: [path.resolve(__dirname, '..'), designSystemRoot],
     },
-    hmr: {
+    ws: {
+      // Свой порт под HMR: приложения делят один HTTP-порт, но вебсокеты — нет.
+      // Раньше это был `hmr.port`, в Vite 8 он объявлен устаревшим.
       port: 24680,
     },
   },

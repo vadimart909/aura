@@ -9,3 +9,6 @@ node_modules/
 # in history was swept in by the broad `git add` in 35d885c, not tracked on
 # purpose; keeping these out stops the repo growing by ~30 MB per re-export.
 *.fig
+
+# Сборка обоих приложений в один артефакт Pages (.github/workflows/deploy.yml)
+_site/
