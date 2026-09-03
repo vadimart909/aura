@@ -1,5 +1,10 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { ATTRIBUTE_CATEGORIES, ATTRIBUTES } from '@shared/client-attributes/clientAttributes';
+import { Drawer } from '@ds/components/Drawer';
+import { DrawerHeader } from '@ds/components/Drawer';
+import { DrawerFooter } from '@ds/components/Drawer';
+import { Dropdown } from '@ds/components/Dropdown';
+import { Cell } from '@ds/components/Cell';
 import './DrawerParameter.css';
 
 /* ---- Category and parameter data ----
@@ -38,95 +43,38 @@ const CATEGORIES = [
   })),
 ];
 
-/* ---- Inline SVG icons ---- */
-
-function CrossIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 /**
  * DrawerParameter — правый боковой drawer для добавления нового параметра.
  *
  * Props:
+ *   isOpen     — открыт ли drawer
  *   onClose    — колбэк закрытия drawer
  *   onAdd      — колбэк добавления параметра ({ category, parameter })
  */
-export default function DrawerParameter({ onClose, onAdd }) {
-  /* ---- Category state ---- */
-  const [categoryOpen, setCategoryOpen] = useState(false);
+export default function DrawerParameter({ isOpen, onClose, onAdd }) {
   const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
-  const categoryRef = useRef(null);
-
-  /* ---- Parameter state ---- */
-  const [paramOpen, setParamOpen] = useState(false);
   const [selectedParam, setSelectedParam] = useState(null);
   const [paramSearch, setParamSearch] = useState('');
-  const paramRef = useRef(null);
-  const paramInputRef = useRef(null);
+
+  // Drawer живёт постоянно (иначе ДС не проиграет анимацию открытия), поэтому
+  // сбрасываем выбор сами — раньше это делал размонтаж.
+  useEffect(() => {
+    if (!isOpen) return;
+    setSelectedCategory(CATEGORIES[0]);
+    setSelectedParam(null);
+    setParamSearch('');
+  }, [isOpen]);
 
   const availableParams = getParametersForCategory(selectedCategory.id);
   const filteredParams = paramSearch
     ? availableParams.filter((p) => p.name.toLowerCase().includes(paramSearch.toLowerCase()))
     : availableParams;
 
-  /* ---- Click-outside for both dropdowns ---- */
-  const handleClickOutside = useCallback((e) => {
-    if (categoryRef.current && !categoryRef.current.contains(e.target)) {
-      setCategoryOpen(false);
-    }
-    if (paramRef.current && !paramRef.current.contains(e.target)) {
-      setParamOpen(false);
-      setParamSearch('');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (categoryOpen || paramOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [categoryOpen, paramOpen, handleClickOutside]);
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    setCategoryOpen(false);
     /* Reset parameter when category changes */
     setSelectedParam(null);
     setParamSearch('');
-    setParamOpen(false);
-  };
-
-  const handleParamSelect = (param) => {
-    setSelectedParam(param);
-    setParamSearch('');
-    setParamOpen(false);
   };
 
   const handleAdd = () => {
@@ -135,166 +83,59 @@ export default function DrawerParameter({ onClose, onAdd }) {
   };
 
   return (
-    <div className="drawer-param-overlay" onClick={handleOverlayClick}>
-      <div className="drawer-param">
-        {/* ---- Header ---- */}
-        <div className="drawer-param__header">
-          <span className="drawer-param__title">Новый параметр</span>
-          <button
-            type="button"
-            className="drawer-param__close-btn"
-            onClick={onClose}
-            aria-label="Закрыть"
-          >
-            <CrossIcon />
-          </button>
-        </div>
+    <Drawer
+      isOpen={isOpen}
+      onClose={onClose}
+      header={<DrawerHeader title="Новый параметр" onClose={onClose} />}
+      footer={
+        <DrawerFooter
+          layout="1-button"
+          primaryAction={{ label: 'Добавить', onClick: handleAdd }}
+        />
+      }
+    >
+      <div className="drawer-param__content">
+        {/* Dropdown: Категория. `value` — подпись, а не id: по ней DropdownPopup
+            сам находит выбранный пункт и ставит галочку. */}
+        <Dropdown
+          label="Категория"
+          value={selectedCategory.name}
+          description={selectedCategory.description || undefined}
+        >
+          {CATEGORIES.map((cat) => (
+            <Cell
+              key={cat.id}
+              title={cat.name}
+              description={cat.description || undefined}
+              hasLeftAccessory={false}
+              onClick={() => handleCategorySelect(cat)}
+            />
+          ))}
+        </Dropdown>
 
-        {/* ---- Content ---- */}
-        <div className="drawer-param__content">
-          {/* Dropdown: Категория */}
-          <div className="drawer-param__dropdown-wrap" ref={categoryRef}>
-            <div
-              className={`drawer-param__dropdown${categoryOpen ? ' drawer-param__dropdown--open' : ''}`}
-              onClick={() => setCategoryOpen((prev) => !prev)}
-            >
-              <div className="drawer-param__dropdown-inner">
-                <div className="drawer-param__dropdown-text">
-                  <span className="drawer-param__dropdown-label">Категория</span>
-                  <span className="drawer-param__dropdown-value">{selectedCategory.name}</span>
-                </div>
-                <div className="drawer-param__dropdown-accessory">
-                  <ChevronDownIcon />
-                </div>
-              </div>
-              {selectedCategory.description && (
-                <div className="drawer-param__dropdown-description">
-                  <div className="drawer-param__dropdown-divider" />
-                  <span className="drawer-param__dropdown-hint">{selectedCategory.description}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Context menu: category list */}
-            {categoryOpen && (
-              <div className="drawer-param__options">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    className={`drawer-param__option${selectedCategory.id === cat.id ? ' drawer-param__option--selected' : ''}`}
-                    onClick={() => handleCategorySelect(cat)}
-                  >
-                    <div className="drawer-param__option-content">
-                      <span className="drawer-param__option-name">{cat.name}</span>
-                      {cat.description && (
-                        <span className="drawer-param__option-desc">{cat.description}</span>
-                      )}
-                    </div>
-                    {selectedCategory.id === cat.id && (
-                      <span className="drawer-param__option-check">
-                        <CheckIcon />
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Dropdown: Параметр (с поиском) */}
-          <div className="drawer-param__dropdown-wrap" ref={paramRef}>
-            <div
-              className={`drawer-param__dropdown${paramOpen ? ' drawer-param__dropdown--open' : ''}`}
-              onClick={() => {
-                if (!paramOpen) {
-                  setParamOpen(true);
-                  setTimeout(() => paramInputRef.current?.focus(), 0);
-                }
-              }}
-            >
-              <div className="drawer-param__dropdown-inner">
-                <div className="drawer-param__dropdown-text">
-                  <span className="drawer-param__dropdown-label">Параметр</span>
-                  {paramOpen ? (
-                    <input
-                      ref={paramInputRef}
-                      className="drawer-param__dropdown-input"
-                      type="text"
-                      value={paramSearch}
-                      onChange={(e) => setParamSearch(e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
-                      onMouseDown={(e) => e.stopPropagation()}
-                      placeholder="Введи название"
-                      autoComplete="off"
-                    />
-                  ) : selectedParam ? (
-                    <span className="drawer-param__dropdown-value">{selectedParam.name}</span>
-                  ) : (
-                    <span className="drawer-param__dropdown-value drawer-param__dropdown-value--placeholder">
-                      Введи название или выбери из списка
-                    </span>
-                  )}
-                </div>
-                <div className="drawer-param__dropdown-accessory">
-                  <ChevronDownIcon />
-                </div>
-              </div>
-              {!paramOpen && selectedParam?.description && (
-                <div className="drawer-param__dropdown-description">
-                  <div className="drawer-param__dropdown-divider" />
-                  <span className="drawer-param__dropdown-hint">{selectedParam.description}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Context menu: parameter list */}
-            {paramOpen && (
-              <div className="drawer-param__options">
-                {filteredParams.length === 0 ? (
-                  <div className="drawer-param__option drawer-param__option--empty">
-                    <span className="drawer-param__option-name">
-                      {paramSearch ? 'Ничего не найдено' : 'Нет параметров для выбранной категории'}
-                    </span>
-                  </div>
-                ) : (
-                  filteredParams.map((param) => (
-                    <button
-                      key={param.id}
-                      type="button"
-                      className={`drawer-param__option${selectedParam?.id === param.id ? ' drawer-param__option--selected' : ''}`}
-                      onClick={() => handleParamSelect(param)}
-                    >
-                      <div className="drawer-param__option-content">
-                        <span className="drawer-param__option-name">{param.name}</span>
-                        {param.description && (
-                          <span className="drawer-param__option-desc">{param.description}</span>
-                        )}
-                      </div>
-                      {selectedParam?.id === param.id && (
-                        <span className="drawer-param__option-check">
-                          <CheckIcon />
-                        </span>
-                      )}
-                    </button>
-                  ))
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ---- Footer ---- */}
-        <div className="drawer-param__footer">
-          <button
-            type="button"
-            className="drawer-param__add-btn"
-            onClick={handleAdd}
-          >
-            Добавить
-          </button>
-        </div>
+        {/* Dropdown: Параметр (с поиском) */}
+        <Dropdown
+          label="Параметр"
+          value={selectedParam?.name}
+          placeholder="Введи название или выбери из списка"
+          description={selectedParam?.description || undefined}
+          hasSearch
+          searchPlaceholder="Введи название"
+          onSearchChange={setParamSearch}
+          isEmpty={filteredParams.length === 0}
+          emptyText={paramSearch ? 'Ничего не найдено' : 'Нет параметров для выбранной категории'}
+        >
+          {filteredParams.map((param) => (
+            <Cell
+              key={param.id}
+              title={param.name}
+              description={param.description || undefined}
+              hasLeftAccessory={false}
+              onClick={() => setSelectedParam(param)}
+            />
+          ))}
+        </Dropdown>
       </div>
-    </div>
+    </Drawer>
   );
 }

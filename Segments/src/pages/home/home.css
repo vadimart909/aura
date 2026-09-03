@@ -60,15 +60,10 @@
 }
 
 .segments-page__search-icon {
-  display: flex;
-  align-items: center;
+  /* Размер и центрирование внутри — от .ds-icon; здесь только позиция
+     в растянутом (align-items: stretch) контейнере поля. */
+  align-self: center;
   color: var(--primitive-neutral-4);
-  flex-shrink: 0;
-}
-
-.segments-page__search-icon svg {
-  width: var(--icon-size-m);
-  height: var(--icon-size-m);
 }
 
 .segments-page__search-input {
@@ -88,77 +83,9 @@
   color: var(--primitive-neutral-4);
 }
 
-/* --- Chip Tabs --- */
-.chip-tab {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--spacing-2x);
-  height: var(--spacing-8x);
-  border: none;
-  border-radius: var(--chip-rounding-weak);
-  background: var(--container-transparent-1);
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-s);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--primitive-primary);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
+/* (Chip styles now provided by DS Chip component) */
 
-.chip-tab:hover {
-  background: var(--state-container-transparent-1-active);
-}
-
-.chip-tab--selected {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.4px var(--primitive-primary);
-}
-
-.chip-tab--selected:hover {
-  background: var(--container-transparent-1);
-}
-
-/* --- Button --- */
-.btn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2x);
-  padding: 0 var(--spacing-3x);
-  height: 40px;
-  border: none;
-  border-radius: var(--button-rounding-weak);
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-s);
-  letter-spacing: var(--letter-spacing-tight);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn--brand {
-  background: var(--bg-brand);
-  color: var(--primitive-default);
-}
-
-.btn--brand:hover {
-  background: var(--state-bg-brand-active);
-}
-
-.btn__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn__icon svg {
-  width: var(--icon-size-m);
-  height: var(--icon-size-m);
-}
-
+/* (Button styles now provided by DS HeaderButton component) */
 
 /* --- Table --- */
 .table {

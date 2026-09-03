@@ -161,37 +161,9 @@
    Action Cell — «Создать основную группу»
    -------------------------------------------------------------------------- */
 
-.cs-tree__action-cell {
-  display: flex;
-  align-items: center;
-  width: 680px;
-  gap: 12px;
-  padding: 16px 20px;
-  background: var(--container-transparent-1); /* rgba(25, 25, 25, 0.05) */
-  border-radius: var(--form-rounding); /* 12px */
-  border: none;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
 
-.cs-tree__action-cell:hover {
-  background: var(--state-container-transparent-1-active);
-}
 
-.cs-tree__action-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
 
-.cs-tree__action-text {
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-medium); /* 500 */
-  font-size: var(--font-size-m); /* 16px */
-  line-height: var(--line-height-m); /* 20px */
-  letter-spacing: var(--letter-spacing-tight); /* 0.01em */
-  color: var(--primitive-brand); /* #835DE1 */
-}
 
 /* --------------------------------------------------------------------------
    Group Cell — «И / ИЛИ — основная группа»
@@ -268,6 +240,8 @@
 .cs-tree__action-wrap {
   position: relative;
   align-self: stretch;
+  /* ActionFormCell тянется на 100% и своей ширины не имеет — задаём здесь. */
+  width: 680px;
 }
 
 .cs-tree__context-menu {
@@ -375,44 +349,10 @@
   padding: 32px 20px;
 }
 
-.cs-tree__notification {
-  display: flex;
-  width: 300px;
-  padding: 0 20px;
-  border: 1px solid rgba(25, 25, 25, 0.2);
-  border-radius: var(--form-rounding); /* 12px */
-}
 
-.cs-tree__notification-icon-wrap {
-  display: flex;
-  align-self: stretch;
-  align-items: flex-start;
-  padding: 12px 12px 12px 0;
-  flex-shrink: 0;
-}
 
-.cs-tree__notification-icon {
-  width: 18px;
-  height: 18px;
-}
 
-.cs-tree__notification-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px 0;
-  flex: 1;
-}
 
-.cs-tree__notification-text {
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-regular); /* 400 */
-  font-size: var(--font-size-s); /* 14px */
-  line-height: var(--line-height-s); /* 18px */
-  letter-spacing: var(--letter-spacing-tight); /* 0.01em */
-  color: var(--primitive-primary);
-  margin: 0;
-}
 
 .cs-tree__notification-highlight {
   color: var(--primitive-brand); /* #835DE1 */
@@ -439,24 +379,10 @@
   gap: 8px;
 }
 
+/* Внешний вид даёт DS Button; здесь только ширина по макету. */
 .cs-tree__footer-btn {
   width: 320px;
-  height: 48px;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primitive-brand); /* #835DE1 */
-  color: var(--primitive-default); /* #FFFFFF */
-  border: none;
-  border-radius: var(--form-rounding); /* 12px */
-  font-family: var(--font-family-tt-norms-tochka-extended);
-  font-weight: var(--font-weight-medium); /* 500 */
-  font-size: var(--font-size-m); /* 16px */
-  line-height: var(--line-height-m); /* 20px */
-  letter-spacing: var(--letter-spacing-tight); /* 0.01em */
-  cursor: pointer;
-  transition: background 0.15s ease;
+  min-width: 320px;
 }
 
 .cs-tree__footer-btn:hover {

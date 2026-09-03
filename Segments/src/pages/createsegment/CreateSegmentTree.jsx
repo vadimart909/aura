@@ -1,28 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CreateSegmentTree.css'
+// Полоски шагов — не иконки, а декоративные линейки 4x30, аналога в ДС нет.
 import stepActive from './icons/step-active.svg'
 import stepInactive from './icons/step-inactive.svg'
-import iconPlus from './icons/icon-plus.svg'
-import iconPlusCircle from './icons/icon-plus-circle.svg'
-import iconTrash from './icons/icon-trash.svg'
-import iconInfoCircle from './icons/icon-info-circle.svg'
-import iconChevronRight from './icons/icon-chevron-right.svg'
 import { DrawerParameter } from '../../components/DrawerParameter'
-
-function ArrowLeftIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M15 6L9 12L15 18"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
+import { Button } from '@ds/components/Button'
+import { ActionFormCell } from '@ds/components/ActionFormCell'
+import { ContextualNotification } from '@ds/components/ContextualNotification'
+import { ArrowLeft, Plus, PlusCircle, Trash, ChevronRight, InformationCircle } from '@ds/icons'
 
 export default function CreateSegmentTree() {
   const navigate = useNavigate()
@@ -99,7 +85,7 @@ export default function CreateSegmentTree() {
           className="cs-tree__back-btn"
           onClick={() => navigate('/')}
         >
-          <ArrowLeftIcon />
+          <span className="ds-icon ds-icon--m"><ArrowLeft /></span>
         </button>
 
         <div className="cs-tree__sidebar-header">
@@ -135,14 +121,11 @@ export default function CreateSegmentTree() {
           {/* Action cell — create group + context menu / Group Cell */}
           {!rootGroup ? (
             <div className="cs-tree__action-wrap" ref={menuRef}>
-              <button
-                type="button"
-                className="cs-tree__action-cell"
+              <ActionFormCell
+                title="Создать основную группу"
+                left={<Plus />}
                 onClick={() => setMenuOpen((prev) => !prev)}
-              >
-                <img className="cs-tree__action-icon" src={iconPlus} alt="" />
-                <span className="cs-tree__action-text">Создать основную группу</span>
-              </button>
+              />
 
               {menuOpen && (
                 <div className="cs-tree__context-menu">
@@ -176,7 +159,7 @@ export default function CreateSegmentTree() {
                     onClick={handleToggleGroupMenu}
                     title="Добавить условие"
                   >
-                    <img src={iconPlusCircle} alt="" width="24" height="24" />
+                    <span className="ds-icon ds-icon--m"><PlusCircle /></span>
                   </button>
                   <button
                     type="button"
@@ -184,7 +167,7 @@ export default function CreateSegmentTree() {
                     onClick={handleDeleteGroup}
                     title="Удалить группу"
                   >
-                    <img src={iconTrash} alt="" width="24" height="24" />
+                    <span className="ds-icon ds-icon--m"><Trash /></span>
                   </button>
 
                   {/* Context menu — add subgroup / parameter */}
@@ -196,13 +179,9 @@ export default function CreateSegmentTree() {
                         onMouseLeave={() => setSubMenuOpen(false)}
                       >
                         <span>Добавить подгруппу</span>
-                        <img
-                          className="cs-tree__context-menu-chevron"
-                          src={iconChevronRight}
-                          alt=""
-                          width="16"
-                          height="16"
-                        />
+                        <span className="cs-tree__context-menu-chevron ds-icon ds-icon--xs">
+                          <ChevronRight />
+                        </span>
 
                         {/* Sub-menu: group type selection */}
                         {subMenuOpen && (
@@ -242,35 +221,35 @@ export default function CreateSegmentTree() {
 
       {/* ---- Right panel ---- */}
       <div className="cs-tree__right-panel">
-        <div className="cs-tree__notification">
-          <div className="cs-tree__notification-icon-wrap">
-            <img className="cs-tree__notification-icon" src={iconInfoCircle} alt="" />
-          </div>
-          <div className="cs-tree__notification-body">
-            <p className="cs-tree__notification-text">
+        <ContextualNotification
+          hasTitle={false}
+          hasCloseIcon={false}
+          icon={<InformationCircle />}
+          text={
+            <>
               Для запроса недостающих данных в ручной настройке сегмента пиши в канал{' '}
               <span className="cs-tree__notification-highlight">~dannye_v_cdp</span>
-            </p>
-          </div>
-        </div>
+            </>
+          }
+        />
       </div>
 
       {/* ---- Footer ---- */}
       <footer className="cs-tree__footer">
         <div className="cs-tree__footer-content">
-          <button type="button" className="cs-tree__footer-btn">
+          <Button variant="primary" className="cs-tree__footer-btn">
             Продолжить
-          </button>
+          </Button>
         </div>
       </footer>
 
-      {/* ---- Parameter drawer ---- */}
-      {drawerOpen && (
-        <DrawerParameter
-          onClose={() => setDrawerOpen(false)}
-          onAdd={handleDrawerAdd}
-        />
-      )}
+      {/* ---- Parameter drawer ----
+           Рендерится всегда: DS Drawer сам анимирует открытие по isOpen. */}
+      <DrawerParameter
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        onAdd={handleDrawerAdd}
+      />
     </div>
   )
 }

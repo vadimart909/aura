@@ -1,4 +1,11 @@
-@import "./tokens.css";
+/* Design-system style tokens */
+@import "@ds/assets/Style/color.css";
+@import "@ds/assets/Style/font.css";
+@import "@ds/assets/Style/radius.css";
+@import "@ds/assets/Style/spacing.css";
+@import "@ds/assets/Style/shadow.css";
+@import "@ds/assets/Style/animation.css";
+@import "@ds/assets/Icon/icon.css";
 
 :root {
   font-family: var(--font-family-tt-norms-tochka-extended), Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,6 +15,30 @@
   background-color: var(--page-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Font-weight aliases (not shipped by DS tokens — kept for custom components) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-demibold: 600;
+
+  /* Font-size aliases (not shipped by DS tokens — use ts-* classes where possible) */
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+
+  /* Line-height aliases */
+  --line-height-s: 18px;
+  --line-height-m: 20px;
+  --line-height-2xl: 30px;
+
+  /* Letter-spacing alias */
+  --letter-spacing-tight: 0.01em;
+
+  /* Shadow aliases — DS tokens use capitalized names (--Popout, --Drawer-Right, …),
+     but component CSS references lowercase-prefixed variants. Bridge them here. */
+  --shadow-popout: var(--Popout);
+  --shadow-drawer-right: var(--Drawer-Right);
 }
 
 * {
