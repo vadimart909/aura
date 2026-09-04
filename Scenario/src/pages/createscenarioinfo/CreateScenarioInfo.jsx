@@ -51,8 +51,8 @@ export default function CreateScenarioInfo() {
   // открытой модалкой успеха.
   const entryStatus = useRef(scenario?.status ?? 'draft').current;
   // Черновик публикуют, всё остальное — запускают. Та же развилка, что в футере
-  // ScenarioView: у 'draft' одна широкая кнопка, у опубликованного и
-  // остановленного — пара с «Запустить».
+  // ScenarioView: у 'draft' одна широкая кнопка, у опубликованного — пара
+  // «Редактировать» + «Запустить», у остановленного — только «Запустить».
   const isPublishFlow = entryStatus === 'draft';
 
   const [name, setName] = useState(scenario?.name ?? '');

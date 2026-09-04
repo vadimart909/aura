@@ -53,9 +53,10 @@ function ScenarioViewInner() {
   const nodes = canvas.nodes;
   const edges = canvas.edges;
 
-  // Figma gives a draft and a running scenario one wide primary button each;
-  // everything else (Опубликован / Остановлен / Завершает работу) gets the
-  // «Редактировать» + «Запустить» pair.
+  // По макетам широкая кнопка-одиночка у всех статусов, кроме «Опубликован»:
+  // черновик редактируют, запущенный останавливают, а остановленный и
+  // завершающий работу можно только запустить — редактирование им закрыто.
+  // Пара «Редактировать» + «Запустить» осталась только у «Опубликован».
   const status = scenario?.status ?? 'draft';
 
   // Flowing dashes on the cables while the scenario is live, per the
@@ -121,6 +122,9 @@ function ScenarioViewInner() {
   }
 
   function handleStopFull() {
+    // Полная остановка — конечное состояние: сценарий можно только запустить
+    // заново, редактирование закрыто. Правки вносят в копию, которую создают
+    // с главной страницы, — об этом и говорит модалка успеха ниже.
     updateScenario(id, { status: 'stopped', statusLabel: 'Остановлен' });
     setShowStopChoice(false);
     setShowStopFullSuccess(true);
@@ -193,25 +197,24 @@ function ScenarioViewInner() {
           {status === 'finishing' && (
             <>
               <span className="scenario-view__footer-hint ts-400-s">
-                Чтобы отредактировать или запустить сценарий, дождись смены статуса на «Остановлен»
+                Чтобы запустить сценарий, дождись смены статуса на «Остановлен»
               </span>
-              <div className="scenario-view__footer-buttons">
-                <Button variant="secondary" className="scenario-view__btn" isDisabled>
-                  Редактировать
-                </Button>
-                <Button variant="primary" className="scenario-view__btn scenario-view__btn--icon" isDisabled>
-                  <PlayIcon />
-                  Запустить
-                </Button>
-              </div>
+              <Button variant="primary" className="scenario-view__btn scenario-view__btn--icon" isDisabled>
+                <PlayIcon />
+                Запустить
+              </Button>
             </>
           )}
 
           {status !== 'draft' && status !== 'started' && status !== 'finishing' && (
             <div className="scenario-view__footer-buttons">
-              <Button variant="secondary" className="scenario-view__btn" onClick={handleEdit}>
-                Редактировать
-              </Button>
+              {/* Остановленный сценарий не редактируют — с него создают копию на
+                  главной, поэтому в футере остаётся одна «Запустить». */}
+              {status !== 'stopped' && (
+                <Button variant="secondary" className="scenario-view__btn" onClick={handleEdit}>
+                  Редактировать
+                </Button>
+              )}
               <Button
                 variant="primary"
                 className="scenario-view__btn scenario-view__btn--icon"
@@ -295,10 +298,13 @@ function ScenarioViewInner() {
       {/* ---- Stop success: full ---- */}
       <FlowResultView
         isOpen={showStopFullSuccess}
-        onDone={() => setShowStopFullSuccess(false)}
+        // «Готово» уводит на главную, а не закрывает модалку: остановленный
+        // сценарий больше не редактируется, и правки начинаются с его копии,
+        // которую создают из списка.
+        onDone={() => navigate('/')}
         state="success"
         title="Сценарий остановлен"
-        text="При необходимости можешь отредактировать его"
+        text="Если хочешь отредактировать его, то создай копию с главной страницы"
       />
 
       {/* ---- Stop success: partial ---- */}
