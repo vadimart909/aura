@@ -13,6 +13,14 @@
   overflow: hidden;
 }
 
+/* DS-шный Alert держит `position: fixed; top: 0` на КОРНЕВОМ .alert__wrapper,
+   а проп className уезжает на внутренний .alert — сдвинуть полосу из-под шапки
+   можно только селектором потомка. (0,2,0) перебивает (0,1,0) из alert.css,
+   так что порядок подключения стилей роли не играет. 74px — высота шапки. */
+.scenarios .alert__wrapper {
+  top: 74px;
+}
+
 .scenarios__content {
   display: flex;
   flex-direction: column;
@@ -228,6 +236,17 @@
 
 .table__action-btn:active {
   transform: scale(0.98);
+}
+
+/* --- Меню действий над строкой --- */
+
+/* Панель ContextMenu абсолютная и не портальная, а .table__body скроллится:
+   у нижних строк места вниз не остаётся и меню обрезалось бы краем контейнера.
+   Home.jsx меряет это при открытии и вешает модификатор — панель прижимается
+   к низу триггера и раскрывается вверх. */
+.table__menu--up .context-menu {
+  top: auto;
+  bottom: 0;
 }
 
 /* (Status tag color classes moved to global.css) */
